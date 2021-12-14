@@ -1,0 +1,16 @@
+.home {
+  flex-wrap: wrap;
+  background: linear-gradient(rgba(255, 168, 6, 0.753),rgba(255, 251, 42, 0.6))
+}
+
+.titleDiv{
+  text-align: center;
+  font-size: x-large;
+  margin: 0 auto;
+  font-style: italic;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.chairDisplay{
+  text-align: center;
+}

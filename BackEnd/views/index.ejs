@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Venta de Sillas </title>
+  </head>
+  <body>
+    <h1> Bienvenido </h1>
+    <p> Tome asiento </p>
+    <div >
+      <div >Productos</div>
+      <% if (productos != null) { %>
+      <% productos.forEach(function (producto) { %>
+      <div><%= producto.name %> </div>
+      <div><%= producto.precio %> </div>
+      <button> Mostrar Detalles </button>
+      <% }) %>
+      <% } %>
+    </div>
+  </body>
+</html>

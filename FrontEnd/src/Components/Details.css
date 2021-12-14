@@ -1,0 +1,11 @@
+.DetailsImage{
+    width: 250px;
+    height: 250px;
+}
+.DetailsPrice{
+    font-weight: 500;
+}
+.DetailsDiv{
+    text-align: center;
+}
+

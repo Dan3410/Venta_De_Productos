@@ -1,0 +1,7 @@
+.pageProfile{
+    background: linear-gradient(rgba(255, 168, 6, 0.753),rgba(255, 251, 42, 0.6));
+    height:100%;
+    width: 100%;
+    padding-bottom: 70px;
+    position:absolute;
+}
