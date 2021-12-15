@@ -1,7 +1,15 @@
 const usuariosModel = require("../models/usuariosModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const productosModel = require("../models/productosModel");
+
+function modifyRes(res, status, message, data){
+  res.json({
+    status: status,
+    message: message,
+    data: data
+  })
+}
+
 module.exports = {
   logUser: async function (req, res, next) {
     try {
@@ -11,28 +19,16 @@ module.exports = {
           const token = jwt.sign({ id: user._id }, req.app.get("secretKey"), {
             expiresIn: "1h",
           });
-          res.json({
-            status: "success",
-            message: "user found",
-            data: { user: user, token: token },
-          });
+          modifyRes(res,"Success","User Found",{user:user, token:token})
         } else {
-          res.json({
-            status: "Error",
-            message: "Invalid user/password",
-            data: null,
-          });
+          modifyRes(res,"Error","Invalid user/password",null)
         }
       } else {
-        res.json({
-          status: "Error",
-          message: "user not found",
-          data: null,
-        });
+        modifyRes(res,"Error","User Not Found",null)
       }
     } catch (e) {
-      console.log("Error: ", e)
-      next(e);
+      modifyRes(res,"Error",e.message,null)
+      next(e)
     }
   },
   findUserByUsername: async function (req, res, next) {
@@ -47,28 +43,17 @@ module.exports = {
             req.params.token,
             req.app.get("secretKey")
           );
-          res.json({
-            status: "success",
-            message: "User Found",
-            data: { user: user },
-          });
+          modifyRes(res,"Success","userFound",{user:user})
         } catch (e) {
-          res.json({
-            status: "Error",
-            message: "Invalid Token",
-            data: null,
-          });
+          modifyRes(res,"Error","Invalid Token",null)
+          next(e)
         }
       } else {
-        res.json({
-          status: "Error",
-          message: "user not found",
-          data: null,
-        });
+        modifyRes(res,"Error","User Not Found",null)
       }
     } catch (e) {
-      console.log("Error: ",e)
-      next(e);
+      modifyRes(res,"Error",e.message,null)
+      next(e)
     }
   },
   updateUserData: async function (req, res, next) {
@@ -79,45 +64,36 @@ module.exports = {
         userName: req.body.userName,
       });
     } catch (e) {
-      res.json({
-        status: "Error",
-        message: "User Not Found",
-        data: null,
-      });
-      return
+      modifyRes(res,"Error",e.message,null)
+      next(e)
     }
     if (user) {
       try {
         const decoded = jwt.verify(req.body.token, req.app.get("secretKey"));
       } catch (e) {
-        res.json({
-          status: "Error",
-          message: "Invalid Token",
-          data: null,
-        });
+        modifyRes(res,"Error","Invalid Token",null)
+        next(e)
         return
       }
-      try{
-      let newData = {firstName : req.body.firstName, lastName : req.body.lastName}
-      if (req.body.password !== undefined){
-        let newPassword = bcrypt.hashSync(req.body.password, 10);
-        newData.password = newPassword;
-      }  
-      await usuariosModel.updateOne({userName: req.body.userName}, newData)
-        res.json({
-          status: "Success",
-          message: "User Data Updated",
-          data: { user: newData },
-        });
-    } catch (e){
-      res.json({
-        status: "Error",
-        message: "Error al actualizar",
-        data: null,
-      });
-      return
+      try {
+        let newData = {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+        };
+        if (req.body.password !== undefined) {
+          let newPassword = bcrypt.hashSync(req.body.password, 10);
+          newData.password = newPassword;
+        }
+        await usuariosModel.updateOne({ userName: req.body.userName }, newData);
+        modifyRes(res,"Success","User Data Updated",{user:newData})
+      } catch (e) {
+        modifyRes(res,"Error","Error al Actualizar",null)
+        next(e)
+      }
+    }else{
+      modifyRes(res,"Error","User Not Found",null)
     }
-  }},
+  },
   register: async function (req, res, next) {
     try {
       var data = new usuariosModel({
@@ -126,15 +102,13 @@ module.exports = {
         userName: req.body.userName,
         password: req.body.password,
         email: req.body.email,
+        accountType: req.body.accountType,
       });
+      console.log(data);
       const document = await data.save();
-      res.json({
-        status: "Success",
-        message: "User Created Successfully",
-        data: document,
-      });
+      modifyRes(res,"Success","User Created Successfully",document)
     } catch (e) {
-      console.log("Error: ", e)
+      modifyRes(res,"Error",e.message,null)
       next(e);
     }
   },

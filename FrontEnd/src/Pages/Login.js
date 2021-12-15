@@ -3,6 +3,8 @@ import { useHistory } from "react-router";
 import userContext from "../Config/context";
 import "./Forms.css";
 import { signInWithUserNameAndPassword } from "../services/userServices";
+import FormField from "../Components/FormField";
+import FormSubmit from "../Components/FormSubmit";
 
 function Login(props) {
   const [form, setForm] = useState({ userName: "", password: "" });
@@ -12,12 +14,16 @@ function Login(props) {
       label: "UserName:",
       value: form.userName,
       placeholder: "Introduzca el UserName",
+      type: "text",
+      disabled: false
     },
     {
       name: "password",
       label: "Password:",
       value: form.password,
       placeholder: "Introduza la contraseña",
+      type: "password",
+      disabled: false
     },
   ];
   let history = useHistory();
@@ -40,10 +46,7 @@ function Login(props) {
     let userName = form.userName;
     let password = form.password;
     try {
-      const userInfo = await signInWithUserNameAndPassword(
-        userName,
-        password
-      );
+      const userInfo = await signInWithUserNameAndPassword(userName, password);
       if (userInfo.status === "Error") throw new Error(userInfo.message);
       context.logInUserContext(userInfo.data.user, userInfo.data.token);
       history.push("/");
@@ -60,20 +63,13 @@ function Login(props) {
             <div className="titleDiv">Login</div>
             <form onSubmit={handleSubmit}>
               {fields.map((field, index) => (
-                <div className="divForm">
-                  <label>{field.label}</label>
-                  <input
-                    type="text"
-                    placeholder={field.placeholder}
-                    name={field.name}
-                    value={field.value}
-                    onChange={handleChange}
-                  ></input>
-                </div>
+                <FormField
+                  field={field}
+                  key={index}
+                  handleChange={handleChange}
+                ></FormField>
               ))}
-              <div className="divForm">
-                <input className="buttonForm" type="submit" value="Ingresar" />
-              </div>
+          <FormSubmit value="Ingresar"></FormSubmit>
               <div className="errorDiv">{errorMessage}</div>
             </form>
           </div>

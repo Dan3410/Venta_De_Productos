@@ -6,6 +6,9 @@ import {
   updateUserData,
 } from "../services/userServices";
 import "./Profile.css";
+import FormField from "../Components/FormField.js";
+import FormSubmit from "../Components/FormSubmit";
+
 
 function Profile(props) {
   let history = useHistory();
@@ -16,6 +19,7 @@ function Profile(props) {
     userName: "",
     password: "",
     confirmPassword: "",
+    accountType: ""
   });
   const fields = [
     {
@@ -24,6 +28,7 @@ function Profile(props) {
       value: form.firstName,
       placeholder: "Introduzca su nombre",
       disabled: false,
+      type:"text"
     },
     {
       name: "lastName",
@@ -31,13 +36,15 @@ function Profile(props) {
       value: form.lastName,
       placeholder: "Introduzca su apellido",
       disabled: false,
+      type:"text"
     },
     {
       name: "userName",
       label: "UserName:",
       value: form.userName,
-      placeholder: "Introduzca el UserName",
+      placeholder: "",
       disabled: true,
+      type:"text"
     },
     {
       name: "mail",
@@ -45,17 +52,25 @@ function Profile(props) {
       value: form.mail,
       placeholder: "Introduzca su mail",
       disabled: true,
+      type:"text"
     },
+    {
+      name: "accountType",
+      label: "Tipo de Cuenta: ",
+      value: form.accountType,
+      placeholder: "",
+      disabled: true,
+      type:"text"
+    }
   ];
   const changePasswordFields = [
     {
-      beforeField:
-        "Para modificar la contraseña debe completar ambos campos. Caso contrario ignore ambos campos.",
       name: "password",
       label: "Password:",
       value: form.password,
       placeholder: "Introduza la contraseña",
       disabled: false,
+      type:"password"
     },
     {
       name: "confirmPassword",
@@ -63,11 +78,13 @@ function Profile(props) {
       value: form.confirmPassword,
       placeholder: "Reintroduzca la contraseña",
       disabled: false,
+      type:"password"
     },
   ];
 
   const context = useContext(userContext);
   const [errorMessage, setErrorMessage] = useState();
+  const [changeMessage, setChangeMessage] = useState();
 
   const handleChange = (e) => {
     const target = e.target;
@@ -83,16 +100,25 @@ function Profile(props) {
   const updateData = (e) => {
     e.preventDefault();
     let errorSettled = false;
+    console.log(form.password)
+    console.log(form.confirmPassword)
     if (form.password !== "" && form.confirmPassword === "") {
       setErrorMessage("Si desea modificar la contraseña, debe confirmarla");
       errorSettled = true;
     }
     if (form.password === "" && form.confirmPassword !== "") {
       setErrorMessage(
-        "Ambos campos dben estar completados si quiere cambiar la contraseña"
+        "Ambos campos deben estar completados si quiere cambiar la contraseña"
       );
       errorSettled = true;
     }
+    if (form.password !== form.confirmPassword && !errorSettled) {
+      setErrorMessage(
+        "El campo Contraseña y Confirmar Contraseña deben coincidir"
+      );
+      errorSettled = true;
+    }
+
     if (form.firstName === "" || form.lastName === "") {
       setErrorMessage("El campo nombre y apellido no pueden ser vacios");
       errorSettled = false;
@@ -111,8 +137,13 @@ function Profile(props) {
       ).then((response) => {
         if (response.status === "Success") {
           context.changeName(firstName);
+          setChangeMessage("Cambios realizados")
+          setErrorMessage("");
+
         }
       });
+    }else{
+      setChangeMessage("")
     }
   };
 
@@ -128,6 +159,7 @@ function Profile(props) {
                 lastName: userData.data.user.lastName,
                 mail: userData.data.user.email,
                 userName: userData.data.user.userName,
+                accountType: userData.data.user.accountType
               });
             }
           );
@@ -150,48 +182,30 @@ function Profile(props) {
             <div className="titleDiv">Datos del Usuario</div>
             <form onSubmit={updateData}>
               {fields.map((field, index) => (
-                <div className="divForm">
-                  <label>{field.label}</label>
-                  <input
-                    type="text"
-                    placeholder={field.placeholder}
-                    name={field.name}
-                    value={field.value}
-                    onChange={handleChange}
-                    disabled={field.disabled}
-                    key={index}
-                  ></input>
-                </div>
+                <FormField
+                  field={field}
+                  key={index}
+                  handleChange={handleChange}
+                ></FormField>
               ))}
+              <br/>
               <label>
                 Aquí puede modificar los datos. Una vez modificados haga click
                 en Confirmar Modificaciones
               </label> <br></br>
 
               {changePasswordFields.map((field, index) => (
-                <div className="divForm">
-                  <label>{field.label}</label>
-                  <input
-                    type="text"
-                    placeholder={field.placeholder}
-                    name={field.name}
-                    value={field.value}
-                    onChange={handleChange}
-                    disabled={field.disabled}
-                    key={index+fields.length}
-                  ></input>
-                </div>
-              ))}
-              <div className="divForm">
-                <input
-                  className="buttonForm"
-                  type="submit"
-                  value="Confirmar Modificaciones"
-                  onClick={updateData}
-                />
-              </div>
+                <FormField
+                field={field}
+                key={index}
+                handleChange={handleChange}
+              ></FormField>
+            ))}
+          <FormSubmit value="Confirmar Modificaciones"></FormSubmit>
             </form>
             <div className="errorDiv">{errorMessage}</div>
+            <div className="errorDiv">{changeMessage}</div>
+
           </div>
         </div>
       )}

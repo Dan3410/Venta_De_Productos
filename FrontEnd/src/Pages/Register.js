@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import "./Forms.css";
 import { createUserWithUserNameAndPassword } from "../services/userServices";
+import FormField from "../Components/FormField";
+import FormSubmit from "../Components/FormSubmit";
 
 function Register(props) {
   let history = useHistory();
@@ -10,7 +12,7 @@ function Register(props) {
     lastName: "",
     mail: "",
     userName: "",
-    accountType: "",
+    accountType: "Cuenta común",
     password: "",
     confirmPassword: "",
   });
@@ -19,51 +21,62 @@ function Register(props) {
       name: "firstName",
       label: "Nombre: ",
       value: form.firstName,
-      placeholder: "Introduzca su nombre"
+      placeholder: "Introduzca su nombre",
+      type: "text",
+      disabled: false,
     },
     {
       name: "lastName",
       label: "Apellido: ",
       value: form.lastName,
-      placeholder: "Introduzca su apellido"
+      placeholder: "Introduzca su apellido",
+      type: "text",
+      disabled: false,
     },
     {
       name: "userName",
       label: "UserName:",
       value: form.userName,
       placeholder: "Introduzca el UserName",
+      type: "text",
+      disabled: false
     },
     {
       name: "mail",
       label: "Mail: ",
       value: form.mail,
-      placeholder: "Introduzca su mail"
+      placeholder: "Introduzca su mail",
+      type: "text",
+      disabled: false
     },
     {
       name: "password",
       label: "Password:",
       value: form.password,
       placeholder: "Introduza la contraseña",
+      type: "password",
+      disabled: false,
     },
     {
       name: "confirmPassword",
       label: "Confirmar Contraseña:",
       value: form.confirmPassword,
-      placeholder: "Reintroduzca la contraseña"
-    }
+      placeholder: "Reintroduzca la contraseña",
+      type: "password",
+      disabled: false,
+    },
   ];
 
   const options = [
     {
       label: "Cuenta común",
-      value: "common",
+      value: "Cuenta común",
     },
     {
       label: "Cuenta Empresarial",
-      value: "admin",
+      value: "Cuenta Empresarial",
     },
   ];
-
 
   const [errorMessage, setErrorMessage] = useState();
 
@@ -80,26 +93,25 @@ function Register(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let mail = form.mail;
-    let userName = form.userName;
-    let firstName = form.firstName;
-    let lastName = form.lastName;
-    let accountType = form.accountType;
     let password = form.password;
     let confirmpassword = form.confirmPassword;
-    if (
-      mail === "" ||
-      userName === "" ||
-      firstName === "" ||
-      lastName === "" ||
-      accountType === "" ||
-      password === "" ||
-      confirmpassword === ""
-    ) {
+    console.log(Object.values(form).indexOf("") > -1);
+    if (Object.values(form).indexOf("") > -1) {
       setErrorMessage("Debe llenar todos los campos");
     } else if (password !== confirmpassword) {
-      setErrorMessage("La contraseña no concuerda");
-    } else {
+      setErrorMessage(
+        "El valor ingresado en contraseña y confirmar contraseña deben ser iguales"
+      );
+    } else if (password.length < 6) {
+      setErrorMessage("La contraseña debe tener al menos 6 caracteres");
+    } else if (password.length > 14){
+      setErrorMessage("La contraseña debe tener menos de 15 caracteres")
+    }else{
+      let mail = form.mail;
+      let userName = form.userName;
+      let firstName = form.firstName;
+      let lastName = form.lastName;
+      let accountType = form.accountType;
       try {
         await createUserWithUserNameAndPassword(
           userName,
@@ -112,12 +124,8 @@ function Register(props) {
         alert("Usuario registrado, haga click en Aceptar para continuar");
         history.push("/");
       } catch (err) {
-        if (err.code === "auth/weak-password") {
-          setErrorMessage("El password debe tener al menos 6 caracteres");
-        }
-        if (err.code === "auth/email-already-in-use") {
-          setErrorMessage("Ya hay un usuario con ese email registrado");
-        }
+        console.log(err);
+        setErrorMessage(err.message);
       }
     }
   };
@@ -127,18 +135,13 @@ function Register(props) {
       <div className="registerFormContainer">
         <div className="titleDiv">Register</div>
         <form onSubmit={handleSubmit}>
-        {fields.map((field, index) => (
-                <div className="divForm">
-                  <label>{field.label}</label>
-                  <input
-                    type="text"
-                    placeholder={field.placeholder}
-                    name={field.name}
-                    value={field.value}
-                    onChange={handleChange}
-                  ></input>
-                </div>
-              ))}
+          {fields.map((field, index) => (
+            <FormField
+              field={field}
+              key={index}
+              handleChange={handleChange}
+            ></FormField>
+          ))}
           <div className="divForm">
             Tipo de Cuenta:
             <select
@@ -146,14 +149,14 @@ function Register(props) {
               name="accountType"
               onChange={handleChange}
             >
-              {options.map((option,index) => (
-                <option key={index} value={option.value}>{option.label}</option>
+              {options.map((option, index) => (
+                <option key={index} value={option.value}>
+                  {option.label}
+                </option>
               ))}
             </select>
           </div>
-          <div className="divForm">
-            <input className="buttonForm" type="submit" value="Registrarse" />
-          </div>
+          <FormSubmit value="Registrarse"></FormSubmit>
         </form>
         <div className="errorDiv">{errorMessage}</div>
       </div>

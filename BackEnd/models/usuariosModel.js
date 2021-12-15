@@ -36,7 +36,11 @@ const usuariosSchema = new mongoose.Schema({
             },
             message: "Mail mal formateado"
         }
-        }
+        },
+    accountType: {
+        type:String,
+        required:[true, "Falta el valor de accountType"],
+    }
     }
 )
 usuariosSchema.pre('save', function(next){

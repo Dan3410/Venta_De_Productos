@@ -26,8 +26,8 @@ function Home() {
           <div className="titleDiv ">Productos</div>
         </div>
         <div className="chairDisplay">
-          {items.map((item) => (
-            <Producto key={item.itemId} itemAMostrar={item} />
+          {items.map((item,index) => (
+            <Producto key={index} itemAMostrar={item} />
           ))}
         </div>
       </div>
