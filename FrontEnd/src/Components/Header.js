@@ -14,30 +14,30 @@ function Header(props) {
           {!context.isLoggedIn && (
             <div>
               <Link to={"/"}>
-                <div className="headerButton">
-                  <div className="buttonText"> Home</div>
+                <div className="header__button">
+                  <div className="header__button__text"> Home</div>
                 </div>
               </Link>
               <Link to={"/Login"}>
-                <div className="headerButton buttonText"> Login </div>
+                <div className="header__button header__button__text"> Login </div>
               </Link>
               <Link to={`/Register`}>
-                <div className="headerButton buttonText"> Register </div>
+                <div className="header__button header__button__text"> Register </div>
               </Link>
             </div>
           )}
           {context.isLoggedIn && (
             <div>
-              <div className="textWithName">
+              <div className="header__text-with-name">
                 {" "}
                 Bienvenido {context.name}!. Tome asiento
               </div>
               <Link to={"/"}>
-                <div className="headerButton buttonText"> Home </div>
+                <div className="header__button header__button__text"> Home </div>
               </Link>
               <Link to={"/"}>
                 <div
-                  className="headerButton buttonText"
+                  className="header__button header__button__text"
                   onClick={context.logOutUserContext}
                 >
                   {" "}
@@ -45,7 +45,7 @@ function Header(props) {
                 </div>
               </Link>
               <Link to={`/Profile/${context.userName}`}>
-                <div className="headerButton buttonText"> Profile </div>
+                <div className="header__button header__button__text"> Profile </div>
               </Link>
             </div>
           )}

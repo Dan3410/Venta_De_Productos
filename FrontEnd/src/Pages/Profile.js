@@ -9,7 +9,6 @@ import "./Profile.css";
 import FormField from "../Components/FormField.js";
 import FormSubmit from "../Components/FormSubmit";
 
-
 function Profile(props) {
   let history = useHistory();
   const [form, setForm] = useState({
@@ -19,7 +18,7 @@ function Profile(props) {
     userName: "",
     password: "",
     confirmPassword: "",
-    accountType: ""
+    accountType: "",
   });
   const fields = [
     {
@@ -28,7 +27,7 @@ function Profile(props) {
       value: form.firstName,
       placeholder: "Introduzca su nombre",
       disabled: false,
-      type:"text"
+      type: "text",
     },
     {
       name: "lastName",
@@ -36,7 +35,7 @@ function Profile(props) {
       value: form.lastName,
       placeholder: "Introduzca su apellido",
       disabled: false,
-      type:"text"
+      type: "text",
     },
     {
       name: "userName",
@@ -44,7 +43,7 @@ function Profile(props) {
       value: form.userName,
       placeholder: "",
       disabled: true,
-      type:"text"
+      type: "text",
     },
     {
       name: "mail",
@@ -52,7 +51,7 @@ function Profile(props) {
       value: form.mail,
       placeholder: "Introduzca su mail",
       disabled: true,
-      type:"text"
+      type: "text",
     },
     {
       name: "accountType",
@@ -60,8 +59,8 @@ function Profile(props) {
       value: form.accountType,
       placeholder: "",
       disabled: true,
-      type:"text"
-    }
+      type: "text",
+    },
   ];
   const changePasswordFields = [
     {
@@ -70,7 +69,7 @@ function Profile(props) {
       value: form.password,
       placeholder: "Introduza la contraseña",
       disabled: false,
-      type:"password"
+      type: "password",
     },
     {
       name: "confirmPassword",
@@ -78,7 +77,7 @@ function Profile(props) {
       value: form.confirmPassword,
       placeholder: "Reintroduzca la contraseña",
       disabled: false,
-      type:"password"
+      type: "password",
     },
   ];
 
@@ -100,8 +99,8 @@ function Profile(props) {
   const updateData = (e) => {
     e.preventDefault();
     let errorSettled = false;
-    console.log(form.password)
-    console.log(form.confirmPassword)
+    console.log(form.password);
+    console.log(form.confirmPassword);
     if (form.password !== "" && form.confirmPassword === "") {
       setErrorMessage("Si desea modificar la contraseña, debe confirmarla");
       errorSettled = true;
@@ -137,13 +136,14 @@ function Profile(props) {
       ).then((response) => {
         if (response.status === "Success") {
           context.changeName(firstName);
-          setChangeMessage("Cambios realizados")
+          setChangeMessage("Cambios realizados");
           setErrorMessage("");
-
+        } else {
+          setErrorMessage(response.message);
         }
       });
-    }else{
-      setChangeMessage("")
+    } else {
+      setChangeMessage("");
     }
   };
 
@@ -159,7 +159,7 @@ function Profile(props) {
                 lastName: userData.data.user.lastName,
                 mail: userData.data.user.email,
                 userName: userData.data.user.userName,
-                accountType: userData.data.user.accountType
+                accountType: userData.data.user.accountType,
               });
             }
           );
@@ -178,9 +178,11 @@ function Profile(props) {
     <userContext.Consumer>
       {(context) => (
         <div className="pageProfile">
-          <div className="registerFormContainer">
-            <div className="titleDiv">Datos del Usuario</div>
-            <form onSubmit={updateData}>
+          <div className="form--center">
+            <form onSubmit={updateData} className="form--format">
+            <div className="form__title-container">
+              <label className="form__title-container__text">Datos del Usuario</label>
+            </div>
               {fields.map((field, index) => (
                 <FormField
                   field={field}
@@ -188,24 +190,31 @@ function Profile(props) {
                   handleChange={handleChange}
                 ></FormField>
               ))}
-              <br/>
+              <br />
               <label>
                 Aquí puede modificar los datos. Una vez modificados haga click
                 en Confirmar Modificaciones
-              </label> <br></br>
-
+              </label>{" "}
+              <br></br>
               {changePasswordFields.map((field, index) => (
                 <FormField
-                field={field}
-                key={index}
-                handleChange={handleChange}
-              ></FormField>
-            ))}
-          <FormSubmit value="Confirmar Modificaciones"></FormSubmit>
+                  field={field}
+                  key={index}
+                  handleChange={handleChange}
+                ></FormField>
+              ))}
+              <FormSubmit value="Confirmar Modificaciones"></FormSubmit>
             </form>
-            <div className="errorDiv">{errorMessage}</div>
-            <div className="errorDiv">{changeMessage}</div>
-
+            <div className="form__message-container">
+              <label className="form__message-container__text--error">
+                {errorMessage}
+              </label>
+            </div>
+            <div className="form__message-container">
+              <label className="form__message-container__text--success">
+                {changeMessage}
+              </label>
+            </div>
           </div>
         </div>
       )}

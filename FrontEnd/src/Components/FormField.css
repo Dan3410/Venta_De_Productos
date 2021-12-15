@@ -1,0 +1,10 @@
+.field-container{
+    margin-top: 20px;
+}
+
+.field-container__input{
+    background:transparent;
+    border: none;
+    width: 100%;
+    border-bottom: 1px solid #fff;
+}

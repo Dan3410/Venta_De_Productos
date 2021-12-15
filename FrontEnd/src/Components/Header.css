@@ -4,15 +4,7 @@
     height: fit-content;
 }
 
-.vertical-center{
-    margin:0;
-    position:absolute;
-    top:50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-}
-
-.headerButton{
+.header__button{
     display:inline-block;
     width: 70px;
     margin-top: 10px;
@@ -27,11 +19,11 @@
     cursor: pointer;
 }
 
-.buttonText{
+.header__button__text{
     line-height: 50px;
 }
 
-.textWithName{
+.header__text-with-name{
     font-size: larger;
     text-decoration: underline;
 }

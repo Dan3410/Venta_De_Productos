@@ -1,14 +1,14 @@
-.ProductImage{
+.product-display__image{
     background-color: transparent;
     background-size: cover;
     height: 200px;
     width: 200px;
 }
-.ProductName{
+.product-display__name{
     font-weight: 700;
 }
 
-.Product{
+.product-display{
     box-shadow: -10px,-10px, 30px, grey;
     display: inline-block;
     width: 27%;

@@ -3,7 +3,6 @@ Este es un proyecto realizado con NodeJS y mongoDB para backEnd y ReactJS, HTML 
 
 Aun falta realizar lo siguiente:
 
-  Poder registrarse como usuario admin para poder agregar/modificar/quitar productos
-  No perder el contexto al recargar la página
-  Refactorizar CSS
-
+  Poder registrarse como usuario admin para poder agregar/modificar/quitar productos  
+  No perder el contexto al recargar la página  
+  Arreglar profile: El contenedor con los datos del usuario se extiende al header  

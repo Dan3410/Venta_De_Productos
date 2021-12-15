@@ -39,7 +39,7 @@ function Register(props) {
       value: form.userName,
       placeholder: "Introduzca el UserName",
       type: "text",
-      disabled: false
+      disabled: false,
     },
     {
       name: "mail",
@@ -47,7 +47,7 @@ function Register(props) {
       value: form.mail,
       placeholder: "Introduzca su mail",
       type: "text",
-      disabled: false
+      disabled: false,
     },
     {
       name: "password",
@@ -104,16 +104,16 @@ function Register(props) {
       );
     } else if (password.length < 6) {
       setErrorMessage("La contraseña debe tener al menos 6 caracteres");
-    } else if (password.length > 14){
-      setErrorMessage("La contraseña debe tener menos de 15 caracteres")
-    }else{
+    } else if (password.length > 14) {
+      setErrorMessage("La contraseña debe tener menos de 15 caracteres");
+    } else {
       let mail = form.mail;
       let userName = form.userName;
       let firstName = form.firstName;
       let lastName = form.lastName;
       let accountType = form.accountType;
       try {
-        await createUserWithUserNameAndPassword(
+        const outcome = await createUserWithUserNameAndPassword(
           userName,
           password,
           mail,
@@ -121,6 +121,7 @@ function Register(props) {
           lastName,
           accountType
         );
+        if (outcome.status === "Error") throw new Error(outcome.message);
         alert("Usuario registrado, haga click en Aceptar para continuar");
         history.push("/");
       } catch (err) {
@@ -132,9 +133,11 @@ function Register(props) {
 
   return (
     <div className="page">
-      <div className="registerFormContainer">
-        <div className="titleDiv">Register</div>
-        <form onSubmit={handleSubmit}>
+      <div className="form--center">
+        <form onSubmit={handleSubmit} className="form--format">
+          <div className="form__title-container">
+            <label className="form__title-container__text">Register</label>
+          </div>
           {fields.map((field, index) => (
             <FormField
               field={field}
@@ -142,8 +145,8 @@ function Register(props) {
               handleChange={handleChange}
             ></FormField>
           ))}
-          <div className="divForm">
-            Tipo de Cuenta:
+          <div className="field-container">
+            <label>Tipo de Cuenta:</label>
             <select
               value={form.accountType}
               name="accountType"
@@ -157,8 +160,12 @@ function Register(props) {
             </select>
           </div>
           <FormSubmit value="Registrarse"></FormSubmit>
+          <div className="form__message-container">
+            <label className="form__message-container__text--error">
+              {errorMessage}
+            </label>
+          </div>
         </form>
-        <div className="errorDiv">{errorMessage}</div>
       </div>
     </div>
   );

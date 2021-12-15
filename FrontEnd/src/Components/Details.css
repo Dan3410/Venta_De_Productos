@@ -1,11 +1,15 @@
-.DetailsImage{
+.product-details-container__image{
     width: 250px;
     height: 250px;
 }
-.DetailsPrice{
+.product-details-container__price{
     font-weight: 500;
 }
-.DetailsDiv{
+.product-details-container{
     text-align: center;
+}
+
+.product-details-container__warning-message{
+    color:red;
 }
 

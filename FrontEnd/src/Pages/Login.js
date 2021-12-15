@@ -15,7 +15,7 @@ function Login(props) {
       value: form.userName,
       placeholder: "Introduzca el UserName",
       type: "text",
-      disabled: false
+      disabled: false,
     },
     {
       name: "password",
@@ -23,7 +23,7 @@ function Login(props) {
       value: form.password,
       placeholder: "Introduza la contraseña",
       type: "password",
-      disabled: false
+      disabled: false,
     },
   ];
   let history = useHistory();
@@ -46,9 +46,9 @@ function Login(props) {
     let userName = form.userName;
     let password = form.password;
     try {
-      const userInfo = await signInWithUserNameAndPassword(userName, password);
-      if (userInfo.status === "Error") throw new Error(userInfo.message);
-      context.logInUserContext(userInfo.data.user, userInfo.data.token);
+      const response = await signInWithUserNameAndPassword(userName, password);
+      if (response.status === "Error") throw new Error(response.message);
+      context.logInUserContext(response.data.user, response.data.token);
       history.push("/");
     } catch (error) {
       setErrorMessage(error.message);
@@ -59,9 +59,11 @@ function Login(props) {
     <userContext.Consumer>
       {(context) => (
         <div className="page">
-          <div className="loginFormContainer">
-            <div className="titleDiv">Login</div>
-            <form onSubmit={handleSubmit}>
+          <div className="form--center">
+            <form onSubmit={handleSubmit} className="form--format">
+              <div className="form__title-container ">
+                <label className="form__title-container__text">Login</label>
+              </div>
               {fields.map((field, index) => (
                 <FormField
                   field={field}
@@ -69,8 +71,12 @@ function Login(props) {
                   handleChange={handleChange}
                 ></FormField>
               ))}
-          <FormSubmit value="Ingresar"></FormSubmit>
-              <div className="errorDiv">{errorMessage}</div>
+              <FormSubmit value="Ingresar"></FormSubmit>
+              <div className="form__message-container">
+                <label className="form__message-container__text--error">
+                  {errorMessage}
+                </label>
+              </div>
             </form>
           </div>
         </div>
