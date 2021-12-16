@@ -1,57 +1,61 @@
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import userContext from "../Config/context";
 import "./Header.css";
+import { clearLocalStorage } from "../Config/LocalStorage";
 
 function Header(props) {
-    /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {}, [userContext.name]);
+  const name = localStorage.getItem("name");
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const userName = localStorage.getItem("userName");
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localStorage.getItem("name"), localStorage.getItem("isLoggedIn")]);
 
   return (
-    <userContext.Consumer>
-      {(context) => (
-        <header className="header">
-          {!context.isLoggedIn && (
-            <div>
-              <Link to={"/"}>
-                <div className="header__button">
-                  <div className="header__button__text"> Home</div>
-                </div>
-              </Link>
-              <Link to={"/Login"}>
-                <div className="header__button header__button__text"> Login </div>
-              </Link>
-              <Link to={`/Register`}>
-                <div className="header__button header__button__text"> Register </div>
-              </Link>
+    <header className="header-format">
+      {!isLoggedIn && (
+        <div>
+          <Link to={"/"}>
+            <div className="header__button">
+              <label className="header__button__text">Home</label>
             </div>
-          )}
-          {context.isLoggedIn && (
-            <div>
-              <div className="header__text-with-name">
-                {" "}
-                Bienvenido {context.name}!. Tome asiento
-              </div>
-              <Link to={"/"}>
-                <div className="header__button header__button__text"> Home </div>
-              </Link>
-              <Link to={"/"}>
-                <div
-                  className="header__button header__button__text"
-                  onClick={context.logOutUserContext}
-                >
-                  {" "}
-                  LogOut
-                </div>
-              </Link>
-              <Link to={`/Profile/${context.userName}`}>
-                <div className="header__button header__button__text"> Profile </div>
-              </Link>
+          </Link>
+          <Link to={"/Login"}>
+            <div className="header__button ">
+              <label className="header__button__text">Login</label>
             </div>
-          )}
-        </header>
+          </Link>
+          <Link to={`/Register`}>
+            <div className="header__button ">
+              <label className="header__button__text">Register</label>
+            </div>
+          </Link>
+        </div>
       )}
-    </userContext.Consumer>
+      {isLoggedIn && (
+        <div>
+          <div className="header__text-with-name">
+            <label>Bienvenido {name}!. Tome asiento</label>
+          </div>
+          <Link to={"/"}>
+            <div className="header__button">
+              <label className="header__button__text">Home</label>
+            </div>
+          </Link>
+          <Link to={"/"}>
+            <div className="header__button " onClick={clearLocalStorage}>
+              <label className="header__button__text">LogOut</label>
+            </div>
+          </Link>
+          <Link to={`/Profile/${userName}`}>
+            <div className="header__button ">
+              <label className="header__button__text">Profile</label>
+            </div>
+          </Link>
+        </div>
+      )}
+    </header>
   );
 }
 

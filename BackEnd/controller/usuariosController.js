@@ -108,6 +108,7 @@ module.exports = {
       const document = await data.save();
       modifyRes(res,"Success","User Created Successfully",document)
     } catch (e) {
+
       modifyRes(res,"Error",e.message,null)
       next(e);
     }

@@ -1,4 +1,4 @@
-.header{
+.header-format{
     text-align: right;
     background-color:rgb(214, 122, 36);
     height: fit-content;
@@ -21,6 +21,7 @@
 
 .header__button__text{
     line-height: 50px;
+    cursor: pointer;
 }
 
 .header__text-with-name{

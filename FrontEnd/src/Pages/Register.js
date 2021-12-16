@@ -95,7 +95,6 @@ function Register(props) {
     e.preventDefault();
     let password = form.password;
     let confirmpassword = form.confirmPassword;
-    console.log(Object.values(form).indexOf("") > -1);
     if (Object.values(form).indexOf("") > -1) {
       setErrorMessage("Debe llenar todos los campos");
     } else if (password !== confirmpassword) {
@@ -125,14 +124,14 @@ function Register(props) {
         alert("Usuario registrado, haga click en Aceptar para continuar");
         history.push("/");
       } catch (err) {
-        console.log(err);
+        
         setErrorMessage(err.message);
       }
     }
   };
 
   return (
-    <div className="page">
+    <div className="form-page">
       <div className="form--center">
         <form onSubmit={handleSubmit} className="form--format">
           <div className="form__title-container">

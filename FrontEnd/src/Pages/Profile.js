@@ -1,6 +1,5 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import userContext from "../Config/context";
 import {
   obtainUserDataByUserName,
   updateUserData,
@@ -8,9 +7,9 @@ import {
 import "./Profile.css";
 import FormField from "../Components/FormField.js";
 import FormSubmit from "../Components/FormSubmit";
+import { changeNameInLocalStorage } from "../Config/LocalStorage";
 
 function Profile(props) {
-  let history = useHistory();
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -80,10 +79,13 @@ function Profile(props) {
       type: "password",
     },
   ];
+  let history = useHistory();
 
-  const context = useContext(userContext);
   const [errorMessage, setErrorMessage] = useState();
   const [changeMessage, setChangeMessage] = useState();
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const userName = localStorage.getItem("userName");
+  const token = localStorage.getItem("token");
 
   const handleChange = (e) => {
     const target = e.target;
@@ -99,8 +101,6 @@ function Profile(props) {
   const updateData = (e) => {
     e.preventDefault();
     let errorSettled = false;
-    console.log(form.password);
-    console.log(form.confirmPassword);
     if (form.password !== "" && form.confirmPassword === "") {
       setErrorMessage("Si desea modificar la contraseña, debe confirmarla");
       errorSettled = true;
@@ -117,6 +117,12 @@ function Profile(props) {
       );
       errorSettled = true;
     }
+    if((form.password.length < 6 || form.password.length > 14) && !errorSettled){
+      setErrorMessage(
+        "La contraseña debe tener entre 6 y 14 caracteres"
+      );
+      errorSettled = true;
+    }
 
     if (form.firstName === "" || form.lastName === "") {
       setErrorMessage("El campo nombre y apellido no pueden ser vacios");
@@ -127,43 +133,41 @@ function Profile(props) {
       let lastName = form.lastName;
       let password = form.password;
       let userName = form.userName;
-      updateUserData(
-        userName,
-        firstName,
-        lastName,
-        password,
-        context.token
-      ).then((response) => {
-        if (response.status === "Success") {
-          context.changeName(firstName);
-          setChangeMessage("Cambios realizados");
-          setErrorMessage("");
-        } else {
-          setErrorMessage(response.message);
+      updateUserData(userName, firstName, lastName, password, token).then(
+        (response) => {
+          if (response.status === "Success") {
+            changeNameInLocalStorage(firstName);
+            setChangeMessage("Cambios realizados");
+            setErrorMessage("");
+            history.push(`/Profile/${userName}`);
+          } else {
+            setErrorMessage(response.message);
+            setChangeMessage("");
+          }
         }
-      });
+      );
     } else {
       setChangeMessage("");
     }
   };
 
   useEffect(() => {
-    if (context.isLoggedIn) {
-      if (context.userName === props.match.params.userName) {
+    if (isLoggedIn) {
+      if (userName === props.match.params.userName) {
         try {
-          obtainUserDataByUserName(context.userName, context.token).then(
-            (userData) => {
-              setForm({
-                ...form,
-                firstName: userData.data.user.firstName,
-                lastName: userData.data.user.lastName,
-                mail: userData.data.user.email,
-                userName: userData.data.user.userName,
-                accountType: userData.data.user.accountType,
-              });
-            }
-          );
-        } catch (error) {}
+          obtainUserDataByUserName(userName, token).then((userData) => {
+            setForm({
+              ...form,
+              firstName: userData.data.user.firstName,
+              lastName: userData.data.user.lastName,
+              mail: userData.data.user.email,
+              userName: userData.data.user.userName,
+              accountType: userData.data.user.accountType,
+            });
+          });
+        } catch (error) {
+          setErrorMessage(error.message);
+        }
       } else {
         history.push("");
       }
@@ -175,50 +179,48 @@ function Profile(props) {
   }, []);
 
   return (
-    <userContext.Consumer>
-      {(context) => (
-        <div className="pageProfile">
-          <div className="form--center">
-            <form onSubmit={updateData} className="form--format">
-            <div className="form__title-container">
-              <label className="form__title-container__text">Datos del Usuario</label>
-            </div>
-              {fields.map((field, index) => (
-                <FormField
-                  field={field}
-                  key={index}
-                  handleChange={handleChange}
-                ></FormField>
-              ))}
-              <br />
-              <label>
-                Aquí puede modificar los datos. Una vez modificados haga click
-                en Confirmar Modificaciones
-              </label>{" "}
-              <br></br>
-              {changePasswordFields.map((field, index) => (
-                <FormField
-                  field={field}
-                  key={index}
-                  handleChange={handleChange}
-                ></FormField>
-              ))}
-              <FormSubmit value="Confirmar Modificaciones"></FormSubmit>
-            </form>
-            <div className="form__message-container">
-              <label className="form__message-container__text--error">
-                {errorMessage}
-              </label>
-            </div>
-            <div className="form__message-container">
-              <label className="form__message-container__text--success">
-                {changeMessage}
-              </label>
-            </div>
+    <div className="form-page">
+      <div className="form--center ">
+        <form onSubmit={updateData} className="form--format">
+          <div className="form__title-container">
+            <label className="form__title-container__text">
+              Datos del Usuario
+            </label>
           </div>
-        </div>
-      )}
-    </userContext.Consumer>
+          {fields.map((field, index) => (
+            <FormField
+              field={field}
+              key={index}
+              handleChange={handleChange}
+            ></FormField>
+          ))}
+          <br />
+          <label>
+            Aquí puede modificar los datos. Una vez modificados haga click en
+            Confirmar Modificaciones
+          </label>{" "}
+          <br></br>
+          {changePasswordFields.map((field, index) => (
+            <FormField
+              field={field}
+              key={index}
+              handleChange={handleChange}
+            ></FormField>
+          ))}
+          <FormSubmit value="Confirmar Modificaciones"></FormSubmit>
+          <div className="form__message-container">
+            <label className="form__message-container__text--error">
+              {errorMessage}
+            </label>
+          </div>
+          <div className="form__message-container">
+            <label className="form__message-container__text--success">
+              {changeMessage}
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }
 
