@@ -52,7 +52,7 @@ export async function createUserWithUserNameAndPassword(
     body: JSON.stringify({
       userName: userName,
       password: contraseña,
-      email: mail,
+      mail: mail,
       firstName: firstName,
       lastName: lastName,
       accountType: accountType

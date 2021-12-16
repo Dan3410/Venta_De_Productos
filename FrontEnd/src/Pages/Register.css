@@ -1,4 +1,4 @@
-.profile-page{
+.register-page{
     background: linear-gradient(rgba(255, 168, 6, 0.753),rgba(255, 251, 42, 0.6));
     height:100%;
     width: 100%;
@@ -6,29 +6,29 @@
 }
 
 
-.profile-form__message-container{
+.register-form__message-container{
     text-align: center;
 }
-.profile-form__message-container__text--error{
+.register-form__message-container__text--error{
     color: rgb(139, 0, 0);
 }
-.profile-form__message-container__text--success{
+.register-form__message-container__text--success{
     color:green;
 }
 
-.profile-form__title-container{
+.register-form__title-container{
     text-align: center;
     font-size: xx-large;
 }
 
-.profileform__title-container__text{
+.register-form__title-container__text{
     font-size: x-large;
     font-style: italic;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
   }
 
 
-.profile-form--format{
+.register-form--format{
     box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.7);
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
@@ -39,7 +39,7 @@
     
 }
 
-.profileform--center{
+.register-form--center{
     margin:0;
     position:absolute;
     top:50%;
@@ -49,4 +49,6 @@
     
 }
 
-
+.register-field-container-select{
+    margin-top: 20px;
+}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
-import "./Forms.css";
+import "./Register.css";
 import { createUserWithUserNameAndPassword } from "../services/userServices";
 import FormField from "../Components/FormField";
 import FormSubmit from "../Components/FormSubmit";
@@ -131,11 +131,11 @@ function Register(props) {
   };
 
   return (
-    <div className="form-page">
-      <div className="form--center">
-        <form onSubmit={handleSubmit} className="form--format">
-          <div className="form__title-container">
-            <label className="form__title-container__text">Register</label>
+    <div className="register-page">
+      <div className="register-form--center">
+        <form onSubmit={handleSubmit} className="register-form--format">
+          <div className="register-form__title-container">
+            <label className="register-form__title-container__text">Register</label>
           </div>
           {fields.map((field, index) => (
             <FormField
@@ -144,7 +144,7 @@ function Register(props) {
               handleChange={handleChange}
             ></FormField>
           ))}
-          <div className="field-container">
+          <div className="register-field-container-select">
             <label>Tipo de Cuenta:</label>
             <select
               value={form.accountType}
@@ -159,8 +159,8 @@ function Register(props) {
             </select>
           </div>
           <FormSubmit value="Registrarse"></FormSubmit>
-          <div className="form__message-container">
-            <label className="form__message-container__text--error">
+          <div className="register-form__message-container">
+            <label className="register-form__message-container__text--error">
               {errorMessage}
             </label>
           </div>

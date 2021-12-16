@@ -2,12 +2,12 @@ const usuariosModel = require("../models/usuariosModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-function modifyRes(res, status, message, data){
+function modifyRes(res, status, message, data) {
   res.json({
     status: status,
     message: message,
-    data: data
-  })
+    data: data,
+  });
 }
 
 module.exports = {
@@ -19,16 +19,16 @@ module.exports = {
           const token = jwt.sign({ id: user._id }, req.app.get("secretKey"), {
             expiresIn: "1h",
           });
-          modifyRes(res,"Success","User Found",{user:user, token:token})
+          modifyRes(res, "Success", "User Found", { user: user, token: token });
         } else {
-          modifyRes(res,"Error","Invalid user/password",null)
+          modifyRes(res, "Error", "Invalid Password", null);
         }
       } else {
-        modifyRes(res,"Error","User Not Found",null)
+        modifyRes(res, "Error", "User Not Found", null);
       }
     } catch (e) {
-      modifyRes(res,"Error",e.message,null)
-      next(e)
+      modifyRes(res, "Error", e.message, null);
+      next(e);
     }
   },
   findUserByUsername: async function (req, res, next) {
@@ -43,17 +43,17 @@ module.exports = {
             req.params.token,
             req.app.get("secretKey")
           );
-          modifyRes(res,"Success","userFound",{user:user})
+          modifyRes(res, "Success", "userFound", { user: user });
         } catch (e) {
-          modifyRes(res,"Error","Invalid Token",null)
-          next(e)
+          modifyRes(res, "Error", "Invalid Token", null);
+          next(e);
         }
       } else {
-        modifyRes(res,"Error","User Not Found",null)
+        modifyRes(res, "Error", "User Not Found", null);
       }
     } catch (e) {
-      modifyRes(res,"Error",e.message,null)
-      next(e)
+      modifyRes(res, "Error", e.message, null);
+      next(e);
     }
   },
   updateUserData: async function (req, res, next) {
@@ -64,16 +64,16 @@ module.exports = {
         userName: req.body.userName,
       });
     } catch (e) {
-      modifyRes(res,"Error",e.message,null)
-      next(e)
+      modifyRes(res, "Error", e.message, null);
+      next(e);
     }
     if (user) {
       try {
         const decoded = jwt.verify(req.body.token, req.app.get("secretKey"));
       } catch (e) {
-        modifyRes(res,"Error","Invalid Token",null)
-        next(e)
-        return
+        modifyRes(res, "Error", "Invalid Token", null);
+        next(e);
+        return;
       }
       try {
         let newData = {
@@ -85,31 +85,41 @@ module.exports = {
           newData.password = newPassword;
         }
         await usuariosModel.updateOne({ userName: req.body.userName }, newData);
-        modifyRes(res,"Success","User Data Updated",{user:newData})
+        modifyRes(res, "Success", "User Data Updated", { user: newData });
       } catch (e) {
-        modifyRes(res,"Error","Error al Actualizar",null)
-        next(e)
+        modifyRes(res, "Error", "Error al Actualizar", null);
+        next(e);
       }
-    }else{
-      modifyRes(res,"Error","User Not Found",null)
+    } else {
+      modifyRes(res, "Error", "User Not Found", null);
     }
   },
   register: async function (req, res, next) {
     try {
-      var data = new usuariosModel({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+      const userByMail = await usuariosModel.findOne({ mail: req.body.mail });
+      const userByuserName = await usuariosModel.findOne({
         userName: req.body.userName,
-        password: req.body.password,
-        email: req.body.email,
-        accountType: req.body.accountType,
       });
-      console.log(data);
-      const document = await data.save();
-      modifyRes(res,"Success","User Created Successfully",document)
+      if (userByMail === null) {
+        if (userByuserName === null) {
+          var data = new usuariosModel({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            userName: req.body.userName,
+            password: req.body.password,
+            mail: req.body.mail,
+            accountType: req.body.accountType,
+          });
+          const document = await data.save();
+          modifyRes(res, "Success", "User Created Successfully", document);
+        } else {
+          modifyRes(res, "Error", "Username Already In Use");
+        }
+      }else{
+        modifyRes(res, "Error", "The Mail Is Already Registered");
+      }
     } catch (e) {
-
-      modifyRes(res,"Error",e.message,null)
+      modifyRes(res, "Error", e.message, null);
       next(e);
     }
   },

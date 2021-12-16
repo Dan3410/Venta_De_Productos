@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { setDataInLocalStorage } from "../Config/LocalStorage";
 import { useHistory } from "react-router";
-import "./Forms.css";
+import "./Login.css"
 import { signInWithUserNameAndPassword } from "../services/userServices";
 import FormField from "../Components/FormField";
 import FormSubmit from "../Components/FormSubmit";
@@ -55,11 +55,11 @@ function Login(props) {
   };
 
   return (
-    <div className="form-page">
-      <div className="form--center">
-        <form onSubmit={handleSubmit} className="form--format">
-          <div className="form__title-container ">
-            <label className="form__title-container__text">Login</label>
+    <div className="login-page">
+      <div className="login-form--center">
+        <form onSubmit={handleSubmit} className="login-form--format">
+          <div className="login-form__title-container ">
+            <label className="login-form__title-container__text">Login</label>
           </div>
           {fields.map((field, index) => (
             <FormField
@@ -69,8 +69,8 @@ function Login(props) {
             ></FormField>
           ))}
           <FormSubmit value="Ingresar"></FormSubmit>
-          <div className="form__message-container">
-            <label className="form__message-container__text--error">
+          <div className="login-form__message-container">
+            <label className="login-form__message-container__text--error">
               {errorMessage}
             </label>
           </div>

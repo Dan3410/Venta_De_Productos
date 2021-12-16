@@ -4,9 +4,9 @@ import {
   obtainUserDataByUserName,
   updateUserData,
 } from "../services/userServices";
-import "./Profile.css";
 import FormField from "../Components/FormField.js";
 import FormSubmit from "../Components/FormSubmit";
+import "./Profile.css";
 import { changeNameInLocalStorage } from "../Config/LocalStorage";
 
 function Profile(props) {
@@ -117,10 +117,12 @@ function Profile(props) {
       );
       errorSettled = true;
     }
-    if((form.password.length < 6 || form.password.length > 14) && !errorSettled){
-      setErrorMessage(
-        "La contraseña debe tener entre 6 y 14 caracteres"
-      );
+    if (
+      form.password !== "" &&
+      (form.password.length < 6 || form.password.length > 14) &&
+      !errorSettled
+    ) {
+      setErrorMessage("La contraseña debe tener entre 6 y 14 caracteres");
       errorSettled = true;
     }
 
@@ -160,7 +162,7 @@ function Profile(props) {
               ...form,
               firstName: userData.data.user.firstName,
               lastName: userData.data.user.lastName,
-              mail: userData.data.user.email,
+              mail: userData.data.user.mail,
               userName: userData.data.user.userName,
               accountType: userData.data.user.accountType,
             });
@@ -179,11 +181,11 @@ function Profile(props) {
   }, []);
 
   return (
-    <div className="form-page">
-      <div className="form--center ">
-        <form onSubmit={updateData} className="form--format">
-          <div className="form__title-container">
-            <label className="form__title-container__text">
+    <div className="profile-page">
+      <div className="profile-form--center ">
+        <form onSubmit={updateData} className="profile-form--format">
+          <div className="profile-form__title-container">
+            <label className="profile-form__title-container__text">
               Datos del Usuario
             </label>
           </div>
@@ -208,13 +210,13 @@ function Profile(props) {
             ></FormField>
           ))}
           <FormSubmit value="Confirmar Modificaciones"></FormSubmit>
-          <div className="form__message-container">
-            <label className="form__message-container__text--error">
+          <div className="profile-form__message-container">
+            <label className="profile-form__message-container__text--error">
               {errorMessage}
             </label>
           </div>
-          <div className="form__message-container">
-            <label className="form__message-container__text--success">
+          <div className="profile-form__message-container">
+            <label className="profile-form__message-container__text--success">
               {changeMessage}
             </label>
           </div>
