@@ -35,8 +35,8 @@ function Header(props) {
       )}
       {isLoggedIn && (
         <div>
-          <div className="header__text-with-name">
-            <label>Bienvenido {name}!. Tome asiento</label>
+          <div >
+            <label className="header__text-with-name">Bienvenido {name}. Tome asiento</label>
           </div>
           <Link to={"/"}>
             <div className="header__button">
