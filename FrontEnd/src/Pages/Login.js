@@ -1,31 +1,30 @@
 import { useState } from "react";
 import { setDataInLocalStorage } from "../Config/LocalStorage";
 import { useHistory } from "react-router";
-import "./Login.css"
+import { Link } from "react-router-dom";
+import "./Login.css";
 import { signInWithUserNameAndPassword } from "../services/userServices";
 import FormField from "../Components/FormField";
 import FormSubmit from "../Components/FormSubmit";
+import FormSecretField from "../Components/FormSecretField";
 
 function Login(props) {
   const [form, setForm] = useState({ userName: "", password: "" });
-  const fields = [
-    {
-      name: "userName",
-      label: "UserName:",
-      value: form.userName,
-      placeholder: "Introduzca el UserName",
-      type: "text",
-      disabled: false,
-    },
-    {
-      name: "password",
-      label: "Password:",
-      value: form.password,
-      placeholder: "Introduza la contraseña",
-      type: "password",
-      disabled: false,
-    },
-  ];
+  const userNameField = {
+    name: "userName",
+    label: "UserName:",
+    value: form.userName,
+    placeholder: "Introduzca el UserName",
+    type: "text",
+    disabled: false,
+  };
+  const passwordField = {
+    name: "password",
+    label: "Password:",
+    value: form.password,
+    placeholder: "Introduza la contraseña",
+    disabled: false,
+  };
   let history = useHistory();
   const [errorMessage, setErrorMessage] = useState();
 
@@ -61,14 +60,16 @@ function Login(props) {
           <div className="login-form__title-container ">
             <label className="login-form__title-container__text">Login</label>
           </div>
-          {fields.map((field, index) => (
-            <FormField
-              field={field}
-              key={index}
-              handleChange={handleChange}
-            ></FormField>
-          ))}
+          <FormField field={userNameField} handleChange={handleChange} />
+          <FormSecretField field={passwordField} handleChange={handleChange} />
           <FormSubmit value="Ingresar"></FormSubmit>
+          <div className="login-form__register-text">
+            <label>
+              {" "}
+              ¿Aún no tenes una cuenta? Haga click{" "}
+              <Link to={"/Register"}>aquí </Link>
+            </label>
+          </div>
           <div className="login-form__message-container">
             <label className="login-form__message-container__text--error">
               {errorMessage}

@@ -6,6 +6,8 @@ import {
 } from "../services/userServices";
 import FormField from "../Components/FormField.js";
 import FormSubmit from "../Components/FormSubmit";
+import AlignedFields from "../Components/AlignedFields";
+import FormSecretField from "../Components/FormSecretField";
 import "./Profile.css";
 import { changeNameInLocalStorage } from "../Config/LocalStorage";
 
@@ -19,54 +21,53 @@ function Profile(props) {
     confirmPassword: "",
     accountType: "",
   });
-  const fields = [
-    {
-      name: "firstName",
-      label: "Nombre: ",
-      value: form.firstName,
-      placeholder: "Introduzca su nombre",
-      disabled: false,
-      type: "text",
-    },
-    {
-      name: "lastName",
-      label: "Apellido: ",
-      value: form.lastName,
-      placeholder: "Introduzca su apellido",
-      disabled: false,
-      type: "text",
-    },
-    {
-      name: "userName",
-      label: "UserName:",
-      value: form.userName,
-      placeholder: "",
-      disabled: true,
-      type: "text",
-    },
-    {
-      name: "mail",
-      label: "Mail: ",
-      value: form.mail,
-      placeholder: "Introduzca su mail",
-      disabled: true,
-      type: "text",
-    },
-    {
-      name: "accountType",
-      label: "Tipo de Cuenta: ",
-      value: form.accountType,
-      placeholder: "",
-      disabled: true,
-      type: "text",
-    },
-  ];
+
+  const firstNameField = {
+    name: "firstName",
+    label: "Nombre: ",
+    value: form.firstName,
+    placeholder: "Introduzca su nombre",
+    disabled: false,
+    type: "text",
+  };
+  const lastNameField = {
+    name: "lastName",
+    label: "Apellido: ",
+    value: form.lastName,
+    placeholder: "Introduzca su apellido",
+    disabled: false,
+    type: "text",
+  };
+  const userNameField = {
+    name: "userName",
+    label: "UserName:",
+    value: form.userName,
+    placeholder: "",
+    disabled: true,
+    type: "text",
+  };
+  const mailField = {
+    name: "mail",
+    label: "Mail: ",
+    value: form.mail,
+    placeholder: "Introduzca su mail",
+    disabled: true,
+    type: "text",
+  };
+  const accountTypeField = {
+    name: "accountType",
+    label: "Tipo de Cuenta: ",
+    value: form.accountType,
+    placeholder: "",
+    disabled: true,
+    type: "text",
+  };
   const changePasswordFields = [
     {
       name: "password",
       label: "Password:",
       value: form.password,
-      placeholder: "Introduza la contraseña",
+      placeholder: "Introduzca la contraseña",
       disabled: false,
       type: "password",
     },
@@ -189,25 +190,33 @@ function Profile(props) {
               Datos del Usuario
             </label>
           </div>
-          {fields.map((field, index) => (
-            <FormField
-              field={field}
-              key={index}
-              handleChange={handleChange}
-            ></FormField>
-          ))}
           <br />
           <label>
             Aquí puede modificar los datos. Una vez modificados haga click en
             Confirmar Modificaciones
-          </label>{" "}
-          <br></br>
+          </label>
+
+          <AlignedFields
+            firstField={firstNameField}
+            secondField={lastNameField}
+            handleChange={handleChange}
+          />
+
+          <AlignedFields
+            firstField={userNameField}
+            secondField={mailField}
+            handleChange={handleChange}
+          />
+          <FormField
+            field={accountTypeField}
+            handleChange={handleChange}
+          />
           {changePasswordFields.map((field, index) => (
-            <FormField
+            <FormSecretField
               field={field}
               key={index}
               handleChange={handleChange}
-            ></FormField>
+            />
           ))}
           <FormSubmit value="Confirmar Modificaciones"></FormSubmit>
           <div className="profile-form__message-container">

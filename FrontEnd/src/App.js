@@ -8,6 +8,7 @@ import Header from "./Components/Header.js";
 import { Route } from "react-router";
 import { withRouter } from "react-router";
 
+
 const exclusionPaths = ["/Login", "/Register"];
 
 function App({ location }) {

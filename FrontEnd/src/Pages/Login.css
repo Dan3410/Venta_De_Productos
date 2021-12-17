@@ -1,5 +1,5 @@
 .login-page{
-    background: linear-gradient(rgb(255, 34, 34),rgb(255, 116, 116));
+    background:rgb(54, 10, 10);
     height:100%;
     width: 100%;
     position:absolute;
@@ -24,11 +24,17 @@
     font-family:Verdana, Geneva, Tahoma, sans-serif;
   }
 
+.login-form__register-text{
+    text-align: center;
+    margin-top: 10px;
+}
 
 .login-form--format{
-    box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.7);
-    background-color: rgb(138, 26, 26);
-    border-radius: 10px;
+    box-shadow: -10px 10px 5px rgba(255, 255, 255, 0.7);
+    background-color: white;
+    border-radius: 0px;
+    border-width: 2px;
+    border-style: solid;
     width: 400px;
     height: auto;
     padding: 30px; 

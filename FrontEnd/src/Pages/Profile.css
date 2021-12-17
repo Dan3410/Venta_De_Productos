@@ -1,5 +1,5 @@
 .profile-page{
-    background: linear-gradient(rgb(255, 34, 34),rgb(255, 116, 116));
+    background:rgb(114, 3, 18);
     height:100%;
     width: 100%;
     position:absolute;
@@ -30,8 +30,9 @@
 
 .profile-form--format{
     box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.7);
-    background-color:  rgb(138, 26, 26);
-    border-radius: 10px;
+    background-color:rgb(255, 255, 255);
+    border-width: 2px;
+    border-style: solid;
     width: 400px;
     height: auto;
     padding: 30px; 
@@ -39,7 +40,7 @@
     
 }
 
-.profileform--center{
+.profile-form--center{
     margin:0;
     position:absolute;
     top:50%;

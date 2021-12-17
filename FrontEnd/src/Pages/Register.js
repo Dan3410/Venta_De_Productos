@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import "./Register.css";
 import { createUserWithUserNameAndPassword } from "../services/userServices";
-import FormField from "../Components/FormField";
 import FormSubmit from "../Components/FormSubmit";
+import AlignedFields from "../Components/AlignedFields";
+import FormSecretField from "../Components/FormSecretField";
 
 function Register(props) {
   let history = useHistory();
@@ -16,39 +17,42 @@ function Register(props) {
     password: "",
     confirmPassword: "",
   });
-  const fields = [
-    {
-      name: "firstName",
-      label: "Nombre: ",
-      value: form.firstName,
-      placeholder: "Introduzca su nombre",
-      type: "text",
-      disabled: false,
-    },
-    {
-      name: "lastName",
-      label: "Apellido: ",
-      value: form.lastName,
-      placeholder: "Introduzca su apellido",
-      type: "text",
-      disabled: false,
-    },
-    {
-      name: "userName",
-      label: "UserName:",
-      value: form.userName,
-      placeholder: "Introduzca el UserName",
-      type: "text",
-      disabled: false,
-    },
-    {
-      name: "mail",
-      label: "Mail: ",
-      value: form.mail,
-      placeholder: "Introduzca su mail",
-      type: "text",
-      disabled: false,
-    },
+
+  const firstNameField = {
+    name: "firstName",
+    label: "Nombre: ",
+    value: form.firstName,
+    placeholder: "Introduzca su nombre",
+    type: "text",
+    disabled: false,
+  };
+  const lastNameField = {
+    name: "lastName",
+    label: "Apellido: ",
+    value: form.lastName,
+    placeholder: "Introduzca su apellido",
+    type: "text",
+    disabled: false,
+  };
+
+  const userNameField = {
+    name: "userName",
+    label: "UserName:",
+    value: form.userName,
+    placeholder: "Introduzca el UserName",
+    type: "text",
+    disabled: false,
+  };
+
+  const mailField = {
+    name: "mail",
+    label: "Mail: ",
+    value: form.mail,
+    placeholder: "Introduzca su mail",
+    type: "text",
+    disabled: false,
+  };
+  const passwordFields = [
     {
       name: "password",
       label: "Password:",
@@ -124,7 +128,6 @@ function Register(props) {
         alert("Usuario registrado, haga click en Aceptar para continuar");
         history.push("/");
       } catch (err) {
-        
         setErrorMessage(err.message);
       }
     }
@@ -135,14 +138,27 @@ function Register(props) {
       <div className="register-form--center">
         <form onSubmit={handleSubmit} className="register-form--format">
           <div className="register-form__title-container">
-            <label className="register-form__title-container__text">Register</label>
+            <label className="register-form__title-container__text">
+              Register
+            </label>
           </div>
-          {fields.map((field, index) => (
-            <FormField
+          <AlignedFields
+            firstField={firstNameField}
+            secondField={lastNameField}
+            handleChange={handleChange}
+          />
+
+          <AlignedFields
+            firstField={userNameField}
+            secondField={mailField}
+            handleChange={handleChange}
+          />
+          {passwordFields.map((field, index) => (
+            <FormSecretField
               field={field}
               key={index}
               handleChange={handleChange}
-            ></FormField>
+            />
           ))}
           <div className="register-field-container-select">
             <label>Tipo de Cuenta:</label>

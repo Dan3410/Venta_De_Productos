@@ -1,0 +1,10 @@
+.aligned-field-container--left{
+    display: inline-block;
+    width: 45%;
+}
+
+.aligned-field-container--right{
+    display: inline-block;
+    width: 45%;
+    margin-left: 10%;
+}

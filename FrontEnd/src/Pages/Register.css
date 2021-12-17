@@ -1,19 +1,15 @@
 .register-page{
-    background: linear-gradient(rgb(255, 34, 34),rgb(255, 116, 116));
+    background: linear-gradient(rgb(105, 1, 1),rgb(124, 35, 0));
     height:100%;
     width: 100%;
     position:absolute;
 }
-
 
 .register-form__message-container{
     text-align: center;
 }
 .register-form__message-container__text--error{
     color: rgb(139, 0, 0);
-}
-.register-form__message-container__text--success{
-    color:green;
 }
 
 .register-form__title-container{
@@ -30,8 +26,10 @@
 
 .register-form--format{
     box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.7);
-    background-color:  rgb(138, 26, 26);
-    border-radius: 10px;
+    background-color:  rgba(255, 255, 255, 1);
+    border-color: rgb(0, 0, 0);
+    border-width: 2px;
+    border-style: solid;
     width: 400px;
     height: auto;
     padding: 30px; 
