@@ -9,13 +9,13 @@
 }
 
 .product-display{
-    box-shadow: -10px,-10px, 30px, grey;
+    box-shadow: -10px,-10px, 30px, rgb(26, 26, 26);
     display: inline-block;
     width: 27%;
     height: auto;
     border: medium;
     border-style: double;
-    border-color: brown;
+    border-color: rgb(189, 26, 26);
     border-radius: 20px;
     background-color: white;
     margin-left: 30px;

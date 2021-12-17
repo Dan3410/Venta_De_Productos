@@ -1,5 +1,5 @@
 .profile-page{
-    background: linear-gradient(rgba(255, 168, 6, 0.753),rgba(255, 251, 42, 0.6));
+    background: linear-gradient(rgb(255, 34, 34),rgb(255, 116, 116));
     height:100%;
     width: 100%;
     position:absolute;
@@ -30,7 +30,7 @@
 
 .profile-form--format{
     box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.7);
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color:  rgb(138, 26, 26);
     border-radius: 10px;
     width: 400px;
     height: auto;
