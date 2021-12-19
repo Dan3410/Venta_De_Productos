@@ -5,6 +5,8 @@ import Login from "./Pages/Login.js";
 import ProductDetail from "./Pages/ProductDetails.js";
 import Profile from "./Pages/Profile.js";
 import Gestion_Productos from "./Pages/Gestion_Productos.js"
+import Modificar_Producto from "./Pages/Modificar_Producto.js";
+import Agregar_Producto from "./Pages/Agregar_Producto.js"
 import Header from "./Components/Header.js";
 import { Route } from "react-router";
 import { withRouter } from "react-router";
@@ -20,6 +22,8 @@ function App({ location }) {
       <Route exact path="/Login" component={Login} />
       <Route exact path="/" component={Home} />
       <Route exact path="/Gestion_Productos" component={Gestion_Productos} />
+      <Route exact path="/Modificar_Producto/:id" component={Modificar_Producto} />
+      <Route exact path="/Agregar_Producto/" component={Agregar_Producto}/>
       <Route exact path="/ProductDetail/:id" component={ProductDetail} />
       <Route exact path="/Profile/:userName" component={Profile} />
     </div>

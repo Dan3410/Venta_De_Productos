@@ -2,7 +2,8 @@
 Este es un proyecto realizado con NodeJS y mongoDB para backEnd y ReactJS, HTML y CSS para el FrontEnd.  
 
 Aun falta realizar lo siguiente:  
-  Poder registrarse como usuario admin para poder agregar/modificar/quitar productos  
-  Gestionar Productos solo este disponible para "Cuentas Empresariales"
+  Al llenar el campo foto del formulario de agregar productos, evitar que se mueva todo el formulario  
+  Refactorizacion  
+  Hacer la parte de "changito" con los productos a comprar
   
 

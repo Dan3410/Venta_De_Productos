@@ -12,7 +12,7 @@ export async function obtainUserDataByUserName(userName, token) {
   return await response.json();
 }
 
-export async function updateUserData(userName, firstName, lastName, password,token) {
+export async function updateUserDataByUserName(userName, firstName, lastName, password,token) {
   let messageBody;
   if (password !== ""){
     messageBody = {

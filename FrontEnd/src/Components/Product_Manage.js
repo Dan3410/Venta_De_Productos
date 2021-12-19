@@ -1,9 +1,20 @@
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Product_Manage.css";
+import { deleteProductById } from "../services/productServices";
+
 
 function Product_Manage(props) {
-  if (props.item !== undefined)
+
+  const [isDeleted,setDeleted] = useState(false)
+  function deleteItem(){
+    deleteProductById(props.item._id, localStorage.getItem("userName"), localStorage.getItem("token"))
+    setDeleted(true);
+  }
+
+  if (props.item !== undefined && !isDeleted)
     return (
       <div className="product_manage-container">
         <img
@@ -15,10 +26,12 @@ function Product_Manage(props) {
 
         <br />
         <label>Codigo: {props.item.code} </label>
+        <Link to={`/Modificar_Producto/${props.item._id}`}>
         <FontAwesomeIcon
           icon={faPen}
           className="product_manage-container__icon"
         />
+        </Link>
         <br />
         <label>Precio: {props.item.price}</label>
 
@@ -27,6 +40,7 @@ function Product_Manage(props) {
         <FontAwesomeIcon
           icon={faTrash}
           className="product_manage-container__icon"
+          onClick={deleteItem}
         />
       </div>
     );

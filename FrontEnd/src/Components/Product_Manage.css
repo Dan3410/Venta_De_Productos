@@ -17,4 +17,6 @@
 
 .product_manage-container__icon {
   float: right;
+  cursor: pointer;
+  color: black
 }

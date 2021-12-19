@@ -17,7 +17,7 @@ const productosSchema = new mongoose.Schema({
 
 var productos1 = new Productos(
     {
-        description : "Una silla común y corriente blanca",
+        description : "Una silla común y corriente",
         photo : "https://blogs.elpais.com/.a/6a00d8341bfb1653ef0163029959f8970d-pi",
         name : "Silla blanca",
         price : "199,99$",
@@ -36,7 +36,7 @@ productos1.save(function(error, documento){
 
 var productos2 = new Productos(
     {
-        description : "Una silla común y corriente negra",
+        description : "Una silla común y corriente pero de color negro",
         photo : "https://d2r9epyceweg5n.cloudfront.net/stores/340/925/products/silla-windsor-negra2-jpg1-fd5b0ec6d2ba67f32015155273607261-1024-1024.png",
         name : "Silla Negra",
         price : "199,99$",

@@ -7,8 +7,8 @@ function Home() {
   const [items, setItem] = useState([]);
   const getItems = async () => {
     try {
-      getAllItems().then((products) => {
-        setItem(products);
+      getAllItems().then((response) => {
+        setItem(response.data);
       });
     } catch (e) {
       console.log("Error: ", e);

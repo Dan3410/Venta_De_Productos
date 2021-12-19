@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import {
   obtainUserDataByUserName,
-  updateUserData,
+  updateUserDataByUserName,
 } from "../services/userServices";
 import FormField from "../Components/FormField.js";
 import FormSubmit from "../Components/FormSubmit";
@@ -99,7 +99,7 @@ function Profile(props) {
     });
   };
 
-  const updateData = (e) => {
+  const updateUserData = (e) => {
     e.preventDefault();
     let errorSettled = false;
     if (form.password !== "" && form.confirmPassword === "") {
@@ -136,7 +136,7 @@ function Profile(props) {
       let lastName = form.lastName;
       let password = form.password;
       let userName = form.userName;
-      updateUserData(userName, firstName, lastName, password, token).then(
+      updateUserDataByUserName(userName, firstName, lastName, password, token).then(
         (response) => {
           if (response.status === "Success") {
             changeNameInLocalStorage(firstName);
@@ -159,6 +159,7 @@ function Profile(props) {
       if (userName === props.match.params.userName) {
         try {
           obtainUserDataByUserName(userName, token).then((userData) => {
+            if(userData.status !== "Error")
             setForm({
               ...form,
               firstName: userData.data.user.firstName,
@@ -167,6 +168,8 @@ function Profile(props) {
               userName: userData.data.user.userName,
               accountType: userData.data.user.accountType,
             });
+            else 
+              setErrorMessage(userData.message)
           });
         } catch (error) {
           setErrorMessage(error.message);
@@ -184,7 +187,7 @@ function Profile(props) {
   return (
     <div className="profile-page">
       <div className="profile-form--center ">
-        <form onSubmit={updateData} className="profile-form--format">
+        <form onSubmit={updateUserData} className="profile-form--format">
           <div className="profile-form__title-container">
             <label className="profile-form__title-container__text">
               Datos del Usuario

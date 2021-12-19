@@ -17,8 +17,8 @@ function Details(props) {
   useEffect(() => {
     const getItem = async () => {
       try {
-        getItemById(props.idItemAMostrar).then((product) => {
-          setData(product);
+        getItemById(props.idItemAMostrar).then((response) => {
+          setData(response.data);
         });
       } catch (e) {
         console.log("Error", e);

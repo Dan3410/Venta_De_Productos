@@ -1,14 +1,8 @@
+const resModifier = require ("./resModifier");
 const usuariosModel = require("../models/usuariosModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-function modifyRes(res, status, message, data) {
-  res.json({
-    status: status,
-    message: message,
-    data: data,
-  });
-}
 
 module.exports = {
   logUser: async function (req, res, next) {
@@ -19,15 +13,15 @@ module.exports = {
           const token = jwt.sign({ id: user._id }, req.app.get("secretKey"), {
             expiresIn: "1h",
           });
-          modifyRes(res, "Success", "User Found", { user: user, token: token });
+          resModifier.modifyRes(res, "Success", "User Found", { user: user, token: token });
         } else {
-          modifyRes(res, "Error", "Invalid Password", null);
+          resModifier.modifyRes(res, "Error", "Invalid Password", null);
         }
       } else {
-        modifyRes(res, "Error", "User Not Found", null);
+        resModifier.modifyRes(res, "Error", "User Not Found", null);
       }
     } catch (e) {
-      modifyRes(res, "Error", e.message, null);
+      resModifier.modifyRes(res, "Error", e.message, null);
       next(e);
     }
   },
@@ -43,17 +37,15 @@ module.exports = {
             req.params.token,
             req.app.get("secretKey")
           );
-          modifyRes(res, "Success", "userFound", { user: user });
+          resModifier.modifyRes(res, "Success", "userFound", { user: user });
         } catch (e) {
-          modifyRes(res, "Error", "Invalid Token", null);
-          next(e);
+          resModifier.modifyRes(res, "Error", "Invalid Token", null);
         }
       } else {
-        modifyRes(res, "Error", "User Not Found", null);
+        resModifier.modifyRes(res, "Error", "User Not Found", null);
       }
     } catch (e) {
-      modifyRes(res, "Error", e.message, null);
-      next(e);
+      resModifier.modifyRes(res, "Error", e.message, null);
     }
   },
   updateUserData: async function (req, res, next) {
@@ -64,15 +56,14 @@ module.exports = {
         userName: req.body.userName,
       });
     } catch (e) {
-      modifyRes(res, "Error", e.message, null);
-      next(e);
+      resModifier.modifyRes(res, "Error", e.message, null);
+      return;
     }
     if (user) {
       try {
         const decoded = jwt.verify(req.body.token, req.app.get("secretKey"));
       } catch (e) {
-        modifyRes(res, "Error", "Invalid Token", null);
-        next(e);
+        resModifier.modifyRes(res, "Error", "Invalid Token", null);
         return;
       }
       try {
@@ -85,13 +76,13 @@ module.exports = {
           newData.password = newPassword;
         }
         await usuariosModel.updateOne({ userName: req.body.userName }, newData);
-        modifyRes(res, "Success", "User Data Updated", { user: newData });
+        resModifier.modifyRes(res, "Success", "User Data Updated", { user: newData });
       } catch (e) {
-        modifyRes(res, "Error", "Error al Actualizar", null);
-        next(e);
+        resModifier.modifyRes(res, "Error", "Error al Actualizar", null);
+        return;
       }
     } else {
-      modifyRes(res, "Error", "User Not Found", null);
+      resModifier.modifyRes(res, "Error", "User Not Found", null);
     }
   },
   register: async function (req, res, next) {
@@ -111,16 +102,15 @@ module.exports = {
             accountType: req.body.accountType,
           });
           const document = await data.save();
-          modifyRes(res, "Success", "User Created Successfully", document);
+          resModifier.modifyRes(res, "Success", "User Created Successfully", document);
         } else {
-          modifyRes(res, "Error", "Username Already In Use");
+          resModifier.modifyRes(res, "Error", "Username Already In Use");
         }
       }else{
-        modifyRes(res, "Error", "The Mail Is Already Registered");
+        resModifier.modifyRes(res, "Error", "The Mail Is Already Registered");
       }
     } catch (e) {
-      modifyRes(res, "Error", e.message, null);
-      next(e);
+      resModifier.modifyRes(res, "Error", e.message, null);
     }
   },
 };
