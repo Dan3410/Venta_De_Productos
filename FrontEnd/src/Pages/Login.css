@@ -1,5 +1,5 @@
 .login-page{
-    background:rgb(54, 10, 10);
+    background:rgb(13, 20, 49);
     height:100%;
     width: 100%;
     position:absolute;
@@ -30,7 +30,7 @@
 }
 
 .login-form--format{
-    box-shadow: -10px 10px 5px rgba(255, 255, 255, 0.7);
+    box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.7);
     background-color: white;
     border-radius: 0px;
     border-width: 2px;

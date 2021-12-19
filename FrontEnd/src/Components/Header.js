@@ -7,6 +7,7 @@ function Header(props) {
   const name = localStorage.getItem("name");
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const userName = localStorage.getItem("userName");
+  const isSuperUser = localStorage.getItem("isSuperUser");
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -17,17 +18,17 @@ function Header(props) {
       {!isLoggedIn && (
         <div>
           <Link to={"/"}>
-            <div className="header__button">
+            <div className="header__button-size--medium header__button-format ">
               <label className="header__button__text">Home</label>
             </div>
           </Link>
           <Link to={"/Login"}>
-            <div className="header__button ">
+            <div className="header__button-size--medium header__button-format  ">
               <label className="header__button__text">Login</label>
             </div>
           </Link>
           <Link to={`/Register`}>
-            <div className="header__button ">
+            <div className="header__button-size--medium header__button-format ">
               <label className="header__button__text">Register</label>
             </div>
           </Link>
@@ -35,22 +36,36 @@ function Header(props) {
       )}
       {isLoggedIn && (
         <div>
-          <div >
-            <label className="header__text-with-name">Bienvenido {name}. Tome asiento</label>
+          <div>
+            <label className="header__text-with-name">
+              Bienvenido {name}. Tome asiento
+            </label>
           </div>
           <Link to={"/"}>
-            <div className="header__button">
+            <div className="header__button-size--medium header__button-format ">
               <label className="header__button__text">Home</label>
             </div>
           </Link>
-          <Link to={"/"}>
-            <div className="header__button " onClick={clearLocalStorage}>
-              <label className="header__button__text">LogOut</label>
+          <Link to={`/Profile/${userName}`}>
+            <div className="header__button-size--medium header__button-format ">
+              <label className="header__button__text">Profile</label>
             </div>
           </Link>
-          <Link to={`/Profile/${userName}`}>
-            <div className="header__button ">
-              <label className="header__button__text">Profile</label>
+          {isSuperUser && (
+            <Link to={`/Gestion_Productos`}>
+              <div className="header__button-size--large header__button-format">
+                <label className="header__button__text">
+                  Gestionar Productos
+                </label>
+              </div>
+            </Link>
+          )}
+          <Link to={"/"}>
+            <div
+              className="header__button-size--medium header__button-format  "
+              onClick={clearLocalStorage}
+            >
+              <label className="header__button__text">LogOut</label>
             </div>
           </Link>
         </div>

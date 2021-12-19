@@ -3,6 +3,7 @@ export function setDataInLocalStorage(user, token) {
   localStorage.setItem("name", user.firstName);
   localStorage.setItem("userName", user.userName);
   localStorage.setItem("token", token);
+  localStorage.setItem("isSuperUser", user.accountType === "Cuenta Empresarial");
 }
 
 export function clearLocalStorage(){

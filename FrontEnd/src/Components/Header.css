@@ -1,22 +1,27 @@
 .header-format{
     text-align: right;
-    background-color:rgb(0, 0, 0);
+    background-color:rgb(42, 42, 58);
     height: fit-content;
 }
 
-.header__button{
+.header__button-format{
     display:inline-block;
-    width: 70px;
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 100px;
-    height: 50px;
     margin-right:5px;
     border-radius: 30px;
     text-align: center;
-    background-color: rgb(112, 36, 36);
+    background-color: rgb(36, 63, 112);
     color: rgb(255, 255, 255);
     cursor: pointer;
+
+}
+.header__button-size--medium{
+    width: 8%;
+}
+
+.header__button-size--large{
+    width: 14%;
 }
 
 .header__button__text{
