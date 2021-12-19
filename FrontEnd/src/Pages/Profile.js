@@ -65,9 +65,9 @@ function Profile(props) {
   const changePasswordFields = [
     {
       name: "password",
-      label: "Password:",
+      label: "Nueva contraseña:",
       value: form.password,
-      placeholder: "Introduzca la contraseña",
+      placeholder: "Introduzca la nueva contraseña",
       disabled: false,
       type: "password",
     },
