@@ -3,6 +3,7 @@ import AlignedFields from "../../Components/AlignedFields/AlignedFields";
 import FormField from "../../Components/FormField/FormField";
 import FormSubmit from "../../Components/FormSubmit/FormSubmit";
 import ResizableFormField from "../../Components/ResizableFormField/ResizableFormField";
+import "./ProductForm.css"
 
 function ProductForm(props) {
     
@@ -110,7 +111,7 @@ function ProductForm(props) {
             field={descriptionField}
             handleChange={handleChange}
           />
-          <FormSubmit value="Confirmar Modificaciones"></FormSubmit>
+          <FormSubmit value={props.buttonLabel}></FormSubmit>
           <div className="product-form__message-container">
         <label className="product-form__message-container__text--error">
           {props.errorMessage}

@@ -2,9 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import "./Register.css";
 import { createUserWithUserNameAndPassword } from "../../services/userServices";
-import FormSubmit from "../../Components/FormSubmit/FormSubmit";
-import AlignedFields from "../../Components/AlignedFields/AlignedFields";
-import FormSecretField from "../../Components/FormSecretField/FormSecretField";
+import Register_ProfileForm from "../../Components/Register_ProfileForm/Register_ProfileForm";
 
 function Register(props) {
   let history = useHistory();
@@ -18,59 +16,6 @@ function Register(props) {
     confirmPassword: "",
   });
 
-  const firstNameField = {
-    name: "firstName",
-    label: "Nombre: ",
-    value: form.firstName,
-    placeholder: "Introduzca su nombre",
-    type: "text",
-    disabled: false,
-  };
-  const lastNameField = {
-    name: "lastName",
-    label: "Apellido: ",
-    value: form.lastName,
-    placeholder: "Introduzca su apellido",
-    type: "text",
-    disabled: false,
-  };
-
-  const userNameField = {
-    name: "userName",
-    label: "UserName:",
-    value: form.userName,
-    placeholder: "Introduzca el UserName",
-    type: "text",
-    disabled: false,
-  };
-
-  const mailField = {
-    name: "mail",
-    label: "Mail: ",
-    value: form.mail,
-    placeholder: "Introduzca su mail",
-    type: "text",
-    disabled: false,
-  };
-  const passwordFields = [
-    {
-      name: "password",
-      label: "Password:",
-      value: form.password,
-      placeholder: "Introduza la contraseña",
-      type: "password",
-      disabled: false,
-    },
-    {
-      name: "confirmPassword",
-      label: "Confirmar Contraseña:",
-      value: form.confirmPassword,
-      placeholder: "Reintroduzca la contraseña",
-      type: "password",
-      disabled: false,
-    },
-  ];
-
   const options = [
     {
       label: "Cuenta común",
@@ -83,17 +28,6 @@ function Register(props) {
   ];
 
   const [errorMessage, setErrorMessage] = useState();
-
-  const handleChange = (e) => {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
-
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -134,55 +68,17 @@ function Register(props) {
   };
 
   return (
-    <div className="register-page">
-      <div className="register-form--center">
-        <form onSubmit={handleSubmit} className="register-form--format">
-          <div className="register-form__title-container">
-            <label className="register-form__title-container__text">
-              Register
-            </label>
-          </div>
-          <AlignedFields
-            firstField={firstNameField}
-            secondField={lastNameField}
-            handleChange={handleChange}
-          />
-
-          <AlignedFields
-            firstField={userNameField}
-            secondField={mailField}
-            handleChange={handleChange}
-          />
-          {passwordFields.map((field, index) => (
-            <FormSecretField
-              field={field}
-              key={index}
-              handleChange={handleChange}
-            />
-          ))}
-          <div className="register-field-container-select">
-            <label>Tipo de Cuenta:</label>
-            <select
-              value={form.accountType}
-              name="accountType"
-              onChange={handleChange}
-            >
-              {options.map((option, index) => (
-                <option key={index} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
-          <FormSubmit value="Registrarse"></FormSubmit>
-          <div className="register-form__message-container">
-            <label className="register-form__message-container__text--error">
-              {errorMessage}
-            </label>
-          </div>
-        </form>
-      </div>
-    </div>
+    // eslint-disable-next-line react/jsx-pascal-case
+    <Register_ProfileForm
+     disableUnmodifiableData={false}
+     onSubmit={handleSubmit}
+     titleText="Registrarse"
+     buttonText="Registrarse"
+     descriptionText={null}
+     form={{formData: form, setForm: setForm}}
+     errorMessage={errorMessage}
+     successMessage={null}
+     accountTypeOptions={options}/>
   );
 }
 

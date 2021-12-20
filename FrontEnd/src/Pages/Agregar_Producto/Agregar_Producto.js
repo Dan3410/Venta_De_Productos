@@ -61,8 +61,10 @@ function Agregar_Producto(props) {
         form={{ formData: formData, setForm: setForm }}
         titleLabel={"Datos del Producto"}
         descriptionLabel={
-          "Aquí puede modificar los datos. Una vez modificados haga click en Confirmar Modificaciones"
+          "Ingrese los datos del nuevo producto"
         }
+        buttonLabel={"Agregar Producto"}
+
         errorMessage={errorMessage}
         successMessage={null}
       />

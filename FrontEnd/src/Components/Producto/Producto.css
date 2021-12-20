@@ -3,9 +3,22 @@
     background-size: cover;
     height: 200px;
     width: 200px;
+    cursor: pointer;
 }
 .product-display__name{
     font-weight: 700;
+}
+
+.name-container__text{
+    cursor:pointer
+}
+
+.price-container__text{
+    cursor:pointer
+}
+
+.code-container__text{
+    cursor:pointer
 }
 
 .product-display{

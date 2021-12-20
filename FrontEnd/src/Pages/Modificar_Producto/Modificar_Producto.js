@@ -91,6 +91,7 @@ function Modificar_Producto(props) {
         descriptionLabel={
           "Aquí puede modificar los datos. Una vez modificados haga click en Confirmar Modificaciones"
         }
+        buttonLabel="Confirmar Modificacions"
         errorMessage={errorMessage}
         successMessage={successMessage}
       />

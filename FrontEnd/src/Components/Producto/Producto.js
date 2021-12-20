@@ -11,19 +11,16 @@ function Producto(props) {
           src={props.itemAMostrar.photo}
           alt="error loading"
         />
-        <div className="product-display__name">
-          <label>Nombre del producto: </label>
+        <div className="product-display__name-container">
+          <label class="name-container__text">Nombre del producto: </label>
           {props.itemAMostrar.name}
         </div>
-        <div>
-          <label>Precio: {props.itemAMostrar.price}</label>
+        <div >
+          <label className="price-container__text">Precio: {props.itemAMostrar.price}</label>
         </div>
-        <div>
-          <label>Sku:{props.itemAMostrar.code}</label>
+        <div >
+          <label className="code-container__text">Sku:{props.itemAMostrar.code}</label>
         </div>
-        <button className="product-display__detail-button">
-          <label>Ver Detalle</label>
-        </button>
       </div>
     </Link>
   );
