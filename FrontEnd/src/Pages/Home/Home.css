@@ -1,0 +1,20 @@
+.home-page {
+  flex-wrap: wrap;
+  background: white
+}
+
+.home__title-container{
+  margin: auto;
+  text-align: center;
+  padding: 10px
+}
+
+.home__title-container__text{
+  font-size: x-large;
+  font-style: italic;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.home__products-showroom{
+  text-align: center;
+}

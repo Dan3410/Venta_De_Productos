@@ -1,13 +1,13 @@
 import "./App.css";
-import Home from "./Pages/Home.js";
-import Register from "./Pages/Register.js";
-import Login from "./Pages/Login.js";
-import ProductDetail from "./Pages/ProductDetails.js";
-import Profile from "./Pages/Profile.js";
-import Gestion_Productos from "./Pages/Gestion_Productos.js"
-import Modificar_Producto from "./Pages/Modificar_Producto.js";
-import Agregar_Producto from "./Pages/Agregar_Producto.js"
-import Header from "./Components/Header.js";
+import Home from "./Pages/Home/Home.js";
+import Register from "./Pages/Register/Register.js";
+import Login from "./Pages/Login/Login.js";
+import ProductDetail from "./Pages/ProductDetails/ProductDetails.js";
+import Profile from "./Pages/Profile/Profile.js";
+import Gestion_Productos from "./Pages/Gestion_Producto/Gestion_Productos.js"
+import Modificar_Producto from "./Pages/Modificar_Producto/Modificar_Producto.js";
+import Agregar_Producto from "./Pages/Agregar_Producto/Agregar_Producto.js"
+import Header from "./Components/Header/Header.js";
 import { Route } from "react-router";
 import { withRouter } from "react-router";
 

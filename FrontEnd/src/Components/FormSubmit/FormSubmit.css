@@ -1,0 +1,13 @@
+.submit-container__input{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border-radius: 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 15px;
+    width: 100%;
+}
+
+.submit-container{
+    margin-top: 20px;
+}

@@ -1,0 +1,54 @@
+.login-page{
+    background:rgb(13, 20, 49);
+    height:100%;
+    width: 100%;
+    position:absolute;
+}
+
+
+.login-form__message-container{
+    text-align: center;
+}
+.login-form__message-container__text--error{
+    color: rgb(139, 0, 0);
+}
+
+.login-form__title-container{
+    text-align: center;
+    font-size: xx-large;
+}
+
+.login-form__title-container__text{
+    font-size: x-large;
+    font-style: italic;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+.login-form__register-text{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.login-form--format{
+    box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.7);
+    background-color: white;
+    border-radius: 0px;
+    border-width: 2px;
+    border-style: solid;
+    width: 400px;
+    height: auto;
+    padding: 30px; 
+    margin: 0 auto;
+    
+}
+
+.login-form--center{
+    margin:0;
+    position:absolute;
+    top:50%;
+    left: 50%;
+    -ms-transform: translate(-50%,-50%);
+    transform:translate(-50%,-50%)
+    
+}
+
