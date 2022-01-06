@@ -2,11 +2,15 @@
 import "./Gestion_Productos.css";
 import { getAllItems } from "../../services/productServices";
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router";
 import Product_Manage from "../../Components/Product_Manage/Product_Manage";
 import { Link } from "react-router-dom";
 
 function Gestion_Productos() {
   const [items, setItem] = useState([]);
+  let history = useHistory();
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const isSuperUser = localStorage.getItem("isSuperUser");
 
   const getItems = async () => {
     try {
@@ -19,7 +23,16 @@ function Gestion_Productos() {
   };
 
   useEffect(() => {
+    if (isLoggedIn === "true") {
+      if (!(isSuperUser==="true")) {
+        history.push("/");
+      }
+    } else {
+      history.push("/Login");
+    }
+
     getItems();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

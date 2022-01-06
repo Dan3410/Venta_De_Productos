@@ -54,8 +54,8 @@ function Modificar_Producto(props) {
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
-      if (isSuperUser) {
+    if (isLoggedIn === "true") {
+      if (isSuperUser==="true") {
         try {
           getItemById(props.match.params.id).then((response) => {
             if (response.status !== "Error")
@@ -74,7 +74,7 @@ function Modificar_Producto(props) {
           console.log("Error", e);
         }
       } else {
-        history.push("/Home");
+        history.push("");
       }
     } else {
       history.push("/Login");

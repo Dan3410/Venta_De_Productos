@@ -8,7 +8,7 @@ import Gestion_Productos from "./Pages/Gestion_Producto/Gestion_Productos.js"
 import Modificar_Producto from "./Pages/Modificar_Producto/Modificar_Producto.js";
 import Agregar_Producto from "./Pages/Agregar_Producto/Agregar_Producto.js"
 import Header from "./Components/Header/Header.js";
-import { Route } from "react-router";
+import { Redirect, Route } from "react-router";
 import { withRouter } from "react-router";
 
 
@@ -26,6 +26,7 @@ function App({ location }) {
       <Route exact path="/Agregar_Producto/" component={Agregar_Producto}/>
       <Route exact path="/ProductDetail/:id" component={ProductDetail} />
       <Route exact path="/Profile/:userName" component={Profile} />
+      <Redirect to="/"/>
     </div>
   );
 }

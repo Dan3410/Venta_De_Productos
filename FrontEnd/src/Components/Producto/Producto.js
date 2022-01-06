@@ -12,7 +12,7 @@ function Producto(props) {
           alt="error loading"
         />
         <div className="product-display__name-container">
-          <label class="name-container__text">Nombre del producto: </label>
+          <label className="name-container__text">Nombre del producto: </label>
           {props.itemAMostrar.name}
         </div>
         <div >

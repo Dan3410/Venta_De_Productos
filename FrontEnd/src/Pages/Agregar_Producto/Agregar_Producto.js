@@ -44,9 +44,9 @@ function Agregar_Producto(props) {
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
-      if (!isSuperUser) {
-        history.push("/Home");
+    if (isLoggedIn === "true") {
+      if (!(isSuperUser==="true")) {
+        history.push("");
       }
     } else {
       history.push("/Login");
