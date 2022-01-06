@@ -6,7 +6,7 @@ import { getItemById } from "../../services/productServices";
 function Details(props) {
   const [itemData, setData] = useState([]);
   const [text, setText] = useState([]);
-  const isLoggedIn = useState(localStorage.getItem("isLoggedIn"));
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   function handlePurchase(event) {
     setText("Gracias Por Su Compra");
@@ -48,12 +48,12 @@ function Details(props) {
         <label>SKU: {itemData.code}</label>
       </div>
       <div> {text} </div>
-      {isLoggedIn && (
+      {isLoggedIn === "true" && (
         <button onClick={handlePurchase}>
           <label> Comprar </label>
         </button>
       )}
-      {!isLoggedIn && (
+      {!(isLoggedIn === "true") && (
         <div>
           <label className="product-details-container__warning-message">
             Debes estar logeado para comprar
