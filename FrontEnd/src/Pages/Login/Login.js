@@ -3,10 +3,11 @@ import { setDataInLocalStorage } from "../../Config/LocalStorage";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import "./Login.css";
-import { signInWithUserNameAndPassword } from "../../services/userServices";
+import { signInWithUsernameAndPassword } from "../../services/userServices";
 import FormField from "../../Components/FormField/FormField";
 import FormSubmit from "../../Components/FormSubmit/FormSubmit";
 import FormSecretField from "../../Components/FormSecretField/FormSecretField";
+import { checkPasswordNotEmptyLogin, checkUsernameNotEmptyLogin } from "../../Functions/checkUserFormFunctions";
 
 function Login(props) {
   const [form, setForm] = useState({ userName: "", password: "" });
@@ -41,10 +42,12 @@ function Login(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let userName = form.userName;
+    let username = form.userName;
     let password = form.password;
     try {
-      const response = await signInWithUserNameAndPassword(userName, password);
+    checkUsernameNotEmptyLogin(username)
+    checkPasswordNotEmptyLogin(password)
+      const response = await signInWithUsernameAndPassword(username, password);
       if (response.status === "Error") throw new Error(response.message);
       setDataInLocalStorage(response.data.user, response.data.token);
       history.push("/");

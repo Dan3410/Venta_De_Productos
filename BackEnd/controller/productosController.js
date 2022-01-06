@@ -74,18 +74,19 @@ module.exports = {
   },
 
   delete: async function (req, res, next) {
+    console.log(req.body)
     const token = req.body.token;
+    try {
     if (
       (await accountCheck.hasPrivilege(req.body.userName, res)) &&
       (await tokenCheck.isTokenValid(token, req, res))
     ) {
-      try {
+      
         const producto = await productosModel.deleteOne({ _id: req.params.id });
         resModifier.modifyRes(res, "Success", "Item Deleted", null);
-      } catch (e) {
+      }} catch (e) {
         resModifier.modifyRes(res, "Error", e.message, null);
       }
     } /*Si no tiene privilegios o el token es invalido, se modifico el res en alguna de las
        que fallo, entonces no deberia modificarlo aca */
-  },
 };

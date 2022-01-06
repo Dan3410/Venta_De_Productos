@@ -1,36 +1,43 @@
-export async function getAllItems(){
-    const response = await fetch('/products');
-    return await response.json();
+import axios from "axios";
+const baseURL = "http://localhost:8080";
+
+export async function getAllItems() {
+  const response = await axios.get(baseURL + "/products");
+  return response.data;
 }
 
-export async function getItemById(id){
-    const response = await fetch(`/detalles/${id}`)
-    return await response.json()
+export async function getItemById(id) {
+  const response = await axios.get(baseURL + `/detalles/${id}`);
+  return response.data;
 }
 
-export async function updateProductDataById(id,userName, token,newData){
-    const response = await fetch(`/gestion_productos/${id}`,{
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({userName: userName, token: token, newData: newData})
-    })
-    return await response.json()
+export async function updateProductDataById(id, userName, token, newData) {
+  const response = await axios.put(baseURL + `/gestion_productos/${id}`, {
+    headers: { "Content-Type": "application/json" },
+    userName: userName,
+    token: token,
+    newData: newData,
+  });
+  return await response.data;
 }
 
-export async function createProductById(userName, token,newData){
-    const response = await fetch(`/gestion_productos`,{
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({userName: userName, token: token, newData: newData})
-    })
-    return await response.json()
+export async function createProductById(userName, token, newData) {
+  const response = await axios.post(baseURL + `/gestion_productos`, {
+    headers: { "Content-Type": "application/json" },
+    userName: userName,
+    token: token,
+    newData: newData,
+  });
+  return await response.data;
 }
 
-export async function deleteProductById(id,userName,token){
-    const response = await fetch(`/gestion_productos/${id}`,{
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({userName: userName, token: token})
-    })
-    return await response.json
+export async function deleteProductById(id, userName, token) {
+  const response = await axios.delete(baseURL + `/gestion_productos/${id}`, {
+    headers: { "Content-Type": "application/json" },
+    data: {
+      userName: userName,
+      token: token,
+    },
+  });
+  return await response.data;
 }

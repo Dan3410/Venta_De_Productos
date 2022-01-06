@@ -1,9 +1,8 @@
 export function setDataInLocalStorage(user, token) {
   localStorage.setItem("isLoggedIn", true);
   localStorage.setItem("name", user.firstName);
-  localStorage.setItem("userName", user.userName);
+  localStorage.setItem("username", user.userName);
   localStorage.setItem("token", token);
-  localStorage.setItem("isSuperUser", user.accountType === "Cuenta Empresarial");
 }
 
 export function clearLocalStorage(){
@@ -13,3 +12,8 @@ export function clearLocalStorage(){
 export function changeNameInLocalStorage(name){
     localStorage.setItem("name",name)
 }
+
+export function getIsLoggedIn() {return localStorage.getItem("isLoggedIn") === "true"}
+export function getName() {return localStorage.getItem("name") }
+export function getUsername() {return localStorage.getItem("username")}
+export function getToken() {return localStorage.getItem("token")}

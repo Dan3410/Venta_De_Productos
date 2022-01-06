@@ -1,22 +1,13 @@
 import Producto from "../../Components/Producto/Producto";
 import "./Home.css";
 import { useEffect, useState } from "react";
-import { getAllItems } from "../../services/productServices";
+import { getItems } from "../../Functions/productsFunctions";
 
 function Home() {
   const [items, setItem] = useState([]);
-  const getItems = async () => {
-    try {
-      getAllItems().then((response) => {
-        setItem(response.data);
-      });
-    } catch (e) {
-      console.log("Error: ", e);
-    }
-  };
 
   useEffect(() => {
-    getItems();
+    getItems(setItem);
   }, []);
 
   return (

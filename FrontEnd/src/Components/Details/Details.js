@@ -2,11 +2,12 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./Details.css";
 import { getItemById } from "../../services/productServices";
+import { getIsLoggedIn } from "../../Config/LocalStorage";
 
 function Details(props) {
   const [itemData, setData] = useState([]);
   const [text, setText] = useState([]);
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const isLoggedIn = getIsLoggedIn();
 
   function handlePurchase(event) {
     setText("Gracias Por Su Compra");
@@ -48,12 +49,12 @@ function Details(props) {
         <label>SKU: {itemData.code}</label>
       </div>
       <div> {text} </div>
-      {isLoggedIn === "true" && (
+      {isLoggedIn && (
         <button onClick={handlePurchase}>
           <label> Comprar </label>
         </button>
       )}
-      {!(isLoggedIn === "true") && (
+      {!isLoggedIn && (
         <div>
           <label className="product-details-container__warning-message">
             Debes estar logeado para comprar

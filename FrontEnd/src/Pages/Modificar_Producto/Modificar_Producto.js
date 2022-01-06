@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import ProductForm from "../../Components/ProductForm/ProductForm";
+import { getIsLoggedIn, getToken, getUsername } from "../../Config/LocalStorage";
+import { getPrivilege } from "../../Functions/userFunctions";
 import {
   getItemById,
   updateProductDataById,
@@ -9,12 +11,14 @@ import "./Modificar_Producto.css";
 
 function Modificar_Producto(props) {
   let history = useHistory();
+
   const [errorMessage, setErrorMessage] = useState();
   const [successMessage, setSuccessMessage] = useState();
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
-  const isSuperUser = localStorage.getItem("isSuperUser");
-  const userName = localStorage.getItem("userName");
-  const token = localStorage.getItem("token");
+
+  const username = getUsername();
+  const token = getToken();
+  const isLoggedIn = getIsLoggedIn();
+  const isSuperUser = getPrivilege(username, token);
 
   const [formData, setForm] = useState({
     photo: "",
@@ -29,18 +33,17 @@ function Modificar_Producto(props) {
     e.preventDefault();
     if (Object.values(formData).indexOf("") > -1) {
       setErrorMessage("Debe llenar todos los campos");
-      setSuccessMessage("")
+      setSuccessMessage("");
     } else {
       try {
         updateProductDataById(
           props.match.params.id,
-          userName,
+          username,
           token,
           formData
         ).then((response) => {
           if (response.status !== "Error") {
             setSuccessMessage("Datos Actualizados");
-            console.log(successMessage);
             setErrorMessage("");
           } else {
             setErrorMessage(response.message);
@@ -54,8 +57,8 @@ function Modificar_Producto(props) {
   };
 
   useEffect(() => {
-    if (isLoggedIn === "true") {
-      if (isSuperUser==="true") {
+    if (isLoggedIn) {
+      if (isSuperUser) {
         try {
           getItemById(props.match.params.id).then((response) => {
             if (response.status !== "Error")
@@ -68,10 +71,10 @@ function Modificar_Producto(props) {
                 code: response.data.code,
                 description: response.data.description,
               });
-            else setErrorMessage(response.message);
+            else throw new Error (response.message);
           });
         } catch (e) {
-          console.log("Error", e);
+          setErrorMessage(e.message);
         }
       } else {
         history.push("");

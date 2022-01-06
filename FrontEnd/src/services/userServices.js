@@ -1,44 +1,33 @@
-export async function signInWithUserNameAndPassword(userName, contraseña) {
-  const response = await fetch("/login", {
-    method: "POST",
+import axios from "axios"
+const baseURL = "http://localhost:8080"
+
+export async function signInWithUsernameAndPassword(userName, contraseña) {
+  const response = await axios.post(baseURL + "/login", {
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userName: userName, password: contraseña }),
+    userName: userName,
+    password: contraseña
   });
-  return await response.json();
+  return await response.data;
 }
 
-export async function obtainUserDataByUserName(userName, token) {
-  const response = await fetch(`/profile/${userName}/${token}`);
-  return await response.json();
+export async function obtainUserDataByUsername(userName, token) {
+  const response = await axios.get(baseURL + `/profile/${userName}/${token}`);
+  return await response.data;
 }
 
-export async function updateUserDataByUserName(userName, firstName, lastName, password,token) {
-  let messageBody;
-  if (password !== ""){
-    messageBody = {
-      userName: userName,
-      password: password,
-      firstName: firstName,
-      lastName: lastName,
-      token: token
-    }
-  }else{
-    messageBody = {
-      userName: userName,
-      firstName: firstName,
-      lastName: lastName,
-      token: token
-    }
-  }
-  const response = await fetch(`/profile`, {
-    method: "POST",
+export async function updateUserDataByUsername(userName, firstName, lastName, password,token) {
+  const response = await axios.post(baseURL + `/profile`, {
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(messageBody),
+    userName: userName,
+    firstName: firstName,
+    lastName: lastName,
+    token: token,
+    password: password
   });
-  return await response.json();
+  return await response.data;
 }
 
-export async function createUserWithUserNameAndPassword(
+export async function createUserWithUsernameAndPassword(
   userName,
   contraseña,
   mail,
@@ -46,17 +35,14 @@ export async function createUserWithUserNameAndPassword(
   lastName,
   accountType
 ) {
-  const response = await fetch("register", {
-    method: "POST",
+  const response = await axios.post("register", {
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
       userName: userName,
       password: contraseña,
       mail: mail,
       firstName: firstName,
       lastName: lastName,
       accountType: accountType
-    }),
-  });
-  return await response.json();
+    })
+  return await response.data;
 }

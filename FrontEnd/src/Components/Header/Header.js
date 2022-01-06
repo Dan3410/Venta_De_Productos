@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 import "./Header.css";
-import { clearLocalStorage } from "../../Config/LocalStorage";
+import { clearLocalStorage, getIsLoggedIn, getName, getToken, getUsername } from "../../Config/LocalStorage";
+import { getPrivilege } from "../../Functions/userFunctions";
 
 function Header(props) {
-  const name = localStorage.getItem("name");
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-  const isSuperUser = localStorage.getItem("isSuperUser") === "true";
-  const userName = localStorage.getItem("userName");
+  const username = getUsername();
+  const token = getToken();
+  const isLoggedIn = getIsLoggedIn();
+  const name = getName();
+  const isSuperUser = getPrivilege(username,token);
   const notLoggedButtons = [
     {
       link: "/Login",
@@ -21,7 +22,7 @@ function Header(props) {
 
   const loggedButtons = [
     {
-      link: `/Profile/${userName}`,
+      link: `/Profile/${username}`,
       label: "Profile",
       onClick: null,
     },
@@ -31,10 +32,6 @@ function Header(props) {
       onClick: clearLocalStorage,
     },
   ];
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localStorage.getItem("name"), localStorage.getItem("isLoggedIn")]);
 
   return (
     <header className="header-format">

@@ -4,13 +4,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Product_Manage.css";
 import { deleteProductById } from "../../services/productServices";
+import { getToken, getUsername } from "../../Config/LocalStorage";
 
 
 function Product_Manage(props) {
 
   const [isDeleted,setDeleted] = useState(false)
+  const username = getUsername()
+  const token = getToken()
+
   function deleteItem(){
-    deleteProductById(props.item._id, localStorage.getItem("userName"), localStorage.getItem("token"))
+    deleteProductById(props.item._id, username, token)
     setDeleted(true);
   }
 

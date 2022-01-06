@@ -25,7 +25,7 @@ function App({ location }) {
       <Route exact path="/Modificar_Producto/:id" component={Modificar_Producto} />
       <Route exact path="/Agregar_Producto/" component={Agregar_Producto}/>
       <Route exact path="/ProductDetail/:id" component={ProductDetail} />
-      <Route exact path="/Profile/:userName" component={Profile} />
+      <Route exact path="/Profile/:username" component={Profile} />
       <Redirect to="/"/>
     </div>
   );
