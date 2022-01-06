@@ -1,6 +1,6 @@
 # Venta_De_Productos
 Este es un proyecto realizado con NodeJS y mongoDB para backEnd y ReactJS, HTML y CSS para el FrontEnd.  
 
-Aun falta realizar lo siguiente:  
-  Hacer la parte de "changito" con los productos a comprar (Utilizar redux)  
-  Reemplazar toda la parte de localStorage para usar redux (Si es posible)
+Es posible extender este proyecto para agregar:
+  Un menu el cual se puede seleccionar una categoria de los productos para que muestre solo los productos de dicha categoria (requiere modificar el modelo de los productos en el backEnd)    
+  El sistema de changuito. Para esto se puede utilizar redux
