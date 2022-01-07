@@ -1,6 +1,7 @@
 import { obtainUserDataByUsername } from "../services/userServices";
 
 export const getPrivilege = async (username, token) => {
+  console.log("getPrivilege")
   if(username !== null && token !== null){
   const userData = await obtainUserDataByUsername(username, token);
   if (userData.status !== "Error") {

@@ -1,14 +1,24 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
-import { clearLocalStorage, getIsLoggedIn, getName, getToken, getUsername } from "../../Config/LocalStorage";
+import {
+  clearLocalStorage,
+  getIsLoggedIn,
+  getName,
+  getToken,
+  getUsername,
+} from "../../Config/LocalStorage";
 import { getPrivilege } from "../../Functions/userFunctions";
+import { useEffect } from "react";
+import { useCallback } from "react";
+import { useState } from "react";
 
 function Header(props) {
   const username = getUsername();
   const token = getToken();
   const isLoggedIn = getIsLoggedIn();
   const name = getName();
-  const isSuperUser = getPrivilege(username,token);
+  const [isSuperUser, setIsSuperUser] = useState();
+
   const notLoggedButtons = [
     {
       link: "/Login",
@@ -32,6 +42,14 @@ function Header(props) {
       onClick: clearLocalStorage,
     },
   ];
+
+  const getUserPrivilege = useCallback(async () => {
+    setIsSuperUser(getPrivilege(username, token));
+  }, [setIsSuperUser, token, username]);
+
+  useEffect(() => {
+    getUserPrivilege();
+  }, [getUserPrivilege]);
 
   return (
     <header className="header-format">
@@ -61,7 +79,8 @@ function Header(props) {
         ) : (
           <>
             {isSuperUser && (
-              <Link to={`/Gestion_Productos`}>
+              <Link
+                to={`/Gestion_Productos`}>
                 <div className="header__button-size--large header__button-format">
                   <label className="header__button__text">
                     Gestionar Productos
