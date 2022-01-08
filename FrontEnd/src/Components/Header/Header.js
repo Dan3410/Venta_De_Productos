@@ -6,7 +6,7 @@ import {
   getName,
   getToken,
   getUsername,
-} from "../../Config/LocalStorage";
+} from "../../Config/LocalStorage/LocalStorage";
 import { getPrivilege } from "../../Functions/userFunctions";
 import { useEffect } from "react";
 import { useCallback } from "react";
@@ -44,11 +44,12 @@ function Header(props) {
   ];
 
   const getUserPrivilege = useCallback(async () => {
-    setIsSuperUser(getPrivilege(username, token));
+    setIsSuperUser(await getPrivilege(username, token));
   }, [setIsSuperUser, token, username]);
 
   useEffect(() => {
     getUserPrivilege();
+    
   }, [getUserPrivilege]);
 
   return (

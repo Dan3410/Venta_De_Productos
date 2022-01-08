@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, } from "react";
 import { useHistory } from "react-router";
 import ProductForm from "../../Components/ProductForm/ProductForm";
-import { getIsLoggedIn, getToken, getUsername } from "../../Config/LocalStorage";
-import { getPrivilege } from "../../Functions/userFunctions";
+import { getToken, getUsername } from "../../Config/LocalStorage/LocalStorage";
 import { createProductById } from "../../services/productServices";
 import "./Agregar_Producto.css";
 
@@ -20,8 +19,6 @@ function Agregar_Producto(props) {
   const [errorMessage, setErrorMessage] = useState();
   const username = getUsername();
   const token = getToken();
-  const isLoggedIn = getIsLoggedIn();
-  const isSuperUser = getPrivilege(username, token);
 
   const uploadProductData = (e) => {
     e.preventDefault();
@@ -42,17 +39,6 @@ function Agregar_Producto(props) {
       }
     }
   };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      if (!isSuperUser) {
-        history.push("");
-      }
-    } else {
-      history.push("/Login");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>

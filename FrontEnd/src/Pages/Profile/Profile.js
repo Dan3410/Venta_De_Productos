@@ -3,10 +3,9 @@ import { useHistory } from "react-router";
 import { updateUserDataByUsername } from "../../services/userServices";
 import {
   changeNameInLocalStorage,
-  getIsLoggedIn,
   getToken,
   getUsername,
-} from "../../Config/LocalStorage";
+} from "../../Config/LocalStorage/LocalStorage";
 import { loadUserData } from "../../Functions/userFunctions";
 import Register_ProfileForm from "../../Components/Register_ProfileForm/Register_ProfileForm";
 import "./Profile.css";
@@ -30,7 +29,6 @@ function Profile(props) {
   const [successMessage, setChangeMessage] = useState();
   const username = getUsername();
   const token = getToken();
-  const isLoggedIn = getIsLoggedIn();
 
   const updateUserData = (e) => {
     e.preventDefault();
@@ -68,21 +66,11 @@ function Profile(props) {
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
-      console.log(username);
-      if (username === props.match.params.username) {
-        try {
+      try {
           loadUserData(username, token, form, setForm);
         } catch (error) {
           setErrorMessage(error.message);
         }
-      } else {
-        history.push("");
-      }
-    } else {
-      alert("Debe logearse para acceder a esta sección");
-      history.push("/");
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { setDataInLocalStorage } from "../../Config/LocalStorage";
+import { setDataInLocalStorage } from "../../Config/LocalStorage/LocalStorage";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import "./Login.css";

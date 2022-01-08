@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./Details.css";
 import { getItemById } from "../../services/productServices";
-import { getIsLoggedIn } from "../../Config/LocalStorage";
+import { getIsLoggedIn } from "../../Config/LocalStorage/LocalStorage";
 
 function Details(props) {
   const [itemData, setData] = useState([]);

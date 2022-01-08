@@ -10,6 +10,8 @@ import Agregar_Producto from "./Pages/Agregar_Producto/Agregar_Producto.js";
 import Header from "./Components/Header/Header.js";
 import { Redirect, Route, Switch } from "react-router";
 import { withRouter } from "react-router";
+import LoggedInRoute from "./Components/ProtectedRoutes/LoggedInRoute";
+import SuperUserRoute from "./Components/ProtectedRoutes/SuperUserRoute";
 
 const exclusionPaths = ["/Login", "/Register"];
 
@@ -20,16 +22,16 @@ function App({ location }) {
       <Switch>
         <Route exact path="/Register" component={Register} />
         <Route exact path="/Login" component={Login} />
-        <Route exact path="/Gestion_Productos" component={Gestion_Productos} />
-        <Route
+        <Route exact path="/ProductDetail/:id" component={ProductDetail} />
+        <Route exact path="/" component={Home} />
+        <LoggedInRoute exact path="/Profile/:username" component={Profile} />
+        <SuperUserRoute exact path="/Gestion_Productos" component={Gestion_Productos} />
+        <SuperUserRoute
           exact
           path="/Modificar_Producto/:id"
           component={Modificar_Producto}
         />
-        <Route exact path="/Agregar_Producto/" component={Agregar_Producto} />
-        <Route exact path="/ProductDetail/:id" component={ProductDetail} />
-        <Route exact path="/Profile/:username" component={Profile} />
-        <Route exact path="/" component={Home} />
+        <SuperUserRoute exact path="/Agregar_Producto/" component={Agregar_Producto} />
         <Redirect to="/" />
       </Switch>
     </div>

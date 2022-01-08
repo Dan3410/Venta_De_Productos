@@ -11,18 +11,18 @@ function Home() {
   }, []);
 
   return (
-      <div className="home-page">
-        <div>
-          <div className="home__title-container">
-            <label className="home__title-container__text">Productos</label>
-          </div>
-        </div>
-        <div className="home__products-showroom">
-          {items.map((item, index) => (
-            <Producto key={index} itemAMostrar={item} />
-          ))}
+    <div className="home-page">
+      <div>
+        <div className="home__title-container">
+          <label className="home__title-container__text">Productos</label>
         </div>
       </div>
+      <div className="home__products-showroom">
+        {items.map((item, index) => (
+          <Producto key={index} itemAMostrar={item} />
+        ))}
+      </div>
+    </div>
   );
 }
 

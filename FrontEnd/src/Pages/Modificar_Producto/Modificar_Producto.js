@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router";
 import ProductForm from "../../Components/ProductForm/ProductForm";
-import { getIsLoggedIn, getToken, getUsername } from "../../Config/LocalStorage";
-import { getPrivilege } from "../../Functions/userFunctions";
+import {
+  getToken,
+  getUsername,
+} from "../../Config/LocalStorage/LocalStorage";
 import {
   getItemById,
   updateProductDataById,
@@ -10,15 +11,12 @@ import {
 import "./Modificar_Producto.css";
 
 function Modificar_Producto(props) {
-  let history = useHistory();
 
   const [errorMessage, setErrorMessage] = useState();
   const [successMessage, setSuccessMessage] = useState();
 
   const username = getUsername();
   const token = getToken();
-  const isLoggedIn = getIsLoggedIn();
-  const isSuperUser = getPrivilege(username, token);
 
   const [formData, setForm] = useState({
     photo: "",
@@ -57,30 +55,22 @@ function Modificar_Producto(props) {
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
-      if (isSuperUser) {
-        try {
-          getItemById(props.match.params.id).then((response) => {
-            if (response.status !== "Error")
-              setForm({
-                ...formData,
-                price: response.data.price,
-                category: response.data.category,
-                name: response.data.name,
-                photo: response.data.photo,
-                code: response.data.code,
-                description: response.data.description,
-              });
-            else throw new Error (response.message);
+    try {
+      getItemById(props.match.params.id).then((response) => {
+        if (response.status !== "Error")
+          setForm({
+            ...formData,
+            price: response.data.price,
+            category: response.data.category,
+            name: response.data.name,
+            photo: response.data.photo,
+            code: response.data.code,
+            description: response.data.description,
           });
-        } catch (e) {
-          setErrorMessage(e.message);
-        }
-      } else {
-        history.push("");
-      }
-    } else {
-      history.push("/Login");
+        else throw new Error(response.message);
+      });
+    } catch (e) {
+      setErrorMessage(e.message);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
