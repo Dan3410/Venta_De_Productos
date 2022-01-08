@@ -12,6 +12,7 @@ import { Redirect, Route, Switch } from "react-router";
 import { withRouter } from "react-router";
 import LoggedInRoute from "./Components/ProtectedRoutes/LoggedInRoute";
 import SuperUserRoute from "./Components/ProtectedRoutes/SuperUserRoute";
+import NotLoggedInRoute from "./Components/ProtectedRoutes/NotLoggedInRoute";
 
 const exclusionPaths = ["/Login", "/Register"];
 
@@ -20,18 +21,26 @@ function App({ location }) {
     <div>
       {exclusionPaths.indexOf(location.pathname) < 0 && <Header />}
       <Switch>
-        <Route exact path="/Register" component={Register} />
-        <Route exact path="/Login" component={Login} />
         <Route exact path="/ProductDetail/:id" component={ProductDetail} />
         <Route exact path="/" component={Home} />
+        <NotLoggedInRoute exact path="/Register" component={Register} />
+        <NotLoggedInRoute exact path="/Login" component={Login} />
         <LoggedInRoute exact path="/Profile/:username" component={Profile} />
-        <SuperUserRoute exact path="/Gestion_Productos" component={Gestion_Productos} />
+        <SuperUserRoute
+          exact
+          path="/Gestion_Productos"
+          component={Gestion_Productos}
+        />
         <SuperUserRoute
           exact
           path="/Modificar_Producto/:id"
           component={Modificar_Producto}
         />
-        <SuperUserRoute exact path="/Agregar_Producto/" component={Agregar_Producto} />
+        <SuperUserRoute
+          exact
+          path="/Agregar_Producto/"
+          component={Agregar_Producto}
+        />
         <Redirect to="/" />
       </Switch>
     </div>

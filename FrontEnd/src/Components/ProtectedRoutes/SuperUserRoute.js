@@ -10,7 +10,8 @@ function SuperUserRoute({ component: Component, ...restOfProps }) {
   const isLoggedIn = getIsLoggedIn();
   const username = isLoggedIn ? getUsername() : null;
   const token = isLoggedIn ? getToken() : null;
-  let isSuperUser = getPrivilege(username, token);
+  const isSuperUser = getPrivilege(username, token);
+  
 
   return (
     <Route
