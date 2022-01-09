@@ -1,23 +1,27 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import { updateUserDataByUsername } from "../../services/userServices";
+import { updateUserData } from "../../services/userServices";
 import {
   changeNameInLocalStorage,
   getToken,
-  getUsername,
 } from "../../Config/LocalStorage/LocalStorage";
 import { loadUserData } from "../../Functions/userFunctions";
 import Register_ProfileForm from "../../Components/Register_ProfileForm/Register_ProfileForm";
 import "./Profile.css";
-import { checkEqualPasswordAndConfirmPasswordFields, checkFirstNameNotEmpty, checkLastNameNotEmpty, checkLengthPassword, checkPasswordAndConfirmPasswordFieldFilled } from "../../Functions/checkUserFormFunctions";
-
+import {
+  checkEqualPasswordAndConfirmPasswordFields,
+  checkFirstNameNotEmpty,
+  checkLastNameNotEmpty,
+  checkLengthPassword,
+  checkPasswordAndConfirmPasswordFieldFilled,
+} from "../../Functions/checkUserFormFunctions";
 
 function Profile(props) {
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
     mail: "",
-    userName: "",
+    username: "",
     password: "",
     confirmPassword: "",
     accountType: "",
@@ -27,23 +31,29 @@ function Profile(props) {
 
   const [errorMessage, setErrorMessage] = useState();
   const [successMessage, setChangeMessage] = useState();
-  const username = getUsername();
   const token = getToken();
 
-  const updateUserData = (e) => {
+  const handleSubmitData = (e) => {
     e.preventDefault();
-    try{
-    checkPasswordAndConfirmPasswordFieldFilled(form.password,form.confirmPassword)
-    checkLengthPassword(form.password)
-    checkEqualPasswordAndConfirmPasswordFields(form.password,form.confirmPassword)
-    checkFirstNameNotEmpty(form.firstName)
-    checkLastNameNotEmpty(form.lastName)
+    try {
+      if (form.password !== "" && form.confirmPassword !== "") {
+        checkLengthPassword(form.password);
+        checkPasswordAndConfirmPasswordFieldFilled(
+          form.password,
+          form.confirmPassword
+        );
+        checkEqualPasswordAndConfirmPasswordFields(
+          form.password,
+          form.confirmPassword
+        );
+      }
+      checkFirstNameNotEmpty(form.firstName);
+      checkLastNameNotEmpty(form.lastName);
       let firstName = form.firstName;
       let lastName = form.lastName;
       let password = form.password;
-      let userName = form.userName;
-      updateUserDataByUsername(
-        userName,
+      let username = form.username;
+      updateUserData(
         firstName,
         lastName,
         password,
@@ -53,24 +63,24 @@ function Profile(props) {
           changeNameInLocalStorage(firstName);
           setChangeMessage("Cambios realizados");
           setErrorMessage("");
-          history.push(`/Profile/${userName}`);
+          history.push(`/Profile/${username}`);
         } else {
-          setChangeMessage("")
+          setChangeMessage("");
           throw new Error(response.message);
         }
       });
-    }catch(e){
-      setErrorMessage(e.message)
-      setChangeMessage("")
+    } catch (e) {
+      setErrorMessage(e.message);
+      setChangeMessage("");
     }
   };
 
   useEffect(() => {
-      try {
-          loadUserData(username, token, form, setForm);
-        } catch (error) {
-          setErrorMessage(error.message);
-        }
+    try {
+      loadUserData(token, form, setForm);
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -78,7 +88,7 @@ function Profile(props) {
     // eslint-disable-next-line react/jsx-pascal-case
     <Register_ProfileForm
       disableUnmodifiableData={true}
-      onSubmit={updateUserData}
+      onSubmit={handleSubmitData}
       titleText="Datos del Usuario"
       buttonText="Confirmar Modificaciones"
       descriptionText="Aquí puede modificar los datos. Una vez modificados haga click en

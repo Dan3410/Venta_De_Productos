@@ -1,23 +1,19 @@
 import { Redirect, Route } from "react-router-dom";
 import {
   getIsLoggedIn,
-  getToken,
-  getUsername,
+  getToken
 } from "../../Config/LocalStorage/LocalStorage";
 import { getPrivilege } from "../../Functions/userFunctions";
 
 function SuperUserRoute({ component: Component, ...restOfProps }) {
   const isLoggedIn = getIsLoggedIn();
-  const username = isLoggedIn ? getUsername() : null;
   const token = isLoggedIn ? getToken() : null;
-  const isSuperUser = getPrivilege(username, token);
-  
 
   return (
     <Route
       {...restOfProps}
       render={(props) =>
-        isLoggedIn && isSuperUser ? (
+        isLoggedIn && getPrivilege(token) ? (
           <Component {...props} />
         ) : (
           <Redirect to="/" />

@@ -1,18 +1,24 @@
 const resModifier = require("./resModifier");
-const tokenCheck = require("./tokenCheck");
-const accountCheck = require("./accountCheck");
+const tokenFunctions = require("./tokenFunctions");
+const accountFunctions = require("./accountFunctions");
+const productFunctions = require("./productFunctions");
 const productosModel = require("../models/productosModel");
 
 module.exports = {
-  getAll: async function (req, res, next) {
+  getAllProducts: async function (req, res, next) {
     try {
       const productos = await productosModel.find().populate("");
       resModifier.modifyRes(res, "Success", "Items Extracted", productos);
     } catch (e) {
-      resModifier.modifyRes(res, "Error", e.message, null);
+      resModifier.modifyRes(
+        res,
+        "Error",
+        "Error al obtener los items: " + e.message,
+        null
+      );
     }
   },
-  getById: async function (req, res, next) {
+  getProductById: async function (req, res, next) {
     try {
       const producto = await productosModel
         .findById({ _id: req.params.id })
@@ -26,67 +32,72 @@ module.exports = {
         });
       resModifier.modifyRes(res, "Success", "Item Found", producto);
     } catch (e) {
-      resModifier.modifyRes(res, "Error", e.message, null);
+      resModifier.modifyRes(
+        res,
+        "Error",
+        "Error al obtener el item: " + e.message,
+        null
+      );
     }
   },
-  create: async function (req, res, next) {
-    if (
-      (await accountCheck.hasPrivilege(req.body.userName, res)) &&
-      (await tokenCheck.isTokenValid(req.body.token,req, res))
-    ) {
-      try {
-        const producto = new productosModel({
-          name: req.body.newData.name,
-          price: req.body.newData.price,
-          description: req.body.newData.description,
-          code: req.body.newData.code,
-          category: req.body.newData.category,
-          photo: req.body.newData.photo,
-        });
-        const documento = await producto.save();
-        resModifier.modifyRes(
-          res,
-          "Success",
-          "Item Uploaded to Database",
-          documento
-        );
-      } catch (e) {
-        resModifier.modifyRes(res, "Error", e.message, documento);
-      }
-    }
-  },
-
-  update: async function (req, res, next) {
-    if (
-      (await accountCheck.hasPrivilege(req.body.userName, res)) &&
-      (await tokenCheck.isTokenValid(req.body.token, req, res))
-    ) {
-      try {
-        const producto = await productosModel.updateOne(
-          { _id: req.params.id },
-          req.body.newData
-        );
-        resModifier.modifyRes(res, "Success", "Item Data Modified", producto);
-      } catch (e) {
-        resModifier.modifyRes(res, "Error", e.message, null);
-      }
-    }
-  },
-
-  delete: async function (req, res, next) {
-    console.log(req.body)
-    const token = req.body.token;
+  createProduct: async function (req, res, next) {
     try {
-    if (
-      (await accountCheck.hasPrivilege(req.body.userName, res)) &&
-      (await tokenCheck.isTokenValid(token, req, res))
-    ) {
-      
-        const producto = await productosModel.deleteOne({ _id: req.params.id });
-        resModifier.modifyRes(res, "Success", "Item Deleted", null);
-      }} catch (e) {
-        resModifier.modifyRes(res, "Error", e.message, null);
-      }
-    } /*Si no tiene privilegios o el token es invalido, se modifico el res en alguna de las
-       que fallo, entonces no deberia modificarlo aca */
+      const token = tokenFunctions.extractToken(req);
+      const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
+      await accountFunctions.checkPrivilege(tokenDecoded.username, res);
+      const producto = productFunctions.createProduct(req.body.productData);
+      const documento = await producto.save();
+      resModifier.modifyRes(
+        res,
+        "Success",
+        "Item Uploaded to Database",
+        documento
+      );
+    } catch (e) {
+      resModifier.modifyRes(
+        res,
+        "Error",
+        "Error al cargar los datos: " + e.message,
+        null
+      );
+    }
+  },
+
+  updateProduct: async function (req, res, next) {
+    try {
+      const token = tokenFunctions.extractToken(req);
+      const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
+      await accountFunctions.checkPrivilege(tokenDecoded.username, res);
+      const producto = await productosModel.updateOne(
+        { _id: req.params.id },
+        req.body.productData
+      );
+      resModifier.modifyRes(res, "Success", "Item Data Modified", producto);
+    } catch (e) {
+      resModifier.modifyRes(
+        res,
+        "Error",
+        "Error al actualizar los datos: " + e.message,
+        null
+      );
+    }
+  },
+
+  deleteProduct: async function (req, res, next) {
+    try {
+      const token = tokenFunctions.extractToken(req);
+      const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
+      await accountFunctions.checkPrivilege(tokenDecoded.username, res);
+      const producto = await productosModel.deleteOne({ _id: req.params.id });
+      resModifier.modifyRes(res, "Success", "Item Deleted", producto);
+    } catch (e) {
+      resModifier.modifyRes(
+        res,
+        "Error",
+        "Error al borrar el producto: " + e.message,
+        null
+      );
+    }
+  } /*Si no tiene privilegios o el token es invalido, se modifico el res en alguna de las
+       que fallo, entonces no deberia modificarlo aca */,
 };

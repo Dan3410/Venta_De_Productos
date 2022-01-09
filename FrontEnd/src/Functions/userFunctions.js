@@ -1,13 +1,13 @@
-import { obtainUserDataByUsername } from "../services/userServices";
+import { obtainUserData} from "../services/userServices";
 
-export const getPrivilege = async (username, token, setIsSuperUser) => {
-  if (username !== null && token !== null) {
+export const getPrivilege = async (token) => {
+  if (token !== null) {
     try{
-    const userData = await obtainUserDataByUsername(username, token);
+    const userData = await obtainUserData(token);
     if (userData.status !== "Error") {
       return (userData.data.user.accountType === "Cuenta Empresarial");
     } else {
-      throw new Error(userData.data.message);
+      throw new Error(userData.message);
     }
     }catch(e){
       console.log(e.message)
@@ -18,15 +18,15 @@ export const getPrivilege = async (username, token, setIsSuperUser) => {
   }
 };
 
-export const loadUserData = async (username, token, form, setForm) => {
-  obtainUserDataByUsername(username, token).then((userData) => {
+export const loadUserData = async (token, form, setForm) => {
+  obtainUserData(token).then((userData) => {
     if (userData.status !== "Error")
       setForm({
         ...form,
         firstName: userData.data.user.firstName,
         lastName: userData.data.user.lastName,
         mail: userData.data.user.mail,
-        userName: userData.data.user.userName,
+        username: userData.data.user.username,
         accountType: userData.data.user.accountType,
       });
     else throw new Error(userData.message);

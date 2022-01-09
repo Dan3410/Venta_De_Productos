@@ -2,7 +2,7 @@ import { useState, } from "react";
 import { useHistory } from "react-router";
 import ProductForm from "../../Components/ProductForm/ProductForm";
 import { getToken, getUsername } from "../../Config/LocalStorage/LocalStorage";
-import { createProductById } from "../../services/productServices";
+import { createProduct } from "../../services/productServices";
 import "./Agregar_Producto.css";
 
 function Agregar_Producto(props) {
@@ -26,7 +26,7 @@ function Agregar_Producto(props) {
       setErrorMessage("Debe llenar todos los campos");
     } else {
       try {
-        createProductById(username, token, formData).then((response) => {
+        createProduct(username, token, formData).then((response) => {
           if (response.status !== "Error") {
             history.push("/Gestion_Productos");
             setErrorMessage("");

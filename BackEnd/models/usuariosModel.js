@@ -14,7 +14,7 @@ const usuariosSchema = new mongoose.Schema({
     required: [true, "El campo lastName es obligatorio"],
     trim: true,
   },
-  userName: {
+  username: {
     type: String,
     required: [true, "El campo userName es obligatorio"],
     unique: [true, "Ya existe un usuario con ese nombre"],

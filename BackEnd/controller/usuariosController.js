@@ -1,72 +1,70 @@
-const resModifier = require ("./resModifier");
+const resModifier = require("./resModifier");
 const usuariosModel = require("../models/usuariosModel");
+const tokenFunctions = require("./tokenFunctions");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-
 module.exports = {
-  logUser: async function (req, res, next) {
+  logInUser: async function (req, res, next) {
     try {
-      const user = await usuariosModel.findOne({ userName: req.body.userName });
+      const user = await usuariosModel.findOne({
+        username: req.params.username,
+      });
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
-          const token = jwt.sign({ id: user._id }, req.app.get("secretKey"), {
-            expiresIn: "1h",
+          const token = jwt.sign(
+            { id: user._id, username: user.username },
+            req.app.get("secretKey"),
+            {
+              expiresIn: "1h",
+            }
+          );
+          resModifier.modifyRes(res, "Success", "User Found", {
+            user: user,
+            token: token,
           });
-          resModifier.modifyRes(res, "Success", "User Found", { user: user, token: token });
         } else {
-          resModifier.modifyRes(res, "Error", "Invalid Password", null);
+          resModifier.modifyRes(res, "Error", "Contraseña invalida", null);
         }
       } else {
-        resModifier.modifyRes(res, "Error", "User Not Found", null);
+        resModifier.modifyRes(res, "Error", "Usuario no encontrado", null);
       }
     } catch (e) {
-      resModifier.modifyRes(res, "Error", e.message, null);
+      resModifier.modifyRes(
+        res,
+        "Error",
+        "Error al ingresar: " + e.message,
+        null
+      );
       next(e);
     }
   },
   findUserByUsername: async function (req, res, next) {
-    const token = req.params.token;
     try {
+      const token = tokenFunctions.extractToken(req);
+      const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
       const user = await usuariosModel.findOne({
-        userName: req.params.userName,
+        username: tokenDecoded.username,
       });
       if (user) {
-        try {
-          const decoded = jwt.verify(
-            req.params.token,
-            req.app.get("secretKey")
-          );
-          resModifier.modifyRes(res, "Success", "userFound", { user: user });
-        } catch (e) {
-          resModifier.modifyRes(res, "Error", "Invalid Token", null);
-        }
+        resModifier.modifyRes(res, "Success", "Usuario encontrado", {
+          user: user,
+        });
       } else {
-        resModifier.modifyRes(res, "Error", "User Not Found", null);
+        throw new Error("Usuario no encontrado");
       }
     } catch (e) {
       resModifier.modifyRes(res, "Error", e.message, null);
     }
   },
   updateUserData: async function (req, res, next) {
-    const token = req.body.token;
-    let user;
     try {
-      user = await usuariosModel.findOne({
-        userName: req.body.userName,
+      const token = tokenFunctions.extractToken(req);
+      const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
+      const user = await usuariosModel.findOne({
+        username: tokenDecoded.username,
       });
-    } catch (e) {
-      resModifier.modifyRes(res, "Error", e.message, null);
-      return;
-    }
-    if (user) {
-      try {
-        const decoded = jwt.verify(req.body.token, req.app.get("secretKey"));
-      } catch (e) {
-        resModifier.modifyRes(res, "Error", "Invalid Token", null);
-        return;
-      }
-      try {
+      if (user) {
         let newData = {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
@@ -75,42 +73,62 @@ module.exports = {
           let newPassword = bcrypt.hashSync(req.body.password, 10);
           newData.password = newPassword;
         }
-        await usuariosModel.updateOne({ userName: req.body.userName }, newData);
-        resModifier.modifyRes(res, "Success", "User Data Updated", { user: newData });
-      } catch (e) {
-        resModifier.modifyRes(res, "Error", "Error al Actualizar", null);
-        return;
+        await usuariosModel.updateOne(
+          { username: tokenDecoded.username },
+          newData
+        );
+        resModifier.modifyRes(res, "Success", "User Data Updated", {
+          user: newData,
+        });
+      } else {
+        throw new Error("User Not Found");
       }
-    } else {
-      resModifier.modifyRes(res, "Error", "User Not Found", null);
+    } catch (e) {
+      resModifier.modifyRes(
+        res,
+        "Error",
+        "Error al Actualizar: " + e.message,
+        null
+      );
+      return;
     }
   },
-  register: async function (req, res, next) {
+  registerUser: async function (req, res, next) {
     try {
       const userByMail = await usuariosModel.findOne({ mail: req.body.mail });
-      const userByuserName = await usuariosModel.findOne({
-        userName: req.body.userName,
+      const userByUsername = await usuariosModel.findOne({
+        username: req.body.username,
       });
       if (userByMail === null) {
-        if (userByuserName === null) {
+        if (userByUsername === null) {
           var data = new usuariosModel({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            userName: req.body.userName,
+            username: req.body.username,
             password: req.body.password,
             mail: req.body.mail,
             accountType: req.body.accountType,
           });
           const document = await data.save();
-          resModifier.modifyRes(res, "Success", "User Created Successfully", document);
+          resModifier.modifyRes(
+            res,
+            "Success",
+            "User Created Successfully",
+            document
+          );
         } else {
-          resModifier.modifyRes(res, "Error", "Username Already In Use");
+          throw new Error("El nombre de usuario ya esta en uso");
         }
-      }else{
-        resModifier.modifyRes(res, "Error", "The Mail Is Already Registered");
+      } else {
+        throw new Error("Ya hay una cuenta con dicho mail");
       }
     } catch (e) {
-      resModifier.modifyRes(res, "Error", e.message, null);
+      resModifier.modifyRes(
+        res,
+        "Error",
+        "Error al registrarse: " + e.message,
+        null
+      );
     }
   },
 };

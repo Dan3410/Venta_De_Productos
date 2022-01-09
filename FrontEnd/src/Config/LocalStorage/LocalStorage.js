@@ -1,7 +1,7 @@
 export function setDataInLocalStorage(user, token) {
   localStorage.setItem("isLoggedIn", true);
   localStorage.setItem("name", user.firstName);
-  localStorage.setItem("username", user.userName);
+  localStorage.setItem("username", user.username);
   localStorage.setItem("token", token);
 }
 

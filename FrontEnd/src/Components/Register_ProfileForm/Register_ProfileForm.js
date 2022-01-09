@@ -22,10 +22,10 @@ function Register_ProfileForm(props) {
     disabled: false,
     type: "text",
   };
-  const userNameField = {
-    name: "userName",
-    label: "UserName:",
-    value: props.form.formData.userName,
+  const usernameField = {
+    name: "username",
+    label: "Username:",
+    value: props.form.formData.username,
     placeholder: "Ingrese el nombre de usuario",
     disabled: props.disableUnmodifiableData,
     type: "text",
@@ -95,7 +95,7 @@ function Register_ProfileForm(props) {
           />
 
           <AlignedFields
-            firstField={userNameField}
+            firstField={usernameField}
             secondField={mailField}
             handleChange={handleChange}
           />

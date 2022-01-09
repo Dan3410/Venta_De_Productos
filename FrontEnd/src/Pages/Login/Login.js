@@ -10,12 +10,12 @@ import FormSecretField from "../../Components/FormSecretField/FormSecretField";
 import { checkPasswordNotEmptyLogin, checkUsernameNotEmptyLogin } from "../../Functions/checkUserFormFunctions";
 
 function Login(props) {
-  const [form, setForm] = useState({ userName: "", password: "" });
-  const userNameField = {
-    name: "userName",
-    label: "UserName:",
-    value: form.userName,
-    placeholder: "Introduzca el UserName",
+  const [form, setForm] = useState({ username: "", password: "" });
+  const usernameField = {
+    name: "username",
+    label: "Username:",
+    value: form.username,
+    placeholder: "Introduzca el Username",
     type: "text",
     disabled: false,
   };
@@ -42,7 +42,7 @@ function Login(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let username = form.userName;
+    let username = form.username;
     let password = form.password;
     try {
     checkUsernameNotEmptyLogin(username)
@@ -63,7 +63,7 @@ function Login(props) {
           <div className="login-form__title-container ">
             <label className="login-form__title-container__text">Login</label>
           </div>
-          <FormField field={userNameField} handleChange={handleChange} />
+          <FormField field={usernameField} handleChange={handleChange} />
           <FormSecretField field={passwordField} handleChange={handleChange} />
           <FormSubmit value="Ingresar"></FormSubmit>
           <div className="login-form__register-text">

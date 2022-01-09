@@ -44,8 +44,8 @@ function Header(props) {
   ];
 
   const getUserPrivilege = useCallback(async () => {
-    setIsSuperUser(await getPrivilege(username, token));
-  }, [setIsSuperUser, token, username]);
+    setIsSuperUser(await getPrivilege(token));
+  }, [token]);
 
   useEffect(() => {
     getUserPrivilege();
