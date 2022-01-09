@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const cors = require("cors");
 
 var indexRouter = require("./routes/index");
-var detallesRouter = require("./routes/detalles");
+var detailsRouter = require("./routes/details");
 var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
 var profileRouter = require("./routes/profile");
@@ -33,7 +33,7 @@ app.disable('x-powered-by');
 
 
 app.use("/", indexRouter);
-app.use("/detalles", detallesRouter);
+app.use("/details", detailsRouter);
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);
 app.use("/profile", profileRouter);

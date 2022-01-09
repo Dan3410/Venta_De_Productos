@@ -4,15 +4,15 @@ import Register from "./Pages/Register/Register.js";
 import Login from "./Pages/Login/Login.js";
 import ProductDetail from "./Pages/ProductDetails/ProductDetails.js";
 import Profile from "./Pages/Profile/Profile.js";
-import Gestion_Productos from "./Pages/Gestion_Producto/Gestion_Productos.js";
-import Modificar_Producto from "./Pages/Modificar_Producto/Modificar_Producto.js";
-import Agregar_Producto from "./Pages/Agregar_Producto/Agregar_Producto.js";
 import Header from "./Components/Header/Header.js";
 import { Redirect, Route, Switch } from "react-router";
 import { withRouter } from "react-router";
 import LoggedInRoute from "./Components/ProtectedRoutes/LoggedInRoute";
 import SuperUserRoute from "./Components/ProtectedRoutes/SuperUserRoute";
 import NotLoggedInRoute from "./Components/ProtectedRoutes/NotLoggedInRoute";
+import ProductsManager from "./Pages/ProductManager/ProductsManager";
+import ProductModifier from "./Pages/ModifyProduct/ModifyProduct";
+import ProductAdder from "./Pages/ProductAdder/ProductAdder";
 
 const exclusionPaths = ["/Login", "/Register"];
 
@@ -29,17 +29,17 @@ function App({ location }) {
         <SuperUserRoute
           exact
           path="/Gestion_Productos"
-          component={Gestion_Productos}
+          component={ProductsManager}
         />
         <SuperUserRoute
           exact
           path="/Modificar_Producto/:id"
-          component={Modificar_Producto}
+          component={ProductModifier}
         />
         <SuperUserRoute
           exact
           path="/Agregar_Producto/"
-          component={Agregar_Producto}
+          component={ProductAdder}
         />
         <Redirect to="/" />
       </Switch>

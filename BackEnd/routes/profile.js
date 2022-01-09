@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var usuariosController = require('../controller/usuariosController')
+var userController = require('../controller/userController')
 
-router.get('/', usuariosController.findUserByUsername);
-router.put('/', usuariosController.updateUserData);
+router.get('/', userController.findUserByUsername);
+router.put('/', userController.updateUserData);
 module.exports = router;

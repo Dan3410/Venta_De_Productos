@@ -1,6 +1,6 @@
 const mongoose = require("../bin/mongodb")
 
-const productosSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
         name: String,
         price: String,
         photo: String,
@@ -11,5 +11,5 @@ const productosSchema = new mongoose.Schema({
     }
 )
 
-productosSchema.set("toJSON",{getters:true,setters:true,virtuals:true})
-module.exports = mongoose.model('Productos',productosSchema)
+productSchema.set("toJSON",{getters:true,setters:true,virtuals:true})
+module.exports = mongoose.model('Products',productSchema,"product")

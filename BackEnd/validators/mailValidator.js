@@ -1,4 +1,4 @@
-const usuariosModel = require("../models/usuariosModel");
+const userModel = require("../models/userModel");
 
 module.exports ={
     
@@ -7,8 +7,8 @@ module.exports ={
         return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(input);
     },
     mailAlreadyInDatabase:(input) => {
-        usuariosModel.findOne({ userName: req.body.userName }).then((user) =>{
-            return usuariosModel.findOne({ mail: input }) !== null;
+        userModel.findOne({ userName: req.body.userName }).then((user) =>{
+            return userModel.findOne({ mail: input }) !== null;
         })
     }
 }

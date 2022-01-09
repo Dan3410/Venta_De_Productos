@@ -8,9 +8,9 @@ import {
   getItemById,
   updateProductDataById,
 } from "../../services/productServices";
-import "./Modificar_Producto.css";
+import "./ModifyProduct.css";
 
-function Modificar_Producto(props) {
+function ProductModifier(props) {
 
   const [errorMessage, setErrorMessage] = useState();
   const [successMessage, setSuccessMessage] = useState();
@@ -92,4 +92,4 @@ function Modificar_Producto(props) {
   );
 }
 
-export default Modificar_Producto;
+export default ProductModifier;

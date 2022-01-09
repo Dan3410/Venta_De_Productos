@@ -3,9 +3,9 @@ import { useHistory } from "react-router";
 import ProductForm from "../../Components/ProductForm/ProductForm";
 import { getToken, getUsername } from "../../Config/LocalStorage/LocalStorage";
 import { createProduct } from "../../services/productServices";
-import "./Agregar_Producto.css";
+import "./ProductAdder.css";
 
-function Agregar_Producto(props) {
+function ProductAdder(props) {
   const [formData, setForm] = useState({
     photo: "",
     name: "",
@@ -55,4 +55,4 @@ function Agregar_Producto(props) {
   );
 }
 
-export default Agregar_Producto;
+export default ProductAdder;

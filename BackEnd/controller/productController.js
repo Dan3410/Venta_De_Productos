@@ -2,13 +2,13 @@ const resModifier = require("./resModifier");
 const tokenFunctions = require("./tokenFunctions");
 const accountFunctions = require("./accountFunctions");
 const productFunctions = require("./productFunctions");
-const productosModel = require("../models/productosModel");
+const productModel = require("../models/productModel");
 
 module.exports = {
   getAllProducts: async function (req, res, next) {
     try {
-      const productos = await productosModel.find().populate("");
-      resModifier.modifyRes(res, "Success", "Items Extracted", productos);
+      const products = await productModel.find().populate("");
+      resModifier.modifyRes(res, "Success", "Items Extracted", products);
     } catch (e) {
       resModifier.modifyRes(
         res,
@@ -20,7 +20,7 @@ module.exports = {
   },
   getProductById: async function (req, res, next) {
     try {
-      const producto = await productosModel
+      const producto = await productModel
         .findById({ _id: req.params.id })
         .select({
           name: 1,
@@ -68,7 +68,7 @@ module.exports = {
       const token = tokenFunctions.extractToken(req);
       const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
       await accountFunctions.checkPrivilege(tokenDecoded.username, res);
-      const producto = await productosModel.updateOne(
+      const producto = await productModel.updateOne(
         { _id: req.params.id },
         req.body.productData
       );
@@ -88,7 +88,7 @@ module.exports = {
       const token = tokenFunctions.extractToken(req);
       const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
       await accountFunctions.checkPrivilege(tokenDecoded.username, res);
-      const producto = await productosModel.deleteOne({ _id: req.params.id });
+      const producto = await productModel.deleteOne({ _id: req.params.id });
       resModifier.modifyRes(res, "Success", "Item Deleted", producto);
     } catch (e) {
       resModifier.modifyRes(

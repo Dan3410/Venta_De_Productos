@@ -14,7 +14,7 @@ export async function getAllItems() {
 }
 
 export async function getItemById(id) {
-  const response = await axios.get(baseURL + `/detalles/${id}`);
+  const response = await axios.get(baseURL + `/details/${id}`);
   return response.data;
 }
 

@@ -10,7 +10,7 @@ import {
   checkLastNameNotEmpty,
   checkMailNotEmpty,
 } from "../../Functions/checkUserFormFunctions";
-import Register_ProfileForm from "../../Components/Register_ProfileForm/Register_ProfileForm";
+import UserForm from "../../Components/UserForm/UserForm";
 
 function Register(props) {
   let history = useHistory();
@@ -18,7 +18,7 @@ function Register(props) {
     firstName: "",
     lastName: "",
     mail: "",
-    userName: "",
+    username: "",
     accountType: "Cuenta común",
     password: "",
     confirmPassword: "",
@@ -43,7 +43,7 @@ function Register(props) {
     let confirmPassword = form.confirmPassword;
     try {
       let mail = form.mail;
-      let userName = form.userName;
+      let username = form.username;
       let firstName = form.firstName;
       let lastName = form.lastName;
       let accountType = form.accountType;
@@ -55,7 +55,7 @@ function Register(props) {
       checkLastNameNotEmpty(lastName)
 
       const outcome = await createUserWithUsernameAndPassword(
-        userName,
+        username,
         password,
         mail,
         firstName,
@@ -72,7 +72,7 @@ function Register(props) {
 
   return (
     // eslint-disable-next-line react/jsx-pascal-case
-    <Register_ProfileForm
+    <UserForm
       disableUnmodifiableData={false}
       onSubmit={handleSubmit}
       titleText="Registrarse"

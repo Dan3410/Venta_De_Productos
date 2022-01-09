@@ -1,5 +1,5 @@
 const resModifier = require("./resModifier");
-const usuariosModel = require("../models/usuariosModel");
+const userModel = require("../models/userModel");
 const tokenFunctions = require("./tokenFunctions");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   logInUser: async function (req, res, next) {
     try {
-      const user = await usuariosModel.findOne({
+      const user = await userModel.findOne({
         username: req.params.username,
       });
       if (user) {
@@ -43,7 +43,7 @@ module.exports = {
     try {
       const token = tokenFunctions.extractToken(req);
       const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
-      const user = await usuariosModel.findOne({
+      const user = await userModel.findOne({
         username: tokenDecoded.username,
       });
       if (user) {
@@ -61,7 +61,7 @@ module.exports = {
     try {
       const token = tokenFunctions.extractToken(req);
       const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
-      const user = await usuariosModel.findOne({
+      const user = await userModel.findOne({
         username: tokenDecoded.username,
       });
       if (user) {
@@ -73,7 +73,7 @@ module.exports = {
           let newPassword = bcrypt.hashSync(req.body.password, 10);
           newData.password = newPassword;
         }
-        await usuariosModel.updateOne(
+        await userModel.updateOne(
           { username: tokenDecoded.username },
           newData
         );
@@ -95,13 +95,13 @@ module.exports = {
   },
   registerUser: async function (req, res, next) {
     try {
-      const userByMail = await usuariosModel.findOne({ mail: req.body.mail });
-      const userByUsername = await usuariosModel.findOne({
+      const userByMail = await userModel.findOne({ mail: req.body.mail });
+      const userByUsername = await userModel.findOne({
         username: req.body.username,
       });
       if (userByMail === null) {
         if (userByUsername === null) {
-          var data = new usuariosModel({
+          var data = new userModel({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             username: req.body.username,

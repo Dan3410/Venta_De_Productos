@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Producto.css";
+import "./ProductDisplay.css";
 //Definicion de clase
-function Producto(props) {
+function ProductDisplay(props) {
   return (
     <Link to={"/ProductDetail/" + props.itemAMostrar._id + "/"}>
       <div className="product-display">
@@ -26,4 +26,4 @@ function Producto(props) {
   );
 }
 
-export default Producto;
+export default ProductDisplay;

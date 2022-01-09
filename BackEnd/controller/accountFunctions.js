@@ -1,9 +1,9 @@
-const usuariosModel = require("../models/usuariosModel");
+const userModel = require("../models/userModel");
 
 module.exports = {
   obtainData: async function (username) {
     try {
-      user = await usuariosModel.findOne({
+      user = await userModel.findOne({
         username: username,
       });
       if (user === null) {

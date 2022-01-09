@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-pascal-case */
-import "./Gestion_Productos.css";
+import "./ProductsManager.css";
 import { useState, useEffect } from "react";
 import Product_Manage from "../../Components/Product_Manage/Product_Manage";
 import { Link } from "react-router-dom";
 import { getItems } from "../../Functions/productsFunctions";
 
-function Gestion_Productos(props) {
+function ProductsManager(props) {
   const [items, setItem] = useState([]);
 
   useEffect(() => {
@@ -29,4 +29,4 @@ function Gestion_Productos(props) {
   );
 }
 
-export default Gestion_Productos;
+export default ProductsManager;

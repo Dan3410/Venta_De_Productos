@@ -2,7 +2,7 @@ import AlignedFields from "../AlignedFields/AlignedFields";
 import FormField from "../FormField/FormField";
 import FormSecretField from "../FormSecretField/FormSecretField";
 import FormSubmit from "../FormSubmit/FormSubmit";
-import "./Register_ProfileForm.css";
+import "./UserForm.css";
 
 function Register_ProfileForm(props) {
 

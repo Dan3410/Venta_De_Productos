@@ -6,7 +6,7 @@ import {
   getToken,
 } from "../../Config/LocalStorage/LocalStorage";
 import { loadUserData } from "../../Functions/userFunctions";
-import Register_ProfileForm from "../../Components/Register_ProfileForm/Register_ProfileForm";
+import UserForm from "../../Components/UserForm/UserForm";
 import "./Profile.css";
 import {
   checkEqualPasswordAndConfirmPasswordFields,
@@ -86,7 +86,7 @@ function Profile(props) {
 
   return (
     // eslint-disable-next-line react/jsx-pascal-case
-    <Register_ProfileForm
+    <UserForm
       disableUnmodifiableData={true}
       onSubmit={handleSubmitData}
       titleText="Datos del Usuario"

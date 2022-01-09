@@ -1,8 +1,8 @@
-const productosModel = require("../models/productosModel");
+const productModel = require("../models/productModel");
 
 module.exports = {
   createProduct: function (productData) {
-    return new productosModel({
+    return new productModel({
       name: productData.name,
       price: productData.price,
       description: productData.description,

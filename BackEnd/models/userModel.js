@@ -1,9 +1,9 @@
 const mongoose = require("../bin/mongodb");
 const bcrypt = require("bcrypt");
-const mailValidators = require("../validators/mailValidator.js");
+const mailValidator = require("../validators/mailValidator.js");
 
 
-const usuariosSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: [true, "El campo firstName es obligatorio"],
@@ -41,10 +41,10 @@ const usuariosSchema = new mongoose.Schema({
     required: [true, "Falta el valor de accountType"],
   },
 });
-usuariosSchema.pre("save", function (next) {
+userSchema.pre("save", function (next) {
   this.password = bcrypt.hashSync(this.password, 10);
   next();
 });
 
-usuariosSchema.set("toJSON", { getters: true, setters: true, virtuals: true });
-module.exports = mongoose.model("Usuarios", usuariosSchema);
+userSchema.set("toJSON", { getters: true, setters: true, virtuals: true });
+module.exports = mongoose.model("User", userSchema,"user");
