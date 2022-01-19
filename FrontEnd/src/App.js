@@ -1,31 +1,33 @@
 import "./App.css";
-import Home from "./Pages/Home/Home.js";
-import Register from "./Pages/Register/Register.js";
-import Login from "./Pages/Login/Login.js";
-import ProductDetail from "./Pages/ProductDetails/ProductDetails.js";
-import Profile from "./Pages/Profile/Profile.js";
-import Header from "./Components/Header/Header.js";
+import Home from "./Pages/Home/Home.jsx";
+import Register from "./Pages/Register/Register.jsx";
+import Login from "./Pages/Login/Login.jsx";
+import Profile from "./Pages/Profile/Profile.jsx";
 import { Redirect, Route, Switch } from "react-router";
 import { withRouter } from "react-router";
-import LoggedInRoute from "./Components/ProtectedRoutes/LoggedInRoute";
-import SuperUserRoute from "./Components/ProtectedRoutes/SuperUserRoute";
-import NotLoggedInRoute from "./Components/ProtectedRoutes/NotLoggedInRoute";
-import ProductsManager from "./Pages/ProductManager/ProductsManager";
-import ProductModifier from "./Pages/ModifyProduct/ModifyProduct";
-import ProductAdder from "./Pages/ProductAdder/ProductAdder";
+import LoggedInRoute from "./Components/ProtectedRoutes/LoggedInRoute.jsx";
+import SuperUserRoute from "./Components/ProtectedRoutes/SuperUserRoute.jsx";
+import NotLoggedInRoute from "./Components/ProtectedRoutes/NotLoggedInRoute.jsx";
+import ProductsManager from "./Pages/ProductManager/ProductsManager.jsx";
+import ProductModifier from "./Pages/ModifyProduct/ModifyProduct.jsx";
+import ProductAdder from "./Pages/ProductAdder/ProductAdder.jsx";
+import ProductDetailScreen from "./Pages/ProductDetails/ProductDetails.js";
+import CartScreen from "./Pages/Cart/Cart.js";
+import HeaderScreen from "./Components/Header/Header.js";
 
 const exclusionPaths = ["/Login", "/Register"];
 
 function App({ location }) {
   return (
     <div>
-      {exclusionPaths.indexOf(location.pathname) < 0 && <Header />}
+      {exclusionPaths.indexOf(location.pathname) < 0 && <HeaderScreen />}
       <Switch>
-        <Route exact path="/ProductDetail/:id" component={ProductDetail} />
+        <Route exact path="/ProductDetail/:id" component={ProductDetailScreen} />
         <Route exact path="/" component={Home} />
         <NotLoggedInRoute exact path="/Register" component={Register} />
         <NotLoggedInRoute exact path="/Login" component={Login} />
         <LoggedInRoute exact path="/Profile/:username" component={Profile} />
+        <LoggedInRoute exact path="/Cart/:username" component={CartScreen} />
         <SuperUserRoute
           exact
           path="/Gestion_Productos"

@@ -1,7 +1,7 @@
-import AlignedFields from "../AlignedFields/AlignedFields";
-import FormField from "../FormField/FormField";
-import FormSecretField from "../FormSecretField/FormSecretField";
-import FormSubmit from "../FormSubmit/FormSubmit";
+import AlignedFields from "../AlignedFields/AlignedFields.jsx";
+import FormField from "../FormField/FormField.jsx";
+import FormSecretField from "../FormSecretField/FormSecretField.jsx";
+import FormSubmit from "../FormSubmit/FormSubmit.jsx";
 import "./UserForm.css";
 
 function Register_ProfileForm(props) {

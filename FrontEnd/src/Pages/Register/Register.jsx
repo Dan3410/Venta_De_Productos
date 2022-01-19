@@ -10,7 +10,7 @@ import {
   checkLastNameNotEmpty,
   checkMailNotEmpty,
 } from "../../Functions/checkUserFormFunctions";
-import UserForm from "../../Components/UserForm/UserForm";
+import UserForm from "../../Components/UserForm/UserForm.jsx";
 
 function Register(props) {
   let history = useHistory();

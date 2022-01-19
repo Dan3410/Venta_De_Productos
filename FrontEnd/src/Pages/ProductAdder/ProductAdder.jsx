@@ -1,6 +1,6 @@
 import { useState, } from "react";
 import { useHistory } from "react-router";
-import ProductForm from "../../Components/ProductForm/ProductForm";
+import ProductForm from "../../Components/ProductForm/ProductForm.jsx";
 import { getToken, getUsername } from "../../Config/LocalStorage/LocalStorage";
 import { createProduct } from "../../services/productServices";
 import "./ProductAdder.css";

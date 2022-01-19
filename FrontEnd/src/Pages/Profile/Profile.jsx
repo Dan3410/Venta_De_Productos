@@ -6,7 +6,7 @@ import {
   getToken,
 } from "../../Config/LocalStorage/LocalStorage";
 import { loadUserData } from "../../Functions/userFunctions";
-import UserForm from "../../Components/UserForm/UserForm";
+import UserForm from "../../Components/UserForm/UserForm.jsx";
 import "./Profile.css";
 import {
   checkEqualPasswordAndConfirmPasswordFields,

@@ -1,7 +1,7 @@
 import "./Home.css";
 import { useEffect, useState } from "react";
 import { getItems } from "../../Functions/productsFunctions";
-import ProductDisplay from "../../Components/ProductDisplay/ProductDIsplay";
+import ProductDisplay from "../../Components/ProductDisplay/ProductDIsplay.jsx";
 
 function Home() {
   const [items, setItem] = useState([]);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import ProductForm from "../../Components/ProductForm/ProductForm";
+import ProductForm from "../../Components/ProductForm/ProductForm.jsx";
 import {
   getToken,
   getUsername,

@@ -1,9 +1,19 @@
-import Details from "../../Components/Details/Details"
-import "./ProductDetails.css"
+import { connect } from "react-redux";
+import { addProduct } from "../../Config/redux/actions";
+import ProductDetail from "./ProductDetails.jsx";
 
-function ProductDetail(props) {
-    return (
-        <Details idItemAMostrar={props.match.params.id}></Details>
-    )
+function mapStateToProps(state) {
+  return {
+    productsInCart: state.products
+  }
 }
-export default ProductDetail
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addProductToCart: (product,quantity) => dispatch(addProduct(product,quantity))
+  };
+}
+
+const ProductDetailScreen = connect(mapStateToProps,mapDispatchToProps)(ProductDetail)
+
+export default ProductDetailScreen

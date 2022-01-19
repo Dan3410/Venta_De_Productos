@@ -4,9 +4,9 @@ import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import "./Login.css";
 import { signInWithUsernameAndPassword } from "../../services/userServices";
-import FormField from "../../Components/FormField/FormField";
-import FormSubmit from "../../Components/FormSubmit/FormSubmit";
-import FormSecretField from "../../Components/FormSecretField/FormSecretField";
+import FormField from "../../Components/FormField/FormField.jsx";
+import FormSubmit from "../../Components/FormSubmit/FormSubmit.jsx";
+import FormSecretField from "../../Components/FormSecretField/FormSecretField.jsx";
 import { checkPasswordNotEmptyLogin, checkUsernameNotEmptyLogin } from "../../Functions/checkUserFormFunctions";
 
 function Login(props) {

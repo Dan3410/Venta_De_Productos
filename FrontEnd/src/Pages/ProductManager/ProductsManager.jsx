@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import "./ProductsManager.css";
 import { useState, useEffect } from "react";
-import Product_Manage from "../../Components/Product_Manage/Product_Manage";
+import Product_Manage from "../../Components/Product_Manage/Product_Manage.jsx";
 import { Link } from "react-router-dom";
 import { getItems } from "../../Functions/productsFunctions";
 

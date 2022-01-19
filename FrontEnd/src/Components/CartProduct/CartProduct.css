@@ -1,0 +1,41 @@
+.cart-product-container__image {
+    min-height: 100%;
+    max-height: 100%;
+    min-width: 15%;
+    max-width: 15%;
+    float: left;
+  }
+  
+  .cart-product-container {
+    /* Solución temporal para hacer que ocupe todo el ancho de la página dos productos*/
+    width: 100%;
+    height: 10%;
+    border-style: solid;
+    border-width: 1px;
+    display: inline-block;
+  }
+
+  .cart-product__description{
+      width: 60%;
+      height: 100%;
+  }
+
+  .cart-product__options-container{
+      height: 100%;
+      width: 30%;
+      float:right;
+      margin-right: 5%;
+
+  }
+
+  .cart-product__change-quantity-input{
+      width: auto;
+  }
+  
+  .cart-product-container__icon {
+    float: right;
+    cursor: pointer;
+    color: black;
+    padding-left: 5%;
+  }
+  

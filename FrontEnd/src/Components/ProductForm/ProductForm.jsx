@@ -1,8 +1,8 @@
 
-import AlignedFields from "../../Components/AlignedFields/AlignedFields";
-import FormField from "../../Components/FormField/FormField";
-import FormSubmit from "../../Components/FormSubmit/FormSubmit";
-import ResizableFormField from "../../Components/ResizableFormField/ResizableFormField";
+import AlignedFields from "../AlignedFields/AlignedFields.jsx";
+import FormField from "../FormField/FormField.jsx";
+import FormSubmit from "../FormSubmit/FormSubmit.jsx";
+import ResizableFormField from "../ResizableFormField/ResizableFormField.jsx";
 import "./ProductForm.css"
 
 function ProductForm(props) {

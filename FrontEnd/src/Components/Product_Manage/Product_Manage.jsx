@@ -34,6 +34,7 @@ function Product_Manage(props) {
         <FontAwesomeIcon
           icon={faPen}
           className="product_manage-container__icon"
+          title="Modify product data"
         />
         </Link>
         <br />
@@ -45,6 +46,7 @@ function Product_Manage(props) {
           icon={faTrash}
           className="product_manage-container__icon"
           onClick={deleteItem}
+          title="Erase product"
         />
       </div>
     );
