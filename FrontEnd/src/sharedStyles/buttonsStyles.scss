@@ -1,12 +1,16 @@
+$buttonColor: rgb(36, 63, 112);
+$buttonTextColor: rgb(255, 255, 255);
+$buttonTopBottomMargin: 10px;
+
 .button{
     display:inline-block;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-right:5px;
+    margin-top: $buttonTopBottomMargin;
+    margin-bottom: $buttonTopBottomMargin;
+    margin-right: 5px;
     border-radius: 30px;
     text-align: center;
-    background-color: rgb(36, 63, 112);
-    color: rgb(255, 255, 255);
+    background-color: $buttonColor;
+    color: $buttonTextColor;
     cursor: pointer;
     width: 16%;
     border-style: none;

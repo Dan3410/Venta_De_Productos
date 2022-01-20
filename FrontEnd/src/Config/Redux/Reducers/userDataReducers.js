@@ -22,13 +22,14 @@ function changeName(userData, name) {
 function userData(state = initialState, action) {
   switch (action.type) {
     case DELETE_USER_DATA:
+      console.log(DELETE_USER_DATA)
       return initialState;
     case LOAD_USER_DATA:
       return loadUserData(action.username, action.name, action.token);
     case CHANGE_NAME:
       return changeName(state, action.name);
     default:
-      return initialState;
+      return state;
   }
 }
 

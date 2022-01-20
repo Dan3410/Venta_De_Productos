@@ -1,5 +1,7 @@
+$backgroundColor: rgb(19, 1, 59);
+
 .product-form-page{
-    background:rgb(19, 1, 59);
+    background: $backgroundColor;
     height:100%;
     width: 100%;
     position:absolute;
