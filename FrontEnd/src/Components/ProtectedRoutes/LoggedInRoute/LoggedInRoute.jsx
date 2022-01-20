@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
 import { Redirect, Route } from 'react-router-dom'
-import { getIsLoggedIn, getUsername } from '../../Config/LocalStorage/LocalStorage'
 
-function LoggedInRoute({component: Component, ...restOfProps}) {
-    const isLoggedIn = getIsLoggedIn()
-    const username = getUsername()
+function LoggedIn({component: Component, ...restOfProps}) {
+    const isLoggedIn = restOfProps.isLoggedIn
+    const username = restOfProps.username
 
     useEffect(() => {
     },[])
@@ -20,4 +19,4 @@ function LoggedInRoute({component: Component, ...restOfProps}) {
     )
 }
 
-export default LoggedInRoute;
+export default LoggedIn;

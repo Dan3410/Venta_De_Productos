@@ -8,6 +8,7 @@ function ProductDetail(props) {
       productsInCart={props.productsInCart}
       addProductToCart={props.addProductToCart}
       checkProductInCart={props.checkProductInCart}
+      isLoggedIn={props.isLoggedIn}
     ></Details>
   );
 }

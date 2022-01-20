@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 import ProductForm from "../../Components/ProductForm/ProductForm.jsx";
 import {
-  getToken,
-  getUsername,
-} from "../../Config/LocalStorage/LocalStorage";
-import {
   getItemById,
   updateProductDataById,
 } from "../../services/productServices";
@@ -15,8 +11,8 @@ function ProductModifier(props) {
   const [errorMessage, setErrorMessage] = useState();
   const [successMessage, setSuccessMessage] = useState();
 
-  const username = getUsername();
-  const token = getToken();
+  const username = props.username;
+  const token = props.token;
 
   const [formData, setForm] = useState({
     photo: "",

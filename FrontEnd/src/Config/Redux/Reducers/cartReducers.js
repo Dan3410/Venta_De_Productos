@@ -5,7 +5,7 @@ import {
   DELETE_ALL_PRODUCTS,
   DELETE_PRODUCT,
   INCREMENT_QUANTITY,
-} from "./actionsType";
+} from "../ActionsType/cartActionsType";
 
 const initialState = {
   products: [],
@@ -65,7 +65,7 @@ function changeQuantityOfProduct(products, productCode,quantity) {
 
 //Cada caso deberia devolver el nuevo estado
 
-function cartReducer(state = initialState, action) {
+function cart(state = initialState, action) {
   let newArrayProducts;
   switch (action.type) {
     case ADD_PRODUCT:
@@ -107,4 +107,4 @@ function cartReducer(state = initialState, action) {
   }
 }
 
-export default cartReducer;
+export default cart;

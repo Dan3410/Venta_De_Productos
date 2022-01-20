@@ -49,10 +49,10 @@ function Register(props) {
       let accountType = form.accountType;
       checkLengthPassword(password);
       checkEqualPasswordAndConfirmPasswordFields(password, confirmPassword);
-      checkMailNotEmpty(mail)
-      checkMailFormat(mail)
-      checkFirstNameNotEmpty(firstName)
-      checkLastNameNotEmpty(lastName)
+      checkMailNotEmpty(mail);
+      checkMailFormat(mail);
+      checkFirstNameNotEmpty(firstName);
+      checkLastNameNotEmpty(lastName);
 
       const outcome = await createUserWithUsernameAndPassword(
         username,
@@ -72,17 +72,20 @@ function Register(props) {
 
   return (
     // eslint-disable-next-line react/jsx-pascal-case
-    <UserForm
-      disableUnmodifiableData={false}
-      onSubmit={handleSubmit}
-      titleText="Registrarse"
-      buttonText="Registrarse"
-      descriptionText={null}
-      form={{ formData: form, setForm: setForm }}
-      errorMessage={errorMessage}
-      successMessage={null}
-      accountTypeOptions={options}
-    />
+    <div className="register-page">
+      <UserForm
+        className="register-form--animation"
+        disableUnmodifiableData={false}
+        onSubmit={handleSubmit}
+        titleText="Registrarse"
+        buttonText="Registrarse"
+        descriptionText={null}
+        form={{ formData: form, setForm: setForm }}
+        errorMessage={errorMessage}
+        successMessage={null}
+        accountTypeOptions={options}
+      />
+    </div>
   );
 }
 

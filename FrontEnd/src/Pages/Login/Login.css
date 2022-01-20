@@ -1,3 +1,4 @@
+
 .login-page{
     background:rgb(13, 20, 49);
     height:100%;
@@ -50,5 +51,16 @@
     -ms-transform: translate(-50%,-50%);
     transform:translate(-50%,-50%)
     
+}
+
+@keyframes appear {
+    from {opacity: 0%;}
+    to {opacity: 100%;}
+    
+}
+
+.login-form--animation{
+    animation-name:appear;
+    animation-duration: 2s;
 }
 

@@ -1,7 +1,6 @@
 import { useState, } from "react";
 import { useHistory } from "react-router";
 import ProductForm from "../../Components/ProductForm/ProductForm.jsx";
-import { getToken, getUsername } from "../../Config/LocalStorage/LocalStorage";
 import { createProduct } from "../../services/productServices";
 import "./ProductAdder.css";
 
@@ -17,8 +16,8 @@ function ProductAdder(props) {
 
   let history = useHistory();
   const [errorMessage, setErrorMessage] = useState();
-  const username = getUsername();
-  const token = getToken();
+  const username = props.username;
+  const token = props.token;
 
   const uploadProductData = (e) => {
     e.preventDefault();

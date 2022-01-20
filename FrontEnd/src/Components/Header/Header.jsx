@@ -1,12 +1,5 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
-import {
-  clearLocalStorage,
-  getIsLoggedIn,
-  getName,
-  getToken,
-  getUsername,
-} from "../../Config/LocalStorage/LocalStorage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { getPrivilege } from "../../Functions/userFunctions";
@@ -14,15 +7,15 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 function Header(props) {
-  const username = getUsername();
-  const token = getToken();
-  const isLoggedIn = getIsLoggedIn();
-  const name = getName();
-  const [isSuperUser, setIsSuperUser] = useState(getPrivilege(token));
+  const username = props.username;
+  const token = props.token;
+  const isLoggedIn = props.isLoggedIn;
+  const name = props.name;
+  const [isSuperUser, setIsSuperUser] = useState();
 
   function logOutUser(){
     props.deleteAllProductsFromCart();
-    clearLocalStorage();
+    props.deleteUserData();
     //Esto fuerza el re-render
     setIsSuperUser(false)
   }
@@ -51,11 +44,12 @@ function Header(props) {
   ];
 
   useEffect(() => {
-  }, []);
+    setIsSuperUser(getPrivilege(token))
+  }, [token]);
 
   return (
     <header className="header-format">
-      <div>
+      <nav>
         {isLoggedIn ? (
           <div>
             <label className="header__text-with-name">Bienvenido {name}.</label>
@@ -107,7 +101,7 @@ function Header(props) {
             </Link>{" "}
           </>
         )}
-      </div>
+      </nav>
     </header>
   );
 }

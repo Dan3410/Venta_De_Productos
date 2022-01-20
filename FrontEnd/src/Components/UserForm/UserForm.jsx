@@ -5,7 +5,6 @@ import FormSubmit from "../FormSubmit/FormSubmit.jsx";
 import "./UserForm.css";
 
 function Register_ProfileForm(props) {
-
   const firstNameField = {
     name: "firstName",
     label: "Nombre: ",
@@ -77,34 +76,35 @@ function Register_ProfileForm(props) {
   };
 
   return (
-    <div className="register-profile-form-page">
-      <div className="register-profile-form--center ">
-        <form onSubmit={props.onSubmit} className="register-profile-form--format">
-          <div className="register-profile-form__title-container">
-            <label className="register-profile-form__title-container__text">
-              {props.titleText}
-            </label>
-          </div>
-          <br />
-          <label>{props.descriptionText}</label>
+    <div className={props.className}>
+    <div className="register-profile-form--center ">
+      <form onSubmit={props.onSubmit} className="register-profile-form--format">
+        <div className="register-profile-form__title-container">
+          <label className="register-profile-form__title-container__text">
+            {props.titleText}
+          </label>
+        </div>
+        <br />
+        <label>{props.descriptionText}</label>
 
-          <AlignedFields
-            firstField={firstNameField}
-            secondField={lastNameField}
-            handleChange={handleChange}
-          />
+        <AlignedFields
+          firstField={firstNameField}
+          secondField={lastNameField}
+          handleChange={handleChange}
+        />
 
-          <AlignedFields
-            firstField={usernameField}
-            secondField={mailField}
-            handleChange={handleChange}
-          />
-          {props.accountTypeOptions === null ? 
-            <FormField field={accountTypeField} handleChange={handleChange} />
-           : (
-            <div className="register-profile-form-field-container-select">
+        <AlignedFields
+          firstField={usernameField}
+          secondField={mailField}
+          handleChange={handleChange}
+        />
+        {props.accountTypeOptions === null ? (
+          <FormField field={accountTypeField} handleChange={handleChange} />
+        ) : (
+          <div className="register-profile-form-field-container-select">
             <label>Tipo de Cuenta:</label>
-            <select className="register-profile-form-field-container__select"
+            <select
+              className="register-profile-form-field-container__select"
               value={props.form.formData.accountType}
               name="accountType"
               onChange={handleChange}
@@ -116,27 +116,27 @@ function Register_ProfileForm(props) {
               ))}
             </select>
           </div>
-           )}
-          {changePasswordFields.map((field, index) => (
-            <FormSecretField
-              field={field}
-              key={index}
-              handleChange={handleChange}
-            />
-          ))}
-          <FormSubmit value={props.buttonText}></FormSubmit>
-          <div className="register-profile-form__message-container">
-            <label className="register-profile-form__message-container__text--error">
-              {props.errorMessage}
-            </label>
-          </div>
-          <div className="register-profile-form__message-container">
-            <label className="register-profile-form__message-container__text--success">
-              {props.successMessage}
-            </label>
-          </div>
-        </form>
-      </div>
+        )}
+        {changePasswordFields.map((field, index) => (
+          <FormSecretField
+            field={field}
+            key={index}
+            handleChange={handleChange}
+          />
+        ))}
+        <FormSubmit value={props.buttonText}></FormSubmit>
+        <div className="register-profile-form__message-container">
+          <label className="register-profile-form__message-container__text--error">
+            {props.errorMessage}
+          </label>
+        </div>
+        <div className="register-profile-form__message-container">
+          <label className="register-profile-form__message-container__text--success">
+            {props.successMessage}
+          </label>
+        </div>
+      </form>
+    </div>
     </div>
   );
 }

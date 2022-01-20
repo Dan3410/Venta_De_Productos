@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
-import { changeQuantity, decreaseQuantityByOne, deleteProduct, increaseQuantityByOne } from "../../Config/redux/actions";
+import { changeQuantity, decreaseQuantityByOne, deleteProduct, increaseQuantityByOne } from "../../Config/Redux/Actions/cartActions";
 import Cart from "./Cart.jsx";
 
 function mapStateToProps(state) {
     return {
-      productsInCart: state.products
+      productsInCart: state.cart.products
     }
   }
   

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { setDataInLocalStorage } from "../../Config/LocalStorage/LocalStorage";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import "./Login.css";
@@ -7,7 +6,10 @@ import { signInWithUsernameAndPassword } from "../../services/userServices";
 import FormField from "../../Components/FormField/FormField.jsx";
 import FormSubmit from "../../Components/FormSubmit/FormSubmit.jsx";
 import FormSecretField from "../../Components/FormSecretField/FormSecretField.jsx";
-import { checkPasswordNotEmptyLogin, checkUsernameNotEmptyLogin } from "../../Functions/checkUserFormFunctions";
+import {
+  checkPasswordNotEmptyLogin,
+  checkUsernameNotEmptyLogin,
+} from "../../Functions/checkUserFormFunctions";
 
 function Login(props) {
   const [form, setForm] = useState({ username: "", password: "" });
@@ -45,11 +47,15 @@ function Login(props) {
     let username = form.username;
     let password = form.password;
     try {
-    checkUsernameNotEmptyLogin(username)
-    checkPasswordNotEmptyLogin(password)
+      checkUsernameNotEmptyLogin(username);
+      checkPasswordNotEmptyLogin(password);
       const response = await signInWithUsernameAndPassword(username, password);
       if (response.status === "Error") throw new Error(response.message);
-      setDataInLocalStorage(response.data.user, response.data.token);
+      props.loadUserData(
+        response.data.user.username,
+        response.data.token,
+        response.data.user.firstName
+      );
       history.push("/");
     } catch (error) {
       setErrorMessage(error.message);
@@ -58,7 +64,7 @@ function Login(props) {
 
   return (
     <div className="login-page">
-      <div className="login-form--center">
+      <div className="login-form--center login-form--animation">
         <form onSubmit={handleSubmit} className="login-form--format">
           <div className="login-form__title-container ">
             <label className="login-form__title-container__text">Login</label>

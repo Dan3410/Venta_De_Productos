@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { updateUserData } from "../../services/userServices";
-import {
-  changeNameInLocalStorage,
-  getToken,
-} from "../../Config/LocalStorage/LocalStorage";
 import { loadUserData } from "../../Functions/userFunctions";
 import UserForm from "../../Components/UserForm/UserForm.jsx";
 import "./Profile.css";
@@ -31,7 +27,7 @@ function Profile(props) {
 
   const [errorMessage, setErrorMessage] = useState();
   const [successMessage, setChangeMessage] = useState();
-  const token = getToken();
+  const token = props.token;
 
   const handleSubmitData = (e) => {
     e.preventDefault();
@@ -53,14 +49,9 @@ function Profile(props) {
       let lastName = form.lastName;
       let password = form.password;
       let username = form.username;
-      updateUserData(
-        firstName,
-        lastName,
-        password,
-        token
-      ).then((response) => {
+      updateUserData(firstName, lastName, password, token).then((response) => {
         if (response.status === "Success") {
-          changeNameInLocalStorage(firstName);
+          props.changeNameUserData(firstName);
           setChangeMessage("Cambios realizados");
           setErrorMessage("");
           history.push(`/Profile/${username}`);
@@ -86,18 +77,20 @@ function Profile(props) {
 
   return (
     // eslint-disable-next-line react/jsx-pascal-case
-    <UserForm
-      disableUnmodifiableData={true}
-      onSubmit={handleSubmitData}
-      titleText="Datos del Usuario"
-      buttonText="Confirmar Modificaciones"
-      descriptionText="Aquí puede modificar los datos. Una vez modificados haga click en
+    <div>
+      <UserForm className={""}
+        disableUnmodifiableData={true}
+        onSubmit={handleSubmitData}
+        titleText="Datos del Usuario"
+        buttonText="Confirmar Modificaciones"
+        descriptionText="Aquí puede modificar los datos. Una vez modificados haga click en
      Confirmar Modificaciones"
-      form={{ formData: form, setForm: setForm }}
-      errorMessage={errorMessage}
-      successMessage={successMessage}
-      accountTypeOptions={null}
-    />
+        form={{ formData: form, setForm: setForm }}
+        errorMessage={errorMessage}
+        successMessage={successMessage}
+        accountTypeOptions={null}
+      />
+    </div>
   );
 }
 

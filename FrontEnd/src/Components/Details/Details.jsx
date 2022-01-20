@@ -1,18 +1,15 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "./Details.css";
+import "./Details.scss";
 import { getItemById } from "../../services/productServices";
-import { getIsLoggedIn } from "../../Config/LocalStorage/LocalStorage";
-import { useDispatch } from "react-redux";
 
 function Details(props) {
-  const dispatch = useDispatch();
   const [itemData, setData] = useState([]);
   const [productInCart, setProductInCart] = useState(false);
   const [quantityProduct, setQuantity] = useState(Number(0));
   const [warningMessage, setWarningMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const isLoggedIn = getIsLoggedIn();
+  const isLoggedIn = props.isLoggedIn;
 
   function handleChange(event) {
     if (event.target.value < 0) setQuantity(1);
@@ -58,7 +55,7 @@ function Details(props) {
           setWarningMessage("El producto ya esta en el carro.");
       }
     }
-  }, [props.idItemAMostrar, itemData.code, dispatch, isLoggedIn, props, successMessage]);
+  }, [props.idItemAMostrar, itemData.code, isLoggedIn, props, successMessage]);
 
   return (
     <div className="product-details-container">
@@ -97,7 +94,7 @@ function Details(props) {
           <div>
             <button
               onClick={handlePurchase}
-              className="product-details-container__button"
+              className="button"
             >
               <label> Comprar </label>
             </button>
@@ -105,7 +102,7 @@ function Details(props) {
         </>
       )}
       <Link to={"/"}>
-        <button className="product-details-container__button">
+        <button className="button">
           <label>VolverAtras </label>
         </button>
       </Link>

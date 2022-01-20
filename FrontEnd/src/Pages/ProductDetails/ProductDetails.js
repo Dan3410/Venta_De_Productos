@@ -1,10 +1,11 @@
 import { connect } from "react-redux";
-import { addProduct } from "../../Config/redux/actions";
+import { addProduct } from "../../Config/Redux/Actions/cartActions";
 import ProductDetail from "./ProductDetails.jsx";
 
 function mapStateToProps(state) {
   return {
-    productsInCart: state.products
+    productsInCart: state.cart.products,
+    isLoggedIn: state.userData.isLoggedIn
   }
 }
 

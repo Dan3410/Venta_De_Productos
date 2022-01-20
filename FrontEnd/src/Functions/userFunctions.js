@@ -1,17 +1,17 @@
-import { obtainUserData} from "../services/userServices";
+import { obtainUserData } from "../services/userServices";
 
 export const getPrivilege = async (token) => {
   if (token !== null) {
-    try{
-    const userData = await obtainUserData(token);
-    if (userData.status !== "Error") {
-      return (userData.data.user.accountType === "Cuenta Empresarial");
-    } else {
-      throw new Error(userData.message);
-    }
-    }catch(e){
-      console.log(e.message)
-      return false
+    try {
+      const userData = await obtainUserData(token);
+      if (userData.status !== "Error") {
+        return userData.data.user.accountType === "Cuenta Empresarial";
+      } else {
+        throw new Error(userData.message);
+      }
+    } catch (e) {
+      console.log("Error: " + e.message + "\n token: " + token);
+      return false;
     }
   } else {
     return false;
