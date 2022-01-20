@@ -1,11 +1,11 @@
-import "./ResizableFormField.css";
+import "./ResizableFormField.scss";
 
 function ResizableFormField(props) {
   return (
-    <div className="resizable-field-container">
+    <div className="field-container">
       <label>{props.field.label}</label>
       <textarea
-        className="resizable-field-container__input"
+        className="resizable-field-container__input field-container__input"
         type={props.field.type}
         placeholder={props.field.placeholder}
         name={props.field.name}

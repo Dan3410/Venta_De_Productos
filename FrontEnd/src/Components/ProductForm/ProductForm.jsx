@@ -1,9 +1,8 @@
-
 import AlignedFields from "../AlignedFields/AlignedFields.jsx";
 import FormField from "../FormField/FormField.jsx";
 import FormSubmit from "../FormSubmit/FormSubmit.jsx";
 import ResizableFormField from "../ResizableFormField/ResizableFormField.jsx";
-import "./ProductForm.css"
+import "./ProductForm.scss"
 
 function ProductForm(props) {
     
@@ -71,7 +70,6 @@ function ProductForm(props) {
       };
     
   return (
-    <div className="product-form-page">
       <div className="product-form--center ">
         <form
           onSubmit={props.onSubmit}
@@ -124,7 +122,6 @@ function ProductForm(props) {
       </div>
         </form>
       </div>
-    </div>
   );
 }
 

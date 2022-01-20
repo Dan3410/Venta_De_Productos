@@ -4,7 +4,7 @@ import {
   getItemById,
   updateProductDataById,
 } from "../../services/productServices";
-import "./ModifyProduct.css";
+import "./ModifyProduct.scss";
 
 function ProductModifier(props) {
 
@@ -72,7 +72,7 @@ function ProductModifier(props) {
   }, []);
 
   return (
-    <>
+    <div className="product-form-page">
       <ProductForm
         onSubmit={updateProductData}
         form={{ formData: formData, setForm: setForm }}
@@ -84,7 +84,7 @@ function ProductModifier(props) {
         errorMessage={errorMessage}
         successMessage={successMessage}
       />
-    </>
+    </div>
   );
 }
 

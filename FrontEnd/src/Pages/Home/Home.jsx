@@ -1,4 +1,4 @@
-import "./Home.css";
+import "./Home.scss";
 import { useEffect, useState } from "react";
 import { getItems } from "../../Functions/productsFunctions";
 import ProductDisplay from "../../Components/ProductDisplay/ProductDIsplay.jsx";

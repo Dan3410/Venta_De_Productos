@@ -2,7 +2,7 @@ import AlignedFields from "../AlignedFields/AlignedFields.jsx";
 import FormField from "../FormField/FormField.jsx";
 import FormSecretField from "../FormSecretField/FormSecretField.jsx";
 import FormSubmit from "../FormSubmit/FormSubmit.jsx";
-import "./UserForm.css";
+import "./UserForm.scss";
 
 function Register_ProfileForm(props) {
   const firstNameField = {

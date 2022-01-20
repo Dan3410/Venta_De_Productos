@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { updateUserData } from "../../services/userServices";
 import { loadUserData } from "../../Functions/userFunctions";
 import UserForm from "../../Components/UserForm/UserForm.jsx";
-import "./Profile.css";
+import "./Profile.scss";
 import {
   checkEqualPasswordAndConfirmPasswordFields,
   checkFirstNameNotEmpty,
@@ -77,7 +77,7 @@ function Profile(props) {
 
   return (
     // eslint-disable-next-line react/jsx-pascal-case
-    <div>
+    <div className="profile-page">
       <UserForm className={""}
         disableUnmodifiableData={true}
         onSubmit={handleSubmitData}

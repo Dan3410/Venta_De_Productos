@@ -1,5 +1,5 @@
 import CartProduct from "../../Components/CartProduct/CartProduct.jsx";
-import "./Cart.css"
+import "./Cart.scss"
 
 function Cart(props) {
   if (props.productsInCart.length !== 0)

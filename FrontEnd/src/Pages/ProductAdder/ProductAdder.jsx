@@ -2,7 +2,7 @@ import { useState, } from "react";
 import { useHistory } from "react-router";
 import ProductForm from "../../Components/ProductForm/ProductForm.jsx";
 import { createProduct } from "../../services/productServices";
-import "./ProductAdder.css";
+import "./ProductAdder.scss";
 
 function ProductAdder(props) {
   const [formData, setForm] = useState({
@@ -40,7 +40,7 @@ function ProductAdder(props) {
   };
 
   return (
-    <>
+    <div className="product-form-page">
       <ProductForm
         onSubmit={uploadProductData}
         form={{ formData: formData, setForm: setForm }}
@@ -50,7 +50,7 @@ function ProductAdder(props) {
         errorMessage={errorMessage}
         successMessage={null}
       />
-    </>
+    </div>
   );
 }
 

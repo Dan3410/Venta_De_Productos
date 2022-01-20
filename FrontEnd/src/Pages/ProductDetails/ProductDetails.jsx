@@ -1,5 +1,5 @@
 import Details from "../../Components/Details/Details.jsx";
-import "./ProductDetails.css";
+import "./ProductDetails.scss";
 
 function ProductDetail(props) {
   return (

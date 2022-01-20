@@ -1,5 +1,5 @@
 import FormField from "../FormField/FormField";
-import "./AlignedFields.css"
+import "./AlignedFields.scss"
 
 function AlignedFields(props) {
   return (

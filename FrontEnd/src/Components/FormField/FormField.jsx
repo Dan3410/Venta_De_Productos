@@ -1,11 +1,11 @@
-import "./FormField.css";
+import "./FormField.scss";
 
 function FormField(props) {
   return (
     <div className="field-container">
       <label>{props.field.label}</label>
       <input
-        className="field-container__input"
+        className="field-container__input--size field-container__input"
         type={props.field.type}
         placeholder={props.field.placeholder}
         name={props.field.name}

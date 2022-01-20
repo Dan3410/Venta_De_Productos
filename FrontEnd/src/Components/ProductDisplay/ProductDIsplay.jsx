@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./ProductDisplay.css";
+import "./ProductDisplay.scss";
 //Definicion de clase
 function ProductDisplay(props) {
   return (

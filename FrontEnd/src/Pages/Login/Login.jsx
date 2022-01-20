@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import "./Login.css";
+import "./Login.scss";
 import { signInWithUsernameAndPassword } from "../../services/userServices";
 import FormField from "../../Components/FormField/FormField.jsx";
 import FormSubmit from "../../Components/FormSubmit/FormSubmit.jsx";

@@ -1,0 +1,6 @@
+@use '../../sharedStyles/fieldStyles.scss';
+
+.resizable-field-container__input{
+    width: 100%;
+    resize: vertical;
+}

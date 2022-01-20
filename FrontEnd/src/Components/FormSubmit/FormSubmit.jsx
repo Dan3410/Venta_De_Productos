@@ -1,4 +1,4 @@
-import "./FormSubmit.css";
+import "./FormSubmit.scss";
 
 function FormSubmit(props) {
   return (
