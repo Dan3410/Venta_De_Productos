@@ -12,14 +12,14 @@ function ProductDisplay(props) {
           alt="error loading"
         />
         <div className="product-display__name-container">
-          <label className="name-container__text">Nombre del producto: </label>
-          {props.itemAMostrar.name}
+          <label className="name-container__text"> {props.itemAMostrar.name}</label>
+          
         </div>
         <div >
           <label className="price-container__text">Precio: {props.itemAMostrar.price}</label>
         </div>
         <div >
-          <label className="code-container__text">Sku:{props.itemAMostrar.code}</label>
+          <label className="code-container__text">Código:{props.itemAMostrar.code}</label>
         </div>
       </div>
     </Link>

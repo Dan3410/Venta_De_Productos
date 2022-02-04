@@ -20,6 +20,13 @@ function FormSecretField(props) {
   return (
     <div className="field-container">
       <label>{props.field.label}</label>
+      {!showPassword ? (
+        <FontAwesomeIcon icon={faEye} onClick={showText} className="secret-field-container__icon"/>
+      ) : null}
+      {showPassword ? (
+        <FontAwesomeIcon icon={faEyeSlash} onClick={hideText} className="secret-field-container__icon"/>
+      ) : null}
+
       <input
         className="secret-field-container__input field-container__input"
         type={typeInput}
@@ -30,12 +37,6 @@ function FormSecretField(props) {
         key={props.index}
         disabled={props.field.disabled}
       ></input>
-      {!showPassword ? (
-        <FontAwesomeIcon icon={faEye} onClick={showText} />
-      ) : null}
-      {showPassword ? (
-        <FontAwesomeIcon icon={faEyeSlash} onClick={hideText} />
-      ) : null}
     </div>
   );
 }

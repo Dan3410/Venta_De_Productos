@@ -1,13 +1,24 @@
-.submit-container__input{
-    background-color: rgb(0, 0, 0);
-    color: white;
-    border-radius: 10px;
-    text-transform: uppercase;
-    cursor: pointer;
-    padding: 15px;
-    width: 100%;
-}
+$colorBackground: rgb(0,0,0);
+$colorOnHover: rgb(12, 52, 161);
 
-.submit-container{
-    margin-top: 20px;
+.submit-container__input {
+  width: 100%;
+  padding: 2%;
+  color: white;
+  background-image: linear-gradient($colorOnHover, $colorOnHover);
+  background-position: left;
+  background-size: 0%;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  border: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 20px;
+  background-color: $colorBackground;
+  transition: background-size 1s,
+  background-position 0s 1s;
+}
+.submit-container__input:hover {
+  background-position: right;
+  background-size: 100%;
 }

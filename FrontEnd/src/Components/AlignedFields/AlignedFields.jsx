@@ -4,12 +4,12 @@ import "./AlignedFields.scss"
 function AlignedFields(props) {
   return (
     <div>
-      <div className="aligned-field-container--left">
+      <span className="aligned-field-container--left">
         <FormField field={props.firstField} handleChange={props.handleChange} />
-      </div>
-      <div className="aligned-field-container--right">
+      </span>
+      <span className="aligned-field-container--right">
         <FormField field={props.secondField} handleChange={props.handleChange} />
-      </div>
+      </span>
     </div>
   );
 }

@@ -2,13 +2,11 @@ import "./FormSubmit.scss";
 
 function FormSubmit(props) {
   return (
-    <div className="submit-container">
       <input
-        className="submit-container__input"
+        className="submit-container__input draw meet"
         type="submit"
         value={props.value}
       />
-    </div>
   );
 }
 
