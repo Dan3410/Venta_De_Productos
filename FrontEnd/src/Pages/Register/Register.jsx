@@ -62,9 +62,22 @@ function Register(props) {
         lastName,
         accountType
       );
-      if (outcome.status === "Error") throw new Error(outcome.message);
-      alert("Usuario registrado, haga click en Aceptar para continuar");
-      history.push("/");
+      if (outcome.status !== 201) {
+        switch (outcome.status) {
+          case 452:
+            setErrorMessage("There is already user with that username");
+            break;
+          case 453:
+            setErrorMessage("The mail is already registered to another user");
+            break;
+          default:
+            setErrorMessage("Error creating new user");
+            break;
+        }
+      } else {
+        alert("Usuario registrado, haga click en Aceptar para continuar");
+        history.push("/");
+      }
     } catch (err) {
       setErrorMessage(err.message);
     }

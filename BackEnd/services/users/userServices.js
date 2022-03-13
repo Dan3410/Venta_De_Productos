@@ -1,3 +1,5 @@
+const userModel = require("../../utils/models/userModel");
+
 module.exports = {
   findUsernameService: async function (username) {
     return await userModel.findOne({

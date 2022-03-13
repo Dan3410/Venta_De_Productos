@@ -4,14 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Product_Manage.scss";
 
-
 function Product_Manage(props) {
+  const [isDeleted, setDeleted] = useState(false);
 
-  const [isDeleted,setDeleted] = useState(false)
-
-  function deleteItem(){
-    props.deleteProduct(props.item._id)
-    setDeleted(true);
+  function deleteItem() {
+    props.deleteProduct(props.item._id).then((response) => {
+      if (response.status === 200) setDeleted(true);
+      else props.setErrorMessage("Error deleting the product")
+    });
   }
 
   if (props.item !== undefined && !isDeleted)
@@ -27,11 +27,11 @@ function Product_Manage(props) {
         <br />
         <label>Codigo: {props.item.code} </label>
         <Link to={`/Modificar_Producto/${props.item._id}`}>
-        <FontAwesomeIcon
-          icon={faPen}
-          className="product_manage-container__icon"
-          title="Modify product data"
-        />
+          <FontAwesomeIcon
+            icon={faPen}
+            className="product_manage-container__icon"
+            title="Modify product data"
+          />
         </Link>
         <br />
         <label>Precio: {props.item.price}</label>

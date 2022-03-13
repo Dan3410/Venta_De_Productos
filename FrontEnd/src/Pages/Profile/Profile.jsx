@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import { updateUserData } from "../../services/userServices";
+import { updateUserData } from "../../api/userApi";
 import { loadUserData } from "../../Functions/userFunctions";
 import UserForm from "../../Components/UserForm/UserForm.jsx";
 import "./Profile.scss";
@@ -50,14 +50,20 @@ function Profile(props) {
       let password = form.password;
       let username = form.username;
       updateUserData(firstName, lastName, password, token).then((response) => {
-        if (response.status === "Success") {
+        if (response.status !== 200) {
+          switch (response.status) {
+            case 404:
+              setErrorMessage("User not Found");
+              break;
+            default:
+              setErrorMessage("Error when logging in");
+              break;
+          }
+        } else {
           props.changeNameUserData(firstName);
           setChangeMessage("Cambios realizados");
           setErrorMessage("");
           history.push(`/Profile/${username}`);
-        } else {
-          setChangeMessage("");
-          throw new Error(response.message);
         }
       });
     } catch (e) {
@@ -68,7 +74,7 @@ function Profile(props) {
 
   useEffect(() => {
     try {
-      loadUserData(token, form, setForm);
+      loadUserData(token, form, setForm,setErrorMessage);
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -78,7 +84,8 @@ function Profile(props) {
   return (
     // eslint-disable-next-line react/jsx-pascal-case
     <div className="profile-page">
-      <UserForm className={""}
+      <UserForm
+        className={""}
         disableUnmodifiableData={true}
         onSubmit={handleSubmitData}
         titleText="Datos del Usuario"

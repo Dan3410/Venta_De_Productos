@@ -21,7 +21,6 @@ function Header(props) {
     //Esto fuerza el re-render
     setIsSuperUser(false);
     history.push("/");
-
   }
   const notLoggedButtons = [
     {
@@ -41,14 +40,16 @@ function Header(props) {
       onClick: null,
     },
     {
-      link: 'LogOut',
+      link: "LogOut",
       label: "LogOut",
       onClick: logOutUser,
     },
   ];
 
   useEffect(() => {
-    setIsSuperUser(getPrivilege(token));
+    getPrivilege(token).then((isSuperUser) => 
+      setIsSuperUser(isSuperUser)
+    );
   }, [token]);
 
   return (
@@ -60,7 +61,8 @@ function Header(props) {
           </div>
         ) : null}
         <NavLink
-          exact to={"/"}
+          exact
+          to={"/"}
           className="header__button-size--medium header__button-format "
         >
           <label className="header__button__text">Home</label>
@@ -69,7 +71,8 @@ function Header(props) {
           <>
             {notLoggedButtons.map((item, index) => (
               <NavLink
-              exact to={item.link}
+                exact
+                to={item.link}
                 key={index}
                 className="header__button-size--medium header__button-format  "
               >
@@ -81,7 +84,8 @@ function Header(props) {
           <>
             {isSuperUser && (
               <NavLink
-              exact to={`/Gestion_Productos`}
+                exact
+                to={`/Gestion_Productos`}
                 className="header__button-size--large header__button-format"
               >
                 <label className="header__button__text">
@@ -91,7 +95,8 @@ function Header(props) {
             )}
             {loggedButtons.map((item, index) => (
               <NavLink
-                exact to={item.link}
+                exact
+                to={item.link}
                 key={index}
                 className="header__button-size--medium header__button-format"
                 onClick={item.onClick}
@@ -100,7 +105,8 @@ function Header(props) {
               </NavLink>
             ))}
             <NavLink
-              exact to={`/Cart/${username}`}
+              exact
+              to={`/Cart/${username}`}
               className="header__button-size--medium header__button-format"
             >
               <FontAwesomeIcon

@@ -16,9 +16,8 @@ module.exports = {
     }
   },
 
-  checkPrivilege: async function (username, res) {
+  checkPrivilege: async function (username) {
     let user = await this.obtainData(username);
-    if (user !== null && user.accountType !== "Cuenta Empresarial")
-      throw new Error(res, "Error", "Privilegios insuficientes", null);
+    return user !== null && user.accountType === "Cuenta Empresarial";
   },
 };

@@ -11,22 +11,37 @@ router.delete("/:id", (req, res) =>
 );
 router.put("/:id", (req, res) =>
   productController.updateProduct(req, res).then(
-    (result) =>
-      resModifier.modifyRes(res, result.code, "Item Data Modified", result.product),
-    () => resModifier.sendErrorServer(res)
-  )
-);
-router.post("/", (req, res) =>
-  productController.createProduct(req, res).then(
-    (result) =>
+    (result) => {
       resModifier.modifyRes(
         res,
         result.code,
-        "Item Uploaded to Database",
+        "Item Data Modified",
         result.product
-      ),
+      );
+    },
     () => resModifier.sendErrorServer(res)
   )
+);
+router.post("/", (req, res) =>{
+  productController.createProduct(req, res).then(
+    (result) => {
+      console.log(result)
+      if (result.code === 201)
+        resModifier.modifyRes(
+          res,
+          result.code,
+          "Item Uploaded to Database",
+          result.product
+        );
+      if (result.code === 401)
+          resModifier.sendClientError(res,401)
+    },
+    (error) => {
+      console.log(error);
+      resModifier.sendErrorServer(res);
+    }
+  )
+}
 );
 
 module.exports = router;

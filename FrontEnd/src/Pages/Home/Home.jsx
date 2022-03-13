@@ -5,9 +5,10 @@ import ProductDisplay from "../../Components/ProductDisplay/ProductDIsplay.jsx";
 
 function Home() {
   const [items, setItem] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    getItems(setItem);
+    getItems(setItem,setErrorMessage);
   }, []);
 
   return (
@@ -21,6 +22,11 @@ function Home() {
         {items.map((item, index) => (
           <ProductDisplay key={index} itemAMostrar={item} />
         ))}
+      </div>
+      <div className="home__message-container">
+        <label className="home__message-container__text--error">
+          {errorMessage}
+        </label>
       </div>
     </div>
   );

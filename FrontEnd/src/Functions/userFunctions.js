@@ -1,16 +1,16 @@
-import { obtainUserData } from "../services/userServices";
+import { obtainUserData } from "../api/userApi";
 
 export const getPrivilege = async (token) => {
   if (token !== null) {
     try {
-      const userData = await obtainUserData(token);
-      if (userData.status !== "Error") {
-        return userData.data.user.accountType === "Cuenta Empresarial";
+      const response = await obtainUserData(token);
+      if (response.status === 200) {
+        return response.user.accountType === "Cuenta Empresarial";
       } else {
-        throw new Error(userData.message);
+        throw new Error(response.message);
       }
     } catch (e) {
-      console.log("Error: " + e.message + "\n token: " + token);
+      console.log("Error getting privilege");
       return false;
     }
   } else {
@@ -18,17 +18,22 @@ export const getPrivilege = async (token) => {
   }
 };
 
-export const loadUserData = async (token, form, setForm) => {
-  obtainUserData(token).then((userData) => {
-    if (userData.status !== "Error")
+export const loadUserData = (token, form, setForm, setErrorMessage) => {
+  obtainUserData(token).then((response) => {
+    if (response.status === 200)
       setForm({
         ...form,
-        firstName: userData.data.user.firstName,
-        lastName: userData.data.user.lastName,
-        mail: userData.data.user.mail,
-        username: userData.data.user.username,
-        accountType: userData.data.user.accountType,
+        firstName: response.user.firstName,
+        lastName: response.user.lastName,
+        mail: response.user.mail,
+        username: response.user.username,
+        accountType: response.user.accountType,
       });
-    else throw new Error(userData.message);
+    else
+      switch (response.status) {
+        default:
+          setErrorMessage("Error retrieving Data");
+          break;
+      }
   });
 };

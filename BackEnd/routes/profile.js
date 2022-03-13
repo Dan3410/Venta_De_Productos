@@ -5,7 +5,7 @@ const resModifier = require("../utils/resModifier");
 
 router.get("/", (req, res) =>
   userController.findUserByUsername(req).then(
-    (result) => {
+    (result) => {console.log(result)
       if (result.code === 200)
         resModifier.modifyRes(res, result.code, "User found", {
           user: result.user,
@@ -13,7 +13,7 @@ router.get("/", (req, res) =>
       if (result.code === 400) resModifier.sendClientError(res,400);
     },
 
-    () => resModifier.sendErrorServer(res)
+    (error) => {console.log(error); resModifier.sendErrorServer(res)}
   )
 );
 router.put("/", (req, res) =>
@@ -23,7 +23,7 @@ router.put("/", (req, res) =>
         resModifier.modifyRes(res, result.code, "User Data Updated", {
           user: result.user,
         });
-      if (result.code === 400) resModifier.sendClientError(res,400);
+      if (result.code === 404) resModifier.sendClientError(res,404);
     },
     () => resModifier.sendErrorServer(res)
   )

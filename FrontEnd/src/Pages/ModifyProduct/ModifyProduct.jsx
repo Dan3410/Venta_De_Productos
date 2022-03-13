@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
 import ProductForm from "../../Components/ProductForm/ProductForm.jsx";
-import {
-  getItemById,
-  updateProductDataById,
-} from "../../services/productServices";
+import { getItemById, updateProductDataById } from "../../api/productApi";
 import "./ModifyProduct.scss";
 
 function ProductModifier(props) {
-
   const [errorMessage, setErrorMessage] = useState();
   const [successMessage, setSuccessMessage] = useState();
 
@@ -36,11 +32,16 @@ function ProductModifier(props) {
           token,
           formData
         ).then((response) => {
-          if (response.status !== "Error") {
-            setSuccessMessage("Datos Actualizados");
+          if (response.status === 200) {
+            setSuccessMessage("Data updated!");
             setErrorMessage("");
-          } else {
-            setErrorMessage(response.message);
+          }
+          if (response.status === 401) {
+            setErrorMessage("You dont have the privilege to do that");
+            setSuccessMessage("");
+          }
+          if (response.status === 500) {
+            setErrorMessage("Error updating data");
             setSuccessMessage("");
           }
         });
@@ -53,17 +54,18 @@ function ProductModifier(props) {
   useEffect(() => {
     try {
       getItemById(props.match.params.id).then((response) => {
-        if (response.status !== "Error")
+        if (response.status === 200) {
+          console.log(response);
           setForm({
             ...formData,
-            price: response.data.price,
-            category: response.data.category,
-            name: response.data.name,
-            photo: response.data.photo,
-            code: response.data.code,
-            description: response.data.description,
+            price: response.product.price,
+            category: response.product.category,
+            name: response.product.name,
+            photo: response.product.photo,
+            code: response.product.code,
+            description: response.product.description,
           });
-        else throw new Error(response.message);
+        } else setErrorMessage("Error retrieving product data");
       });
     } catch (e) {
       setErrorMessage(e.message);

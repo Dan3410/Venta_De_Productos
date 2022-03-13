@@ -4,15 +4,16 @@ import { useState, useEffect } from "react";
 import Product_Manage from "../../Components/Product_Manage/Product_Manage.jsx";
 import { Link } from "react-router-dom";
 import { getItems } from "../../Functions/productsFunctions";
-import { deleteProductById } from "../../services/productServices";
+import { deleteProductById } from "../../api/productApi";
 
 function ProductsManager(props) {
   const [items, setItem] = useState([]);
-  const username = props.username
-  const token = props.token
+  const [errorMessage, setErrorMessage] = useState("");
+  const username = props.username;
+  const token = props.token;
 
-  function deleteProduct(id){
-    deleteProductById(id, username, token);
+  function deleteProduct(id) {
+    return deleteProductById(id, username, token).then();
   }
 
   useEffect(() => {
@@ -29,6 +30,7 @@ function ProductsManager(props) {
           token={props.token}
           username={props.username}
           deleteProduct={deleteProduct}
+          setErrorMessage = {setErrorMessage}
         />
       ))}
       <Link to={"/Agregar_Producto"}>
@@ -38,6 +40,11 @@ function ProductsManager(props) {
           </button>
         </div>
       </Link>
+      <div className="product-manager__message-container">
+        <label className="product-manager__message-container__text--error">
+          {errorMessage}
+        </label>
+      </div>
     </div>
   );
 }

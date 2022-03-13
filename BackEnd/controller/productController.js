@@ -10,29 +10,45 @@ const {
 
 module.exports = {
   getAllProducts: async function (req, res, next) {
-    const products = getAllProductsService();
+    const products = await getAllProductsService();
     return { code: 200, products: products };
   },
 
   getProductById: async function (req, res, next) {
-    const product = getProductWithIdService(req.params.id);
-    return { code: 200, product: product };
+    const product = await getProductWithIdService(req.params.id);
+    if (product !== null) return { code: 200, product: product };
+    else return { code: 404, product: null };
   },
 
   createProduct: async function (req, res, next) {
     const token = tokenFunctions.extractToken(req);
     const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
-    await accountFunctions.checkPrivilege(tokenDecoded.username, res);
-    const newProduct = createProductService(req.body.productData);
-    return { code: 201, product: newProduct };
+    const hasPrivilege = await accountFunctions.checkPrivilege(
+      tokenDecoded.username,
+      res
+    );
+    if (hasPrivilege) {
+      const newProduct = await createProductService(req.body.productData);
+      return { code: 201, product: newProduct };
+    } else return { code: 401, product: null };
   },
 
   updateProduct: async function (req, res, next) {
     const token = tokenFunctions.extractToken(req);
     const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
-    await accountFunctions.checkPrivilege(tokenDecoded.username, res);
-    const product = updateProductService(req.params.id, req.body.productData);
-    return { code: 200, product: product };
+    const hasPrivilege = await accountFunctions.checkPrivilege(
+      tokenDecoded.username
+    );
+    console.log(hasPrivilege);
+    if (hasPrivilege) {
+      const product = await updateProductService(
+        req.params.id,
+        req.body.productData
+      );
+      return { code: 200, product: product };
+    } else {
+      return { code: 401, product: null };
+    }
   },
 
   deleteProduct: async function (req, res, next) {

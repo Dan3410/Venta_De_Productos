@@ -1,7 +1,7 @@
-import { useState, } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router";
 import ProductForm from "../../Components/ProductForm/ProductForm.jsx";
-import { createProduct } from "../../services/productServices";
+import { createProduct } from "../../api/productApi";
 import "./ProductAdder.scss";
 
 function ProductAdder(props) {
@@ -26,11 +26,15 @@ function ProductAdder(props) {
     } else {
       try {
         createProduct(username, token, formData).then((response) => {
-          if (response.status !== "Error") {
+          if (response.status === 201) {
             history.push("/Gestion_Productos");
             setErrorMessage("");
-          } else {
-            throw new Error(response.message);
+          }
+          if (response.status === 401) {
+            setErrorMessage("You dont have the privilege to do that");
+          }
+          if (response.status === 500) {
+            setErrorMessage("Error creating product");
           }
         });
       } catch (e) {

@@ -7,7 +7,7 @@ module.exports = {
   },
 
   getProductWithIdService: async function (id) {
-    await productModel.findById({ _id: id }).select({
+    return await productModel.findById({ _id: id }).select({
       name: 1,
       price: 1,
       code: 1,

@@ -2,7 +2,7 @@ import { CSSTransition } from "react-transition-group";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Details from "../../Components/Details/Details.jsx";
-import { getItemById } from "../../services/productServices.js";
+import { getItemById } from "../../api/productApi.js";
 import "./ProductDetails.scss";
 
 function ProductDetail(props) {

@@ -7,10 +7,12 @@ module.exports = {
   },
 
   sendClientError: function(res,code){
-    res.status(code).send()
+    res.status(code).json({
+      status: code
+    })
   },
 
   sendErrorServer: function (res) {
-    res.status(500).send();
+    res.status(500).json();
   },
 };

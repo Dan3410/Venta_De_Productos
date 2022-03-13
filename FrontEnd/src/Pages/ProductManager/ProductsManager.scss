@@ -1,5 +1,12 @@
-@use '../../sharedStyles/buttonsStyles.scss';
+@use "../../sharedStyles/buttonsStyles.scss";
 
-.add-product-container{
-    text-align: center
+.add-product-container {
+  text-align: center;
+}
+
+.product-manager__message-container {
+  text-align: center;
+}
+.product-manager__message-container__text--error {
+  color: rgb(139, 0, 0);
 }

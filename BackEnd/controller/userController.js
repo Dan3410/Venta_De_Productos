@@ -5,11 +5,13 @@ const {
   findUsernameService,
   findMailService,
   createUserService,
+  updateUserService,
 } = require("../services/users/userServices");
 
 module.exports = {
   logInUser: async function (req, res, next) {
-    const user = findUsernameService(req.params.username);
+    const user = await findUsernameService(req.params.username);
+    console.log(user)
     if (user) {
       if (bcrypt.compareSync(req.body.password, user.password)) {
         const token = jwt.sign(
@@ -19,18 +21,18 @@ module.exports = {
             expiresIn: "1h",
           }
         );
-        return { code: 200, token: token };
+        return { code: 200, token: token, user: user };
       } else {
-        return { code: 401, token: null };
+        return { code: 401, token: null, user: null };
       }
     } else {
-      return { code: 404, token: null };
+      return { code: 404, token: null, user: null };
     }
   },
   findUserByUsername: async function (req, res, next) {
     const token = tokenFunctions.extractToken(req);
     const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
-    const user = findUsernameService(tokenDecoded.username);
+    const user = await findUsernameService(tokenDecoded.username);
     if (user) {
       return { code: 200, user: user };
     } else {
@@ -41,7 +43,7 @@ module.exports = {
   updateUserData: async function (req, res, next) {
     const token = tokenFunctions.extractToken(req);
     const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
-    const user = findUsernameService(tokenDecoded.username);
+    const user = await findUsernameService(tokenDecoded.username);
     if (user) {
       let newData = {
         firstName: req.body.firstName,
@@ -59,11 +61,11 @@ module.exports = {
   },
 
   registerUser: async function (req, res, next) {
-    const userByMail = findMailService(req.body.mail);
-    const userByUsername = findUsernameService(req.body.username);
+    const userByMail = await findMailService(req.body.mail);
+    const userByUsername = await findUsernameService(req.body.username);
     if (userByMail === null) {
       if (userByUsername === null) {
-        const user = createUserService({
+        const user = await createUserService({
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           username: req.body.username,

@@ -5,13 +5,13 @@ const resModifier = require("../utils/resModifier");
 
 router.get("/products", (req, res) =>
   productController.getAllProducts(req).then(
-    (result) =>
+    (result) =>{
       resModifier.modifyRes(
         res,
         result.code,
         "Items Extracted",
         result.products
-      ),
+      )},
     () => resModifier.sendErrorServer(res)
   )
 );

@@ -9,46 +9,67 @@ function createTokenAuthorizationHeader(token) {
 }
 
 export async function getAllItems() {
-  const response = await axios.get(baseURL + "/products");
-  return response.data;
+  try {
+    const response = await axios.get(baseURL + "/products");
+    return { status: response.status, products: response.data.data };
+  } catch (error) {
+    return { status: error.response.status, products: null };
+  }
 }
 
 export async function getItemById(id) {
-  const response = await axios.get(baseURL + `/details/${id}`);
-  return response.data;
+  try {
+    const response = await axios.get(baseURL + `/details/${id}`);
+    console.log(response)
+    return { status: response.status, product: response.data.data };
+  } catch (error) {
+    return { status: error.response.status, product: null };
+  }
 }
 
 export async function updateProductDataById(id, username, token, newData) {
-  const response = await axios.put(
-    baseURL + `/gestion_productos/${id}`,
-    {
-      username: username,
-      productData: newData,
-    },
-    {
-      headers: createTokenAuthorizationHeader(token),
-    }
-  );
-  return await response.data;
+  try {
+    const response = await axios.put(
+      baseURL + `/gestion_productos/${id}`,
+      {
+        username: username,
+        productData: newData,
+      },
+      {
+        headers: createTokenAuthorizationHeader(token),
+      }
+    );
+    return { status: response.status, product: response.data.data };
+  } catch (error) {
+    return { status: error.response.status, product: null };
+  }
 }
 
 export async function createProduct(username, token, newData) {
-  const response = await axios.post(
-    baseURL + `/gestion_productos`,
-    {
-      username: username,
-      productData: newData,
-    },
-    {
-      headers: createTokenAuthorizationHeader(token),
-    }
-  );
-  return await response.data;
+  try {
+    const response = await axios.post(
+      baseURL + `/gestion_productos`,
+      {
+        username: username,
+        productData: newData,
+      },
+      {
+        headers: createTokenAuthorizationHeader(token),
+      }
+    );
+    return { status: response.status, product: response.data.data };
+  } catch (error) {
+    return { status: error.response.status, product: null };
+  }
 }
 
 export async function deleteProductById(id, username, token) {
-  const response = await axios.delete(baseURL + `/gestion_productos/${id}`, {
-    headers: createTokenAuthorizationHeader(token)
-  });
-  return await response.data;
+  try {
+    const response = await axios.delete(baseURL + `/gestion_productos/${id}`, {
+      headers: createTokenAuthorizationHeader(token),
+    });
+    return { status: response.status, product: response.data.data };
+  } catch (error) {
+    return { status: error.response.status, product: null };
+  }
 }
