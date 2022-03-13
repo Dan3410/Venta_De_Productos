@@ -20,7 +20,6 @@ export async function getAllItems() {
 export async function getItemById(id) {
   try {
     const response = await axios.get(baseURL + `/details/${id}`);
-    console.log(response)
     return { status: response.status, product: response.data.data };
   } catch (error) {
     return { status: error.response.status, product: null };

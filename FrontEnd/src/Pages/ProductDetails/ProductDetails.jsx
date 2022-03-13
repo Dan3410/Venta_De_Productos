@@ -13,38 +13,34 @@ function ProductDetail(props) {
   const [quantityProduct, setQuantity] = useState(Number(0));
   const isLoggedIn = props.isLoggedIn;
 
-  useEffect(() => {
-    const getItem = async () => {
-      try {
-        getItemById(props.match.params.id).then((response) => {
-          setProductData(response.data);
-        });
-      } catch (e) {
-        console.log("Error", e);
-      }
-    };
+  const getItem = async () => {
+    getItemById(props.match.params.id).then((response) => {
+      if (response.status === 200) setProductData(response.product);
+      if (response.status === 404) throw new Error("Product not found");
+      if (response.status === 500) throw new Error("Error retrieving product");
+    });
+  };
 
-    getItem();
-    if (!isLoggedIn) {
-      setWarningMessage("Debes estar logeado para agregar productos al carro");
-    } else {
-      if (
-        props.productsInCart.find(
-          (product) => product.code === productData.code
-        )
-      ) {
-        setProductInCart(true);
-        if (successMessage !== "Agregado al carro")
-          setWarningMessage("El producto ya esta en el carro.");
+  useEffect(() => {
+    getItem().then(() => {
+      if (!isLoggedIn) {
+        setWarningMessage(
+          "Debes estar logeado para agregar productos al carro"
+        );
+      } else {
+        if (
+          props.productsInCart.find(
+            (product) => product.code === productData.code
+          )
+        ) {
+          setProductInCart(true);
+          if (successMessage !== "Agregado al carro")
+            setWarningMessage("El producto ya esta en el carro.");
+        }
       }
-    }
-  }, [
-    props.idItemAMostrar,
-    productData.code,
-    isLoggedIn,
-    props,
-    successMessage,
-  ]);
+    },(error) => setWarningMessage(error.message));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleChange(event) {
     if (event.target.value < 0) setQuantity(1);
