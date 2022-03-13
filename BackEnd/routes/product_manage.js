@@ -25,7 +25,6 @@ router.put("/:id", (req, res) =>
 router.post("/", (req, res) =>{
   productController.createProduct(req, res).then(
     (result) => {
-      console.log(result)
       if (result.code === 201)
         resModifier.modifyRes(
           res,

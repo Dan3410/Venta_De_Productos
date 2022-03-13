@@ -39,7 +39,6 @@ module.exports = {
     const hasPrivilege = await accountFunctions.checkPrivilege(
       tokenDecoded.username
     );
-    console.log(hasPrivilege);
     if (hasPrivilege) {
       const product = await updateProductService(
         req.params.id,

@@ -5,7 +5,7 @@ const resModifier = require("../utils/resModifier");
 
 router.get("/", (req, res) =>
   userController.findUserByUsername(req).then(
-    (result) => {console.log(result)
+    (result) => {
       if (result.code === 200)
         resModifier.modifyRes(res, result.code, "User found", {
           user: result.user,
