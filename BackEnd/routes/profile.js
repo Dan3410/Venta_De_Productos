@@ -1,7 +1,31 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-var userController = require('../controller/userController')
+var userController = require("../controller/userController");
+const resModifier = require("../utils/resModifier");
 
-router.get('/', userController.findUserByUsername);
-router.put('/', userController.updateUserData);
+router.get("/", (req, res) =>
+  userController.findUserByUsername(req).then(
+    (result) => {
+      if (result.code === 200)
+        resModifier.modifyRes(res, result.code, "User found", {
+          user: result.user,
+        });
+      if (result.code === 400) resModifier.sendClientError(res,400);
+    },
+
+    () => resModifier.sendErrorServer(res)
+  )
+);
+router.put("/", (req, res) =>
+  userController.updateUserData(req).then(
+    (result) => {
+      if (result.code === 200)
+        resModifier.modifyRes(res, result.code, "User Data Updated", {
+          user: result.user,
+        });
+      if (result.code === 400) resModifier.sendClientError(res,400);
+    },
+    () => resModifier.sendErrorServer(res)
+  )
+);
 module.exports = router;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
 import "./Register.scss";
-import { createUserWithUsernameAndPassword } from "../../services/userServices";
+import { createUserWithUsernameAndPassword } from "../../api/userApi";
 import {
   checkEqualPasswordAndConfirmPasswordFields,
   checkLengthPassword,

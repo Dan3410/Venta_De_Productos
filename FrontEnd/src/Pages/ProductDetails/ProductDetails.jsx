@@ -1,3 +1,4 @@
+import { CSSTransition } from "react-transition-group";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Details from "../../Components/Details/Details.jsx";
@@ -64,23 +65,30 @@ function ProductDetail(props) {
       event.preventDefault();
       event.stopPropagation();
     }
-    console.log(props.isLoggedIn)
+    console.log(props.isLoggedIn);
   }
 
   return (
-    <div className="product-details-container">
-      <Details
-        productsInCart={props.productsInCart}
-        addProductToCart={props.addProductToCart}
-        checkProductInCart={props.checkProductInCart}
-        product={productData}
-      ></Details>
-      <div className="product-details-container__added-To-Cart-message">
-        <label>{successMessage}</label>
-      </div>
-      <div className="product-details-container__warning-message">
-        <label>{warningMessage}</label>
-      </div>
+    <CSSTransition
+      in
+      classNames="appear"
+      appear={true}
+      unmountOnExit={true}
+      timeout={500}
+    >
+      <div className="product-details-container">
+        <Details
+          productsInCart={props.productsInCart}
+          addProductToCart={props.addProductToCart}
+          checkProductInCart={props.checkProductInCart}
+          product={productData}
+        ></Details>
+        <div className="product-details-container__added-To-Cart-message">
+          <label>{successMessage}</label>
+        </div>
+        <div className="product-details-container__warning-message">
+          <label>{warningMessage}</label>
+        </div>
         {isLoggedIn && !productInCart && (
           <>
             <label>Ingrese la cantidad: </label>
@@ -103,6 +111,7 @@ function ProductDetail(props) {
           </button>
         </Link>
       </div>
+    </CSSTransition>
   );
 }
 

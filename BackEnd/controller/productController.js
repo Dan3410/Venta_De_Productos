@@ -1,103 +1,45 @@
-const resModifier = require("./resModifier");
 const tokenFunctions = require("./tokenFunctions");
-const accountFunctions = require("./accountFunctions");
-const productFunctions = require("./productFunctions");
-const productModel = require("../models/productModel");
+const accountFunctions = require("../services/users/accountFunctions");
+const {
+  createProductService,
+  getProductWithIdService,
+  getAllProductsService,
+  deleteProductService,
+  updateProductService,
+} = require("../services/products/productServices");
 
 module.exports = {
   getAllProducts: async function (req, res, next) {
-    try {
-      const products = await productModel.find().populate("");
-      resModifier.modifyRes(res, "Success", "Items Extracted", products);
-    } catch (e) {
-      resModifier.modifyRes(
-        res,
-        "Error",
-        "Error al obtener los items: " + e.message,
-        null
-      );
-    }
+    const products = getAllProductsService();
+    return { code: 200, products: products };
   },
+
   getProductById: async function (req, res, next) {
-    try {
-      const producto = await productModel
-        .findById({ _id: req.params.id })
-        .select({
-          name: 1,
-          price: 1,
-          code: 1,
-          description: 1,
-          category: 1,
-          photo: 1,
-        });
-      resModifier.modifyRes(res, "Success", "Item Found", producto);
-    } catch (e) {
-      resModifier.modifyRes(
-        res,
-        "Error",
-        "Error al obtener el item: " + e.message,
-        null
-      );
-    }
+    const product = getProductWithIdService(req.params.id);
+    return { code: 200, product: product };
   },
+
   createProduct: async function (req, res, next) {
-    try {
-      const token = tokenFunctions.extractToken(req);
-      const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
-      await accountFunctions.checkPrivilege(tokenDecoded.username, res);
-      const producto = productFunctions.createProduct(req.body.productData);
-      const documento = await producto.save();
-      resModifier.modifyRes(
-        res,
-        "Success",
-        "Item Uploaded to Database",
-        documento
-      );
-    } catch (e) {
-      resModifier.modifyRes(
-        res,
-        "Error",
-        "Error al cargar los datos: " + e.message,
-        null
-      );
-    }
+    const token = tokenFunctions.extractToken(req);
+    const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
+    await accountFunctions.checkPrivilege(tokenDecoded.username, res);
+    const newProduct = createProductService(req.body.productData);
+    return { code: 201, product: newProduct };
   },
 
   updateProduct: async function (req, res, next) {
-    try {
-      const token = tokenFunctions.extractToken(req);
-      const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
-      await accountFunctions.checkPrivilege(tokenDecoded.username, res);
-      const producto = await productModel.updateOne(
-        { _id: req.params.id },
-        req.body.productData
-      );
-      resModifier.modifyRes(res, "Success", "Item Data Modified", producto);
-    } catch (e) {
-      resModifier.modifyRes(
-        res,
-        "Error",
-        "Error al actualizar los datos: " + e.message,
-        null
-      );
-    }
+    const token = tokenFunctions.extractToken(req);
+    const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
+    await accountFunctions.checkPrivilege(tokenDecoded.username, res);
+    const product = updateProductService(req.params.id, req.body.productData);
+    return { code: 200, product: product };
   },
 
   deleteProduct: async function (req, res, next) {
-    try {
-      const token = tokenFunctions.extractToken(req);
-      const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
-      await accountFunctions.checkPrivilege(tokenDecoded.username, res);
-      const producto = await productModel.deleteOne({ _id: req.params.id });
-      resModifier.modifyRes(res, "Success", "Item Deleted", producto);
-    } catch (e) {
-      resModifier.modifyRes(
-        res,
-        "Error",
-        "Error al borrar el producto: " + e.message,
-        null
-      );
-    }
-  } /*Si no tiene privilegios o el token es invalido, se modifico el res en alguna de las
-       que fallo, entonces no deberia modificarlo aca */,
+    const token = tokenFunctions.extractToken(req);
+    const tokenDecoded = await tokenFunctions.checkTokenValid(token, req);
+    await accountFunctions.checkPrivilege(tokenDecoded.username, res);
+    await deleteProductService(req.params.id);
+    return { code: 200 };
+  },
 };

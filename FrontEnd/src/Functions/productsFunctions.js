@@ -1,4 +1,4 @@
-import { getAllItems } from "../services/productServices";
+import { getAllItems } from "../api/productApi";
 
 export const getItems = async (setItem) => {
     try {

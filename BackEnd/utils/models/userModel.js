@@ -1,6 +1,6 @@
-const mongoose = require("../bin/mongodb");
+const mongoose = require("../../bin/mongodb");
 const bcrypt = require("bcrypt");
-const mailValidator = require("../validators/mailValidator.js");
+const mailValidator = require("../../validators/mailValidator.js");
 
 
 const userSchema = new mongoose.Schema({

@@ -15,12 +15,12 @@ import ProductsManagerScreen from "./Pages/ProductManager/ProductsManager.js";
 import ProductAdderScreen from "./Pages/ProductAdder/ProductAdder.js";
 import ModifyProductScreen from "./Pages/ModifyProduct/ModifyProduct.js";
 
-const exclusionPaths = ["/Login", "/Register"];
+//const exclusionPaths = ["/Login", "/Register"];
 
 function App({ location }) {
   return (
     <div>
-      {exclusionPaths.indexOf(location.pathname) < 0 && <HeaderScreen />}
+      {/*exclusionPaths.indexOf(location.pathname) < 0 && */<HeaderScreen />}
       <Switch>
         <Route exact path="/ProductDetail/:id" component={ProductDetailScreen} />
         <Route exact path="/" component={Home} />

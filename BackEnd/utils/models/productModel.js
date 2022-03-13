@@ -1,4 +1,4 @@
-const mongoose = require("../bin/mongodb")
+const mongoose = require("../../bin/mongodb")
 
 const productSchema = new mongoose.Schema({
         name: String,

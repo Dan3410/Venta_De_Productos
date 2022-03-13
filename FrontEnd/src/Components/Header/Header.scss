@@ -18,6 +18,7 @@ $headerBackgroundColor: rgb(42, 42, 58);
   border-radius: 30px;
   height: 50px;
   text-align: center;
+  text-decoration: none;
   background-image: linear-gradient(
     $headerButtonColorOnHover,
     $headerButtonColorOnHover
@@ -31,9 +32,14 @@ $headerBackgroundColor: rgb(42, 42, 58);
   cursor: pointer;
 }
 
-.header__button-format:hover {
+.header__button-format:hover, .active{
   background-position: center;
   background-size: 100%;
+}
+
+.header__button-format:visited{
+  background-size: 0%;
+  background-position: center;
 }
 
 .header__button-size--medium {

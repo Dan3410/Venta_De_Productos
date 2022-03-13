@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router";
 import "./Header.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
@@ -11,13 +12,16 @@ function Header(props) {
   const token = props.token;
   const isLoggedIn = props.isLoggedIn;
   const name = props.name;
+  const history = useHistory();
   const [isSuperUser, setIsSuperUser] = useState();
 
-  function logOutUser(){
+  function logOutUser() {
     props.deleteAllProductsFromCart();
     props.deleteUserData();
     //Esto fuerza el re-render
-    setIsSuperUser(false)
+    setIsSuperUser(false);
+    history.push("/");
+
   }
   const notLoggedButtons = [
     {
@@ -37,14 +41,14 @@ function Header(props) {
       onClick: null,
     },
     {
-      link: "/",
+      link: 'LogOut',
       label: "LogOut",
       onClick: logOutUser,
     },
   ];
 
   useEffect(() => {
-    setIsSuperUser(getPrivilege(token))
+    setIsSuperUser(getPrivilege(token));
   }, [token]);
 
   return (
@@ -55,50 +59,55 @@ function Header(props) {
             <label className="header__text-with-name">Bienvenido {name}.</label>
           </div>
         ) : null}
-        <Link to={"/"}>
-          <div className="header__button-size--medium header__button-format ">
-            <label className="header__button__text">Home</label>
-          </div>
-        </Link>
+        <NavLink
+          exact to={"/"}
+          className="header__button-size--medium header__button-format "
+        >
+          <label className="header__button__text">Home</label>
+        </NavLink>
         {!isLoggedIn ? (
           <>
             {notLoggedButtons.map((item, index) => (
-              <Link to={item.link} key={index}>
-                <div className="header__button-size--medium header__button-format  ">
-                  <label className="header__button__text">{item.label}</label>
-                </div>
-              </Link>
+              <NavLink
+              exact to={item.link}
+                key={index}
+                className="header__button-size--medium header__button-format  "
+              >
+                <label className="header__button__text">{item.label}</label>
+              </NavLink>
             ))}
           </>
         ) : (
           <>
             {isSuperUser && (
-              <Link to={`/Gestion_Productos`}>
-                <div className="header__button-size--large header__button-format">
-                  <label className="header__button__text">
-                    Gestionar Productos
-                  </label>
-                </div>
-              </Link>
+              <NavLink
+              exact to={`/Gestion_Productos`}
+                className="header__button-size--large header__button-format"
+              >
+                <label className="header__button__text">
+                  Gestionar Productos
+                </label>
+              </NavLink>
             )}
             {loggedButtons.map((item, index) => (
-              <Link to={item.link} key={index}>
-                <div
-                  className="header__button-size--medium header__button-format"
-                  onClick={item.onClick}
-                >
-                  <label className="header__button__text">{item.label}</label>
-                </div>
-              </Link>
+              <NavLink
+                exact to={item.link}
+                key={index}
+                className="header__button-size--medium header__button-format"
+                onClick={item.onClick}
+              >
+                <label className="header__button__text">{item.label}</label>
+              </NavLink>
             ))}
-            <Link to={`/Cart/${username}`}>
-              <div className="header__button-size--medium header__button-format">
-                <FontAwesomeIcon
-                  icon={faShoppingCart}
-                  className="header-container__icon"
-                />
-              </div>
-            </Link>{" "}
+            <NavLink
+              exact to={`/Cart/${username}`}
+              className="header__button-size--medium header__button-format"
+            >
+              <FontAwesomeIcon
+                icon={faShoppingCart}
+                className="header-container__icon"
+              />
+            </NavLink>{" "}
           </>
         )}
       </nav>

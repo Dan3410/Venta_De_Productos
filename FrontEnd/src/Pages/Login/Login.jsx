@@ -63,30 +63,35 @@ function Login(props) {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-form--center login-form--animation">
-        <form onSubmit={handleSubmit} className="login-form--format">
-          <div className="login-form__title-container ">
-            <label className="login-form__title-container__text">Login</label>
+        <div className="login-page">
+          <div className="login-form--center login-form--animation">
+            <form onSubmit={handleSubmit} className="login-form--format">
+              <div className="login-form__title-container ">
+                <label className="login-form__title-container__text">
+                  Login
+                </label>
+              </div>
+              <FormField field={usernameField} handleChange={handleChange} />
+              <FormSecretField
+                field={passwordField}
+                handleChange={handleChange}
+              />
+              <FormSubmit value="Ingresar"></FormSubmit>
+              <div className="login-form__register-text">
+                <label>
+                  {" "}
+                  ¿Aún no tenes una cuenta? Haga click{" "}
+                  <Link to={"/Register"}>aquí </Link>
+                </label>
+              </div>
+              <div className="login-form__message-container">
+                <label className="login-form__message-container__text--error">
+                  {errorMessage}
+                </label>
+              </div>
+            </form>
           </div>
-          <FormField field={usernameField} handleChange={handleChange} />
-          <FormSecretField field={passwordField} handleChange={handleChange} />
-          <FormSubmit value="Ingresar"></FormSubmit>
-          <div className="login-form__register-text">
-            <label>
-              {" "}
-              ¿Aún no tenes una cuenta? Haga click{" "}
-              <Link to={"/Register"}>aquí </Link>
-            </label>
-          </div>
-          <div className="login-form__message-container">
-            <label className="login-form__message-container__text--error">
-              {errorMessage}
-            </label>
-          </div>
-        </form>
-      </div>
-    </div>
+        </div>
   );
 }
 
