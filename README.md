@@ -1,5 +1,15 @@
 # Venta_De_Productos
-Este es un proyecto realizado con NodeJS, MongoDB y Mongoose para el BackEnd y ReactJS, React-Redux, HTML y SASS para el FrontEnd.
 
-Es posible extender este proyecto para agregar:
-  Un menu el cual se puede seleccionar una categoria de los productos para que muestre solo los productos de dicha categoria (requiere 	modificar el modelo de los productos en el backEnd)    
+Requirements:
+	NPM 8.4.1  
+	ReactJS 17.0.2  
+	NodeJS 16.6.0  
+	MongoDB 4.4.12  
+	
+To execute the bash script, you will need to run the next command in a terminal:  
+	chmod +x ./script.sh  
+	
+The FrontEnd will run in localhost:3000  
+The BackEnd will run in localhost:8080  
+
+
